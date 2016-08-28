@@ -1,0 +1,12 @@
+<div class="list-group">
+    <div class="list-group-item active">
+        <a href="#!/home">
+            <p style="color:#FFF">Home</p>
+        </a>
+    </div>
+    <div ng-repeat="item in menuItems" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
+        <a ng-href="#!/{{item.text}}" ng-click="menClick(item.text)">
+            <p>{{item.text}}</p>
+        </a>
+    </div> 
+</div>

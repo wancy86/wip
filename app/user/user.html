@@ -1,0 +1,51 @@
+<div class="col-md-12">
+<h3>User Edit - {{user.id}}</h3>
+</div>  
+<div class="col-md-6">
+        <div class="form-group">
+            <label>
+                Account
+            </label>
+            <input type="text" class="form-control" ng-model="user.account" />
+        </div>
+        <div class="form-group">
+            <label>
+                Name
+            </label>
+            <input type="text" class="form-control" ng-model="user.name" />
+        </div>
+        <div class="form-group">
+            <label>
+                Email address
+            </label>
+            <input type="email" class="form-control" ng-model="user.email" />
+        </div>
+        <div class="form-group">
+            <label>
+                Phone
+            </label>
+            <input type="text" class="form-control" ng-model="user.phone" />
+        </div>
+        <div class="form-group">
+            <label>
+                Team
+            </label>
+            <select class="form-control" ng-model="user.team">
+                <option value="1">1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
+                Role
+            </label>
+            <select class="form-control" ng-model="user.role" >
+                <option value="-1">All</option>
+                <option value="1">Developer</option>
+                <option value="2">CR</option>
+                <option value="3">QA</option>
+            </select>
+        </div>        
+        <button type="submit" class="btn btn-default">
+            OK
+        </button>
+</div>

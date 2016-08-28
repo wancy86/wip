@@ -1,0 +1,150 @@
+<h3 class="col-md-12">New / Edit Task -{{task.id}}</h3>
+<div class="form-group col-md-4">
+    <label for="password">
+        Project
+    </label>
+    <select class="form-control" ng-model="task.projectCode">
+        <option value="OIC">OIC</option>
+        <option value="LIS">LIS</option>
+    </select>
+</div>
+<div class="form-group col-md-4">
+    <label for="account">
+        Name
+    </label>
+    <input type="text" class="form-control" ng-model="task.name" />
+</div>
+<div class="form-group col-md-4">
+    <label for="email">
+        Report To
+    </label>
+    <select class="form-control" ng-model="task.">
+        <option>1</option>
+        <option>2</option>
+    </select>
+</div>
+<div class="form-group col-md-4">
+    <label for="password">
+        Developer
+    </label>
+    <select class="form-control" ng-model="task.developer">
+        <option>1</option>
+        <option>2</option>
+    </select>
+</div>
+<div class="form-group col-md-4">
+    <label for="password">
+        Code Reviewer
+    </label>
+    <select class="form-control" ng-model="task.codeReviewer">
+        <option>1</option>
+        <option>2</option>
+    </select>
+</div>
+<div class="form-group col-md-4">
+    <label for="password">
+        QA
+    </label>
+    <select class="form-control" ng-model="task.QA">
+        <option>1</option>
+        <option>2</option>
+    </select>
+</div>
+<div class="form-group col-md-12">
+    <label for="email">
+        Description
+    </label>
+    <textarea class="form-control" ng-model="task.description" rows="3"></textarea>
+</div>
+<div>
+    <div class="col-md-12">
+        <div class="tabbable" id="myTab">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#panel-1" data-toggle="tab">Description</a>
+                </li>
+                <li>
+                    <a href="#panel-2" data-toggle="tab">Comment</a>
+                </li>
+                <li>
+                    <a href="#panel-3" data-toggle="tab">Log</a>
+                </li>
+                <li>
+                    <a href="#panel-4" data-toggle="tab">Attachment</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="panel-1">
+                    <div class="form-group">
+                        <label></label>
+                        <textarea class="form-control" ng-model="task.description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="tab-pane" id="panel-2">
+                    <a href="#!/comment/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Comment</a>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Entry User</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td><a href="#!/comment/commentid/1">1</a></td>
+                            <td>Mark</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane" id="panel-3">
+                    <a href="#!/log/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Log</a>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Entry Date</th>
+                            <th>Time(minutes)</th>
+                            <th>Log Type</th>
+                            <th>Entry User</th>
+                            <th>Work User</th>
+                        </tr>
+                        <tr>
+                            <td><a href="#!/log/logid/1">1</a></td>
+                            <td>2016/08/26 10:21:32</td>
+                            <td>52</td>
+                            <td>Billable</td>
+                            <td>Mark</td>
+                            <td>Mark</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane" id="panel-4">
+                    <a href="#!/attachment/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Attachment</a>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>#</th>
+                            <th>Entry User</th>
+                            <th>Entry Date</th>
+                            <th>Image</th>
+                        </tr>
+                        <tr>
+                            <td><a href="#!/comment/commentid/1">1</a></td>
+                            <td>Mark</td>
+                            <td>2016/08/26 10:25:22</td>
+                            <td><a href="#">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $('#myTab a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    </script>
+</div>
+<div class="form-group col-md-12" style="text-align: right">
+    <button type="submit" class="btn btn-default">
+        Save
+    </button>
+</div>

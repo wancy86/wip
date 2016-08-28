@@ -1,0 +1,26 @@
+<div class="col-md-12">
+    <h3>Project Edit - {{project.id}}</h3>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="account">
+            Project Name
+        </label>
+        <input type="text" class="form-control" ng-model="project.name" />
+    </div>
+    <div class="form-group">
+        <label for="account">
+            Project Code
+        </label>
+        <input type="text" class="form-control" ng-model="project.projectCode" />
+    </div>
+    <div class="form-group">
+        <label for="email">
+            Description
+        </label>
+        <textarea class="form-control" ng-model="project.description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">
+        OK
+    </button>
+</div>
