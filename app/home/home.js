@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('myApp.home', ['ui.router'])
 
 .factory('TasksServe', ['$resource', function($resource) {
     return $resource('data/task/tasks.json', {}, {
@@ -16,11 +16,12 @@ angular.module('myApp.home', ['ngRoute'])
     $scope.tasklist = TasksServe.query({}, function(data) {
         console.log(data);
     });
-}])
-
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {
-        templateUrl: 'home/home.html',
-        controller: 'HomeCtrl'
-    });
 }]);
+
+// .config(['$stateProvider', function($stateProvider) {
+//     $stateProvider.state('home', {
+//         url:'/',
+//         templateUrl: 'home/home.html',
+//         controller: 'HomeCtrl'
+//     });
+// }]);

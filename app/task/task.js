@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.task', ['ngRoute', 'ngResource'])
+angular.module('myApp.task', ['ui.router', 'ngResource'])
 
 .factory('TaskServe', ['$resource', function($resource) {
     return $resource('data/task/:taskid.json', {}, {
@@ -12,34 +12,39 @@ angular.module('myApp.task', ['ngRoute', 'ngResource'])
     });
 }])
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/task/new', {
+.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+    $stateProvider.state('task_new', {
+        url: 'task/new',
         templateUrl: 'task/task.html',
         controller: 'TaskCtrl'
     })
 
-    .when('/task/taskid/:taskid', {
+    .state('task_edit', {
+        url: '/task/taskid/:taskid',
         templateUrl: 'task/task.html',
         controller: 'TaskCtrl'
+    })
+
+    .state('task_edit.newlog', {
+        url: '/newlog',
+        templateUrl: 'log/log.html',
+        controller: 'LogCtrl'
+    })
+
+    .state('task_edit.newcomment', {
+        url: '/newcomment',
+        templateUrl: 'comment/comment.html',
+        controller: 'CommentCtrl'
     });
 }])
 
-.controller('TaskCtrl', ['$scope', '$routeParams', 'TaskServe', function($scope, $routeParams, TaskServe) {
+.controller('TaskCtrl', ['$scope', '$stateParams', 'TaskServe', function($scope, $stateParams, TaskServe) {
     console.log('now in TaskCtrl...');
-    console.log($routeParams.taskid);
-    console.log(TaskServe);
-    // window.TaskServe=TaskServe;
+    console.log($stateParams);
+    console.log($stateParams.taskid);
 
-    // $scope.task = {
-    //     id: $routeParams.taskid,
-    //     name: 'xxxx',
-    //     projectCode: 'OIC',
-    //     status: 'Inprogress',
-    //     developer: 'Mark',
-    //     codeReviewer: 'Miles'
-    // };
 
-    $scope.task = TaskServe.get({ taskid: $routeParams.taskid }, function(data) {
+    $scope.task = TaskServe.get({ taskid: $stateParams.taskid }, function(data) {
         console.log(data);
     });
 

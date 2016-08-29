@@ -18,7 +18,7 @@
     <label for="email">
         Report To
     </label>
-    <select class="form-control" ng-model="task.">
+    <select class="form-control" ng-model="task.reportTo">
         <option>1</option>
         <option>2</option>
     </select>
@@ -50,12 +50,6 @@
         <option>2</option>
     </select>
 </div>
-<div class="form-group col-md-12">
-    <label for="email">
-        Description
-    </label>
-    <textarea class="form-control" ng-model="task.description" rows="3"></textarea>
-</div>
 <div>
     <div class="col-md-12">
         <div class="tabbable" id="myTab">
@@ -81,7 +75,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="panel-2">
-                    <a href="#!/comment/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Comment</a>
+                    <a href="#!/comment/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Comment</a>
                     <table class="table table-bordered">
                         <tr>
                             <th>#</th>
@@ -96,7 +90,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="panel-3">
-                    <a href="#!/log/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Log</a>
+                    <a ui-sref="task_edit.newlog" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Log</a>
                     <table class="table table-bordered">
                         <tr>
                             <th>#</th>
@@ -137,12 +131,13 @@
         </div>
     </div>
     <script>
-    $('#myTab a').click(function(e) {
+    $('#myTab li a').click(function(e) {
         e.preventDefault();
         $(this).tab('show');
     });
     </script>
 </div>
+<div ui-view></div>
 <div class="form-group col-md-12" style="text-align: right">
     <button type="submit" class="btn btn-default">
         Save

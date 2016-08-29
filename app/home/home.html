@@ -90,7 +90,7 @@
         <tbody>
             <tr ng-repeat="task in tasklist">
                 <td>
-                    <a href="#!/task/taskid/{{task.id}}">{{task.id}}</a>
+                    <a ui-sref='task_edit({taskid:task.id})'>{{task.id}}</a>
                 </td>
                 <td>
                     {{task.name}}

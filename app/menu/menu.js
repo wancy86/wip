@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('myApp.menu', ['ngRoute','myApp'])
+angular.module('myApp.menu', ['ngRoute', 'myApp'])
 
 .controller('MenuCtrl', ['$scope', '$location', function($scope, $location) {
     // $scope.menu = 'home';
     $scope.menuItems = [
-        { text: 'register' },
-        { text: 'login' },
-        { text: 'user' },
-        { text: 'project' },
-        // { text: 'task' },
-        { text: 'comment' },
-        { text: 'log' }
+        { text: 'register', sref: 'register' },
+        { text: 'login', sref: 'login' },
+        { text: 'user', sref: 'user' },
+        { text: 'project', sref: 'project' },
+        // { text: 'task' ,sref:'task'},
+        { text: 'comment', sref: 'comment' },
+        { text: 'log', sref: 'log' }
     ];
     $scope.menClick = function(item) {
         $scope.menu = item;
