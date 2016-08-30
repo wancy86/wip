@@ -38,10 +38,14 @@ angular.module('myApp.task', ['ui.router', 'ngResource'])
     });
 }])
 
-.controller('TaskCtrl', ['$scope', '$stateParams', 'TaskServe', function($scope, $stateParams, TaskServe) {
+.controller('TaskCtrl', ['$scope', '$stateParams', 'TaskServe', '$state', function($scope, $stateParams, TaskServe, $state) {
     console.log('now in TaskCtrl...');
     console.log($stateParams);
     console.log($stateParams.taskid);
+
+    // window.stateProvider=$stateProvider;
+    console.log($state);
+    $state.go('task_edit.newlog', { taskid: 1 });
 
 
     $scope.task = TaskServe.get({ taskid: $stateParams.taskid }, function(data) {
