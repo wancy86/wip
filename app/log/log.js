@@ -2,14 +2,22 @@
 
 angular.module('myApp.log', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/log', {
-    templateUrl: 'log/log.html',
-    controller: 'LogCtrl'
-  });
-}])
+// .config(['$routeProvider', function($routeProvider) {
+//   $routeProvider.when('/log', {
+//     templateUrl: 'log/log.html',
+//     controller: 'LogCtrl'
+//   });
+// }])
 
 .controller('LogCtrl', [function() {
     console.log('now in LogCtrl...');
     
-}]);
+}])
+
+.directive('log', function() {
+    return {
+        // restrict: 'E',
+        templateUrl: 'log/log.html',
+        controller: 'LogCtrl'
+    }
+});

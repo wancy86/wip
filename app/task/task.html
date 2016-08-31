@@ -54,87 +54,66 @@
     <label></label>
     <textarea class="form-control" ng-model="task.description" rows="3"></textarea>
 </div>
-<div>
-    <div class="col-md-12">
-        <div class="tabbable" id="myTab">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#panel-2" data-toggle="tab">Comment</a>
-                </li>
-                <li>
-                    <a href="#panel-3" data-toggle="tab">Log</a>
-                </li>
-                <li>
-                    <a href="#panel-4" data-toggle="tab">Attachment</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="panel-2">
-                    <a ui-sref="task_edit.newcomment" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Comment</a>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>#</th>
-                            <th>Entry User</th>
-                            <th>Comment</th>
-                        </tr>
-                        <tr>
-                            <td><a href="#!/comment/commentid/1">1</a></td>
-                            <td>Mark</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="tab-pane" id="panel-3">
-                    <a ui-sref="task_edit.newlog" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Log</a>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>#</th>
-                            <th>Entry Date</th>
-                            <th>Time(minutes)</th>
-                            <th>Log Type</th>
-                            <th>Entry User</th>
-                            <th>Work User</th>
-                        </tr>
-                        <tr>
-                            <td><a href="#!/log/logid/1">1</a></td>
-                            <td>2016/08/26 10:21:32</td>
-                            <td>52</td>
-                            <td>Billable</td>
-                            <td>Mark</td>
-                            <td>Mark</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="tab-pane" id="panel-4">
-                    <a href="#!/attachment/new" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Attachment</a>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>#</th>
-                            <th>Entry User</th>
-                            <th>Entry Date</th>
-                            <th>Image</th>
-                        </tr>
-                        <tr>
-                            <td><a href="#!/comment/commentid/1">1</a></td>
-                            <td>Mark</td>
-                            <td>2016/08/26 10:25:22</td>
-                            <td><a href="#">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-    $('#myTab li a').click(function(e) {
-        if ($(this).parent().hasClass('active')) return false;
-        e.preventDefault();
-        $(this).tab('show');
-        console.log(e);
-    });
-    </script>
+<div class="col-md-12">
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Comment" select="tabClick('comment')">
+            <a ng-click="newSubItem('comment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Comment</a>
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Entry User</th>
+                    <th>Comment</th>
+                </tr>
+                <tr>
+                    <td><a href="#!/comment/commentid/1">1</a></td>
+                    <td>Mark</td>
+                    <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                </tr>
+            </table>
+            <comment ng-show="showComment"></comment>
+        </uib-tab>
+        <uib-tab index="1" heading="Log" select="tabClick('log')">
+            <a ng-click="newSubItem('log')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Log</a>
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Entry Date</th>
+                    <th>Time(minutes)</th>
+                    <th>Log Type</th>
+                    <th>Entry User</th>
+                    <th>Work User</th>
+                </tr>
+                <tr>
+                    <td><a href="#!/log/logid/1">1</a></td>
+                    <td>2016/08/26 10:21:32</td>
+                    <td>52</td>
+                    <td>Billable</td>
+                    <td>Mark</td>
+                    <td>Mark</td>
+                </tr>
+            </table>
+            <log ng-show="showLog"></log>
+        </uib-tab>
+        <uib-tab index="2" heading="Attachment" select="tabClick('attachment')">
+            <a ng-click="newSubItem('attachment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Attachment</a>
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Entry User</th>
+                    <th>Entry Date</th>
+                    <th>Image</th>
+                </tr>
+                <tr>
+                    <td><a href="#!/comment/commentid/1">1</a></td>
+                    <td>Mark</td>
+                    <td>2016/08/26 10:25:22</td>
+                    <td><a href="#">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+            </table>
+        </uib-tab>
+    </uib-tabset>
 </div>
-<div ui-view></div>
+<!-- <div ui-view></div> -->
 <div class="form-group col-md-12" style="text-align: right">
     <button type="submit" class="btn btn-default">
         Save

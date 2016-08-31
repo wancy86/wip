@@ -1,5 +1,5 @@
-<div>
-    <input type="hidden" ng-model="log.id"/>
+<div style="margin-left: -15px;">
+    <input type="hidden" ng-model="log.id" />
     <div class="form-group col-md-4">
         <label for="re_password">
             Date
@@ -7,10 +7,10 @@
         <input type="password" class="form-control" ng-model="log.logdate" />
     </div>
     <div class="form-group col-md-4">
-        <label for="email">
+        <label>
             Minutes
         </label>
-        <input type="email" class="form-control" ng-model="log.logminutes" />
+        <input class="form-control" ng-model="log.logminutes" />
     </div>
     <div class="form-group col-md-4">
         <label for="password">
@@ -23,12 +23,13 @@
         </select>
     </div>
     <div class="form-group col-md-12">
-        <label for="email">
+        <label>
             Log
         </label>
-        <input type="email" class="form-control" ng-model="log.log" />
+        <input class="form-control" ng-model="log.log" />
     </div>
     <div class="col-md-12">
+        <label> </label>
         <button type="submit" class="btn btn-default">
             Save Log
         </button>

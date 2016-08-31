@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.home', ['ui.router'])
+angular.module('myApp.home', ['ui.router', 'ui.bootstrap'])
 
 .factory('TasksServe', ['$resource', function($resource) {
     return $resource('data/task/tasks.json', {}, {
@@ -12,7 +12,7 @@ angular.module('myApp.home', ['ui.router'])
     });
 }])
 
-.controller('HomeCtrl', ['$scope', 'TasksServe', function($scope, TasksServe) {
+.controller('HomeCtrl', ['$scope', 'TasksServe','$window', function($scope, TasksServe, $window) {
     $scope.tasklist = TasksServe.query({}, function(data) {
         console.log(data);
     });
