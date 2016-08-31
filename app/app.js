@@ -21,49 +21,49 @@ angular.module('myApp', [
 
     $stateProvider.state('home', {
         url: '/',
-        templateUrl: 'home/home.html',
+        templateUrl: 'components/home/home.html',
         controller:'HomeCtrl'
     })
 
     .state('taskdetail', {
         url: 'task/taskid/:taskid',
-        templateUrl: 'task/task.html',
+        templateUrl: 'components/task/task.html',
         controller:'TaskCtrl'
     })
 
     .state('register', {
         url: '/',
-        templateUrl: 'register/register.html',
+        templateUrl: 'components/register/register.html',
         controller:'ResiterCtrl'
     })
 
     .state('login', {
         url: '/',
-        templateUrl: 'login/login.html',
+        templateUrl: 'components/login/login.html',
         controller:'LoginCtrl'
     })
 
     .state('user', {
         url: '/',
-        templateUrl: 'user/userlist.html',
+        templateUrl: 'components/user/userlist.html',
         controller:'UserCtrl'
     })
 
     .state('project', {
         url: '/',
-        templateUrl: 'project/projectlist.html',
+        templateUrl: 'components/project/projectlist.html',
         controller:'ProjectCtrl'
     })
 
     .state('log', {
         url: '/',
-        templateUrl: 'log/log.html',
+        templateUrl: 'components/log/log.html',
         controller:'LogCtrl'
     })
 
     .state('comment', {
         url: '/',
-        templateUrl: 'comment/comment.html',
+        templateUrl: 'components/comment/comment.html',
         controller:'CommentCtrl'
     });
 

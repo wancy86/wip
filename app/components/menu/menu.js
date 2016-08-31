@@ -22,7 +22,7 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
 .directive('menu', function() {
     return {
         // restrict: 'E',
-        templateUrl: 'menu/menu.html',
+        templateUrl: 'components/menu/menu.html',
         controller: 'MenuCtrl'
     }
 });

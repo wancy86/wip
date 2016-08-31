@@ -17,7 +17,7 @@ angular.module('myApp.comment', ['ngRoute'])
 .directive('comment', function() {
     return {
         restrict: 'AE',
-        templateUrl: 'comment/comment.html',
+        templateUrl: 'components/comment/comment.html',
         controller: 'CommentCtrl'
     }
 });

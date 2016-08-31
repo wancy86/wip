@@ -17,7 +17,7 @@ angular.module('myApp.log', ['ngRoute'])
 .directive('log', function() {
     return {
         // restrict: 'E',
-        templateUrl: 'log/log.html',
+        templateUrl: 'components/log/log.html',
         controller: 'LogCtrl'
     }
 });
