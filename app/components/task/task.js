@@ -1,27 +1,17 @@
 'use strict';
 
-angular.module('myApp.task', ['ui.router', 'ngResource'])
-
-.factory('TaskServe', ['$resource', function($resource) {
-    return $resource('data/task/:taskid.json', {}, {
-        query: {
-            method: 'GET',
-            params: { taskid: 'taskid' },
-            isArray: true
-        }
-    });
-}])
+angular.module('myApp')
 
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
     $stateProvider.state('task_new', {
         url: 'task/new',
-        templateUrl: 'task/task.html',
+        templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
     })
 
     .state('task_edit', {
         url: '/task/taskid/:taskid',
-        templateUrl: 'task/task.html',
+        templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
     });
 
@@ -94,7 +84,5 @@ angular.module('myApp.task', ['ui.router', 'ngResource'])
                 break;
         }
     };
-
-
 
 }]);

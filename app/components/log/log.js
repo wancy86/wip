@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.log', ['ngRoute'])
+angular.module('myApp')
 
 // .config(['$routeProvider', function($routeProvider) {
 //   $routeProvider.when('/log', {

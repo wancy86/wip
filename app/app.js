@@ -3,16 +3,14 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
+    'ngResource',
     'ui.router',
-    'myApp.home',
+    'ui.bootstrap',
     'myApp.menu',
-    'myApp.register',
-    'myApp.login',
-    'myApp.user',
-    'myApp.project',
-    'myApp.task',
-    'myApp.log',
-    'myApp.comment',
+    // 'myApp.user',
+    // 'myApp.project',
+    // 'myApp.log',
+    // 'myApp.comment',
     'myApp.version'
 ])
 
@@ -22,49 +20,49 @@ angular.module('myApp', [
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'components/home/home.html',
-        controller:'HomeCtrl'
+        controller: 'HomeCtrl'
     })
 
     .state('taskdetail', {
         url: 'task/taskid/:taskid',
         templateUrl: 'components/task/task.html',
-        controller:'TaskCtrl'
+        controller: 'TaskCtrl'
     })
 
     .state('register', {
-        url: '/',
+        url: '/register',
         templateUrl: 'components/register/register.html',
-        controller:'ResiterCtrl'
+        controller: 'RegisterCtrl'
     })
 
     .state('login', {
-        url: '/',
+        url: '/login',
         templateUrl: 'components/login/login.html',
-        controller:'LoginCtrl'
+        controller: 'LoginCtrl'
     })
 
     .state('user', {
-        url: '/',
+        url: '/user',
         templateUrl: 'components/user/userlist.html',
-        controller:'UserCtrl'
+        controller: 'UserCtrl'
     })
 
     .state('project', {
-        url: '/',
+        url: '/project',
         templateUrl: 'components/project/projectlist.html',
-        controller:'ProjectCtrl'
+        controller: 'ProjectCtrl'
     })
 
     .state('log', {
-        url: '/',
+        url: '/log',
         templateUrl: 'components/log/log.html',
-        controller:'LogCtrl'
+        controller: 'LogCtrl'
     })
 
     .state('comment', {
-        url: '/',
+        url: '/comment',
         templateUrl: 'components/comment/comment.html',
-        controller:'CommentCtrl'
+        controller: 'CommentCtrl'
     });
 
     $urlRouterProvider.otherwise('/');

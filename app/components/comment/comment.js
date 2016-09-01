@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.comment', ['ngRoute'])
+angular.module('myApp')
 
 // .config(['$routeProvider', function($routeProvider) {
 //     $routeProvider.when('/comment', {

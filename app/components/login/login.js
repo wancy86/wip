@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.login', ['ngRoute'])
+angular.module('myApp')
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/login', {
-    templateUrl: 'login/login.html',
-    controller: 'LoginCtrl'
-  });
-}])
+// .config(['$stateProvider', function($stateProvider) {
+//     $stateProvider.state('login', {
+//         url: '/url',
+//         templateUrl: 'login/login.html',
+//         controller: 'LoginCtrl'
+//     });
+// }])
 
 .controller('LoginCtrl', [function() {
     console.log('now in LoginCtrl...');
-    
+
 }]);

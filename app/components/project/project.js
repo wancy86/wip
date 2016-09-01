@@ -1,39 +1,32 @@
 'use strict';
 
-angular.module('myApp.project', ['ngRoute'])
+angular.module('myApp')
 
-.service('ProjectServe', ['$resource', function($resource) {
-    return $resource('data/project/:projectid.json', {}, {
-        query: {
-            method: 'GET',
-            params: {
-                projectid: 'projectid'
-            },
-            isArray: true
-        }
-    });
-}])
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/project', {
-        templateUrl: 'project/projectlist.html',
+    // .state('project', {
+    //     url: '/project',
+    //     templateUrl: 'components/project/projectlist.html',
+    //     controller: 'ProjectCtrl'
+    // })
+
+    .state('project.new', {
+        url: '/project/new',
+        templateUrl: 'components/project/project.html',
         controller: 'ProjectCtrl'
     })
 
-    .when('/project/new', {
-        templateUrl: 'project/project.html',
-        controller: 'ProjectCtrl'
-    })
-
-    .when('/project/projectid/:projectid', {
-        templateUrl: 'project/project.html',
+    .state('project.edit', {
+        url: '/project/projectid/:projectid',
+        templateUrl: 'components/project/project.html',
         controller: 'ProjectCtrl'
     });
 }])
 
-.controller('ProjectCtrl', ['ProjectServe', '$routeParams', '$scope', '$http', function(ProjectServe, $routeParams, $scope, $http) {
+.controller('ProjectCtrl', ['ProjectServe', '$stateParams', '$scope', '$http', function(ProjectServe, $stateParams, $scope, $http) {
     console.log('now in ProjectCtrl...');
-    if (!$routeParams.projectid) {
+    if (!$stateParams.projectid) {
         console.log('123');
         $http({
             method: 'GET',
@@ -43,7 +36,7 @@ angular.module('myApp.project', ['ngRoute'])
             console.log(resp.data);
         });
     } else {
-        $scope.project = ProjectServe.get({ projectid: $routeParams.projectid }, function(data) {
+        $scope.project = ProjectServe.get({ projectid: $stateParams.projectid }, function(data) {
             console.log(data);
         });
 

@@ -1,37 +1,32 @@
 'use strict';
 
-angular.module('myApp.user', ['ngRoute'])
+angular.module('myApp')
 
-.service('UserServe', ['$resource', function($resource) {
-    return $resource('data/user/:userid.json', {}, {
-        query: {
-            method: 'GET',
-            params: { userid: 'userid' },
-            isArray: true
-        }
-    });
-}])
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/user', {
-        templateUrl: 'user/userlist.html',
-        controller: 'UserCtrl'
-    })
+    // .state('user', {
+    //     url:'/user',
+    //     templateUrl: 'user/userlist.html',
+    //     controller: 'UserCtrl'
+    // })
 
-    .when('/user/userid/:userid', {
+    .state('user.edit', {
+        url:'/user/userid/:userid',
         templateUrl: 'user/user.html',
         controller: 'UserCtrl'
     })
 
-    .when('/user/new', {
+    .state('user.new', {
+        url:'/user/new',
         templateUrl: 'user/user.html',
         controller: 'UserCtrl'
     });
 }])
 
-.controller('UserCtrl', ['$http', '$scope', '$routeParams', 'UserServe', function($http, $scope, $routeParams, UserServe) {
+.controller('UserCtrl', ['$http', '$scope', '$stateParams', 'UserServe', function($http, $scope, $stateParams, UserServe) {
     console.log('now in UserCtrl...');
-    if (!$routeParams.userid) {
+    if (!$stateParams.userid) {
         //get all user
         $http({
             method: 'GET',
@@ -40,7 +35,7 @@ angular.module('myApp.user', ['ngRoute'])
             $scope.userlist = Resp.data;
         });
     } else {
-        UserServe.get({ userid: $routeParams.userid }, function(resp) {
+        UserServe.get({ userid: $stateParams.userid }, function(resp) {
             $scope.user = resp;
         });
     }
