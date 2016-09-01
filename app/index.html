@@ -19,22 +19,28 @@
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/bootstrap/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <div class="page-header">
                     <h1>WIP! <small>Simple and easy wip.</small></h1>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row">
-            <div class="col-md-3 menu">
+            <!-- <div class="col-md-12 menu">
                 <menu></menu>
-            </div>
-            <div class="col-md-9">
+            </div> -->
+            <div class="col-md-12">
                 <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -54,9 +60,10 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="app.js"></script>
     <script src="common/service/wip.service.js"></script>
-    
     <script src="components/home/home.js"></script>
     <script src="components/menu/menu.js"></script>
+    <script src="components/header/header.js"></script>
+    <script src="components/footer/footer.js"></script>
     <script src="components/register/register.js"></script>
     <script src="components/user/user.js"></script>
     <script src="components/login/login.js"></script>

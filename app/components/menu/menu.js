@@ -7,11 +7,11 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
     $scope.menuItems = [
         { text: 'register', sref: 'register' },
         { text: 'login', sref: 'login' },
-        { text: 'user', sref: 'user' },
-        { text: 'project', sref: 'project' },
+        { text: 'user', sref: 'app.user' },
+        { text: 'project', sref: 'app.project' },
         // { text: 'task' ,sref:'task'},
-        { text: 'comment', sref: 'comment' },
-        { text: 'log', sref: 'log' }
+        { text: 'comment', sref: 'app.comment' },
+        { text: 'log', sref: 'app.log' }
     ];
     $scope.menClick = function(item) {
         $scope.menu = item;

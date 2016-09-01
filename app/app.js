@@ -17,13 +17,19 @@ angular.module('myApp', [
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
     // $locationProvider.hashPrefix('!');
 
-    $stateProvider.state('home', {
+    $stateProvider.state('app', {
         url: '/',
+        templateUrl: 'app.html'
+        // controller: 'HomeCtrl'
+    })
+
+    .state('app.home', {
+        url: 'home',
         templateUrl: 'components/home/home.html',
         controller: 'HomeCtrl'
     })
 
-    .state('taskdetail', {
+    .state('app.taskdetail', {
         url: 'task/taskid/:taskid',
         templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
@@ -47,23 +53,23 @@ angular.module('myApp', [
         controller: 'UserCtrl'
     })
 
-    .state('project', {
+    .state('app.project', {
         url: '/project',
         templateUrl: 'components/project/projectlist.html',
         controller: 'ProjectCtrl'
     })
 
-    .state('log', {
+    .state('app.log', {
         url: '/log',
         templateUrl: 'components/log/log.html',
         controller: 'LogCtrl'
     })
 
-    .state('comment', {
+    .state('app.comment', {
         url: '/comment',
         templateUrl: 'components/comment/comment.html',
         controller: 'CommentCtrl'
     });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('register');
 }]);
