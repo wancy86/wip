@@ -13,3 +13,4 @@ angular.module('myApp')
         controller: 'FooterCtrl'
     }
 });
+

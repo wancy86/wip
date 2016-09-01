@@ -1,5 +1,8 @@
 'use strict';
 
+//Back end API server name
+var ServerName='http://www.123.com';
+
 angular.module('myApp')
 
 .factory('TasksServe', ['$resource', function($resource) {
