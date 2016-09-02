@@ -47,26 +47,32 @@ angular.module('myApp', [
         controller: 'LoginCtrl'
     })
 
-    .state('user', {
-        url: '/user',
+    .state('app.user', {
+        url: 'user',
         templateUrl: 'components/user/userlist.html',
         controller: 'UserCtrl'
     })
 
     .state('app.project', {
-        url: '/project',
+        url: 'project',
         templateUrl: 'components/project/projectlist.html',
         controller: 'ProjectCtrl'
     })
 
+    .state('app.team', {
+        url: 'team',
+        templateUrl: 'components/team/teamlist.html',
+        controller: 'TeamCtrl'
+    })
+
     .state('app.log', {
-        url: '/log',
+        url: 'log',
         templateUrl: 'components/log/log.html',
         controller: 'LogCtrl'
     })
 
     .state('app.comment', {
-        url: '/comment',
+        url: 'comment',
         templateUrl: 'components/comment/comment.html',
         controller: 'CommentCtrl'
     });

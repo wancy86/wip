@@ -9,11 +9,11 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
         { text: 'login', sref: 'login' },
         { text: 'user', sref: 'app.user' },
         { text: 'project', sref: 'app.project' },
-        // { text: 'task' ,sref:'task'},
+        { text: 'team', sref: 'app.team' },
         { text: 'comment', sref: 'app.comment' },
         { text: 'log', sref: 'app.log' }
     ];
-    $scope.menClick = function(item) {
+    $scope.menuClick = function(item) {
         $scope.menu = item;
         // console.log($location.absUrl());
     }

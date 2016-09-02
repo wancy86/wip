@@ -5,7 +5,7 @@
         </a>
     </div>
     <div ng-repeat="item in menuItems" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
-        <a ui-sref="{{item.sref}}" ng-click="menClick(item.text)">
+        <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
             <p>{{item.text}}</p>
         </a>
     </div> 

@@ -10,6 +10,17 @@ angular.module('myApp')
 //     });
 // }])
 
-.controller('RegisterCtrl', [function() {
+.controller('RegisterCtrl', ['$scope', '$stateParams','RegisterServe', function($scope, $stateParams,RegisterServe) {
     console.log('RegisterCtrl');
+    $scope.account = {};
+
+    $scope.postRegister = function() {
+        console.log('post register');
+        console.log($scope.account);
+        var acoount = new RegisterServe($scope.account);
+        window.acoount = acoount;
+        console.log(acoount);
+        // acoount.$save();
+    }
+
 }]);

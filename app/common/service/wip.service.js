@@ -1,7 +1,7 @@
 'use strict';
 
 //Back end API server name
-var ServerName='http://www.123.com';
+var ServerName = 'localhost:8000/';
 
 angular.module('myApp')
 
@@ -41,6 +41,31 @@ angular.module('myApp')
             method: 'GET',
             params: {
                 projectid: 'projectid'
+            },
+            isArray: true
+        }
+    });
+}])
+
+.service('RegisterServe', ['$resource', function($resource) {
+    return $resource(ServerName + 'account/:userid', { userid: '@userid' }, {
+        query: {
+            method: 'GET',
+            params: {
+                userid: 'userid'
+            },
+            isArray: true
+        }
+    });
+}])
+
+
+.service('TeamServe', ['$resource', function($resource) {
+    return $resource(ServerName + 'team/:teamid', { teamid: '@teamid' }, {
+        query: {
+            method: 'GET',
+            params: {
+                teamid: 'teamid'
             },
             isArray: true
         }
