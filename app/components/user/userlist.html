@@ -61,7 +61,7 @@
         <tbody>
             <tr ng-repeat="user in userlist">
                 <td>
-                    <a href="#!/user/userid/{{user.id}}">{{user.id}}</a>
+                    <a ui-sref="app.user_edit({userid:user.id})">{{user.id}}</a>
                 </td>
                 <td>
                     {{user.account}}

@@ -11,15 +11,15 @@ angular.module('myApp')
     //     controller: 'UserCtrl'
     // })
 
-    .state('user.edit', {
-        url:'/user/userid/:userid',
-        templateUrl: 'user/user.html',
+    .state('app.user_edit', {
+        url:'user/userid/:userid',
+        templateUrl: 'components/user/user.html',
         controller: 'UserCtrl'
     })
 
-    .state('user.new', {
+    .state('app.user_new', {
         url:'/user/new',
-        templateUrl: 'user/user.html',
+        templateUrl: 'components/user/user.html',
         controller: 'UserCtrl'
     });
 }])
