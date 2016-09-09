@@ -6,53 +6,49 @@ angular.module('myApp')
     console.log('RegisterCtrl');
     // $scope.account = {};
 
+    $scope.mobileRegx = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
+    $scope.emailRegx = "^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$";
+    $scope.pwdRegx = "[a-zA-Z0-9]*";
 
     // process the form
     $scope.processForm = function() {
         console.log('processForm...');
         console.log($scope.registerForm);
-        console.log('post register');
         console.log($scope.account);
 
-        //RegisterServe.query();
+        if ($scope.registerForm.$valid) {
+            var acoount = new RegisterServe($scope.account);
+            // window.acoount = acoount;
+            // console.log(acoount.$save);
+            acoount.$save({ /*params*/ }).then(function() {
+                //on success
+                console.log('注册成功');
 
-        var acoount = new RegisterServe($scope.account);
-        // var acoount = new RegisterServe({});
-        window.acoount = acoount;
-        console.log(acoount.$save);
-        acoount.$save({ /*params*/ }, function() {
-            //on success
-            console.log('注册成功');
-
-            //TODO 注册完成后进入 主页
-            //$state.go('app.home');
-        }, function() {
-            //on error
-            
-
-        });
-
-        // return false;
-
-        // $scope.formData = {};
-        // $http({
-        //         method: 'POST',
-        //         url: '/user/',
-        //         data: $.param($scope.formData), // pass in data as strings
-        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' } // set the headers so angular passing info as form data (not request payload)
-        //     })
-        //     .success(function(data) {
-        //         console.log(data);
-
-        //         if (!data.success) {
-        //             // if not successful, bind errors to error variables
-        //             $scope.errorName = data.errors.name;
-        //             $scope.errorSuperhero = data.errors.superheroAlias;
-        //         } else {
-        //             // if successful, bind success message to message
-        //             $scope.message = data.message;
-        //         }
-        //     });
+                //TODO 注册完成后进入 主页
+                //$state.go('app.home');
+            });
+        }
     };
 
 }]);
+$scope.formData = {};
+$http({
+        method: 'POST',
+        url: '/user/',
+        // pass in data as strings
+        data: $.param($scope.formData),
+        // set the headers so angular passing info as form data (not request payload)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    .success(function(data) {
+        console.log(data);
+
+        if (!data.success) {
+            // if not successful, bind errors to error variables
+            $scope.errorName = data.errors.name;
+            $scope.errorSuperhero = data.errors.superheroAlias;
+        } else {
+            // if successful, bind success message to message
+            $scope.message = data.message;
+        }
+    });
