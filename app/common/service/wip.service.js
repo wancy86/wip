@@ -1,7 +1,7 @@
 'use strict';
 
 //Back end API server name
-var ServerName = 'localhost:8000/';
+var ServerName = 'http://192.168.1.6:8000/service';
 
 angular.module('myApp')
 
@@ -27,7 +27,10 @@ angular.module('myApp')
 
 .service('UserServe', ['$resource', function($resource) {
     return $resource('data/user/:userid.json', {}, {
+        //query action:
         query: {
+            // url:'www.xx.com/xx/xx',
+            // timeout: 10000,
             method: 'GET',
             params: { userid: 'userid' },
             isArray: true
@@ -36,6 +39,7 @@ angular.module('myApp')
 }])
 
 .service('ProjectServe', ['$resource', function($resource) {
+    //$resource(url, [paramDefaults], [actions], options);
     return $resource('data/project/:projectid.json', {}, {
         query: {
             method: 'GET',
@@ -48,7 +52,7 @@ angular.module('myApp')
 }])
 
 .service('RegisterServe', ['$resource', function($resource) {
-    return $resource(ServerName + 'account/:userid', { userid: '@userid' }, {
+    return $resource(ServerName + '/account/register', { userid: '@userid' }, {
         query: {
             method: 'GET',
             params: {

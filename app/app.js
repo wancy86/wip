@@ -20,7 +20,7 @@ angular.module('myApp', [
     $stateProvider.state('app', {
         url: '/',
         templateUrl: 'app.html'
-        // controller: 'HomeCtrl'
+            // controller: 'HomeCtrl'
     })
 
     .state('app.home', {

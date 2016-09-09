@@ -1,45 +1,50 @@
 <header></header>
 <div class="col-md-4 col-md-offset-4">
+    <h1>注册</h1>
     <form name='registerForm' novalidate ng-submit="processForm()">
-        <input type="hidden" ng-model="account.id" />
+        <!-- <input type="hidden" ng-model="account.id" /> -->
         <div class="form-group">
-            <label>
-                Account
-            </label>
-            <input name="account" type="text" class="form-control" ng-model="account.account" ng-minlength="3" required ng-maxlength="10"/>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.account.$error.required">用户名不能为空</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.account.$error.minlength">最小长度为3</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.account.$error.maxlength">最大长度为10</span>
+            <div class="form-group col-md-6" style="padding-left: 0px;">
+                <input placeholder="姓" name="last_name" type="text" class="form-control" ng-model="account.last_name" ng-minlength="3" required ng-maxlength="10" />
+                <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.required">*姓不能为空</span>
+                <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.minlength">*最小长度为3</span>
+                <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.maxlength">*最大长度为10</span>
+            </div>
+            <div class="form-group col-md-6" style="padding-right: 0px;">
+                <input placeholder="名" name="first_name" type="text" class="form-control" ng-model="account.first_name" ng-minlength="3" required ng-maxlength="10" />
+                <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.required">*名不能为空</span>
+                <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.minlength">*最小长度为3</span>
+                <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.maxlength">*最大长度为10</span>
+            </div>
         </div>
         <div class="form-group">
-            <label>
-                Email address
-            </label>
-            <input name="email" type="email" class="form-control" ng-model="account.email" required/>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.required">email不能为空</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.email">email地址不合法</span>
+            <input placeholder="手机号" name="mobile" type="text" class="form-control" ng-model="account.mobile" required/>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.mobile.$error.required">*手机号不能为空</span>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.mobile.$error.mobile">*email地址不合法</span>
         </div>
         <div class="form-group">
-            <label>
-                Password
-            </label>
-            <input name="password" type="password" class="form-control" ng-model="account.password" required ng-minlength="6" ng-pattern="/\w*\d*/"/>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.required">密码不能为空</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.minlength">密码至少6为</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.pattern">至少包含一个字母，一个数字</span>
+            <input placeholder="邮箱" name="email" type="email" class="form-control" ng-model="account.email" required/>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.required">*email不能为空</span>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.email">*email地址不合法</span>
         </div>
         <div class="form-group">
+            <input placeholder="创建密码" name="password" type="password" class="form-control" ng-model="account.password" required ng-minlength="6" ng-pattern="/\w*\d*/" />
+            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.required">*密码不能为空</span>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.minlength">*密码至少6为</span>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.pattern">*至少包含一个字母，一个数字</span>
+        </div>
+        <!-- <div class="form-group">
             <label>
                 Confirm Password
             </label>
             <input name="password2" type="password" class="form-control" ng-model="account.password2" />
             <span class="error" ng-show="registerForm.$submitted && (registerForm.password.$$rawModelValue !=registerForm.password2.$$rawModelValue)">两次输入的密码不一致</span>
-        </div>
-        <button class="btn btn-success" ng-click="postRegister()">
-            Sign Up
+        </div> -->
+        <button class="btn btn-success">
+            <span class="glyphicon glyphicon-user"></span> 注册
         </button>
-        <button ui-sref='login' type="submit" class="btn btn-default">
+        <!-- <button ui-sref='login' type="submit" class="btn btn-default">
             Sign In >>
-        </button>
+        </button> -->
     </form>
 </div>
