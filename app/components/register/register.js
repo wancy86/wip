@@ -31,24 +31,4 @@ angular.module('myApp')
     };
 
 }]);
-$scope.formData = {};
-$http({
-        method: 'POST',
-        url: '/user/',
-        // pass in data as strings
-        data: $.param($scope.formData),
-        // set the headers so angular passing info as form data (not request payload)
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    })
-    .success(function(data) {
-        console.log(data);
 
-        if (!data.success) {
-            // if not successful, bind errors to error variables
-            $scope.errorName = data.errors.name;
-            $scope.errorSuperhero = data.errors.superheroAlias;
-        } else {
-            // if successful, bind success message to message
-            $scope.message = data.message;
-        }
-    });
