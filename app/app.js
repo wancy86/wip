@@ -14,6 +14,10 @@ angular.module('myApp', [
     'myApp.version'
 ])
 
+.controller('AppCtrl', ['$rootScope', function($rootScope) {
+    $rootScope.login = 0;
+}])
+
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
     // $locationProvider.hashPrefix('!');
 

@@ -2,27 +2,21 @@
 
 angular.module('myApp')
 
-.controller('HeaderCtrl', ['$scope', '$location', function($scope, $location) {
+.controller('HeaderCtrl', ['$scope', 'AccountServe', function($scope, AccountServe) {
     console.log('now in HeaderCtrl...');
-    $scope.name = "mark";
-    
-    $scope.loginPost = function() {
-        console.log('post login...');
-        // $scope.account.mobile_email
-        // $scope.account.password
-        console.log($scope.account);
-        if (0)
-            $http({
-                url: "",
-                method: "post",
-                data: $.param($scope.account),
-                headers: { "content_Type": "application/x-www-form-urlencoded;charset=utf-8" }
-            }).success(function(data) {
-                console.log('login success...');
-            });
 
+    $scope.account = {
+        user_name: "13028865078",
+        password: "123123"
     }
 
+    $scope.loginPost = function() {
+        AccountServe.login($scope.account);
+    }
+
+    $scope.logoff = function() {
+        AccountServe.logoff();
+    }
 }])
 
 .directive('header', function() {
@@ -30,6 +24,5 @@ angular.module('myApp')
         restrict: 'AE',
         scope: false,
         templateUrl: 'components/header/header.html'
-        // controller: 'HeaderCtrl'
     }
 });
