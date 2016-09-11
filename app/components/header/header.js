@@ -11,7 +11,9 @@ angular.module('myApp')
     }
 
     $scope.loginPost = function() {
-        AccountServe.login($scope.account);
+        if ($scope.loginForm.$valid) {
+            AccountServe.login($scope.account);
+        }
     }
 
     $scope.logoff = function() {
