@@ -37,7 +37,7 @@
                         </ul>
                     </li>
                 </ul>      -->
-        <form class="navbar-form navbar-right" ng-submit="loginPost()" ng-hide="login">
+        <form class="navbar-form navbar-right" ng-submit="loginPost()" ng-hide="login" >
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="手机号或邮箱" ng-model="account.user_name">
             </div>
@@ -48,7 +48,10 @@
         </form>
         <ul class="nav navbar-nav navbar-right" ng-show="login">
             <li>
-                <a href="#">{{account.user_name}}</a>
+                <a href="#">欢迎, 【{{account.user_name}}】</a>
+            </li>
+            <li>
+                <a href="#">个人中心</a>
             </li>
             <li>
                 <a href="#" ng-click="logoff()"><span calss="glyphicon glyphicon-off"></span> 退出</a>
