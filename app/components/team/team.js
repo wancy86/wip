@@ -4,12 +4,11 @@ angular.module('myApp')
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider
-
         .state('app.team_new', {
-        url: '/team/new',
-        templateUrl: 'components/team/team.html',
-        controller: 'TeamCtrl'
-    })
+            url: '/team/new',
+            templateUrl: 'components/team/team.html',
+            controller: 'TeamCtrl'
+        })
 
     .state('app.team_edit', {
         url: '/team/teamid/:teamid',
@@ -21,6 +20,21 @@ angular.module('myApp')
 .controller('TeamCtrl', ['TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log',
     function(TeamServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log) {
         console.log('now in TeamCtrl...');
+
+        if ($scope.teamlist) {
+            $scope.teamlist = [{
+                id: 123,
+                name: 'my team',
+                code: 'MAX',
+                description: 'xxxxxxxxxxxxxxxxx'
+            }, {
+                id: 123,
+                name: 'my team',
+                code: 'MAX',
+                description: 'xxxxxxxxxxxxxxxxx'
+            }];
+        }
+        
         // if (!$stateParams.teamid) {
         //     $http({
         //         method: 'GET',
@@ -41,17 +55,7 @@ angular.module('myApp')
         //     description: 'xxxxxxxxxxxxxxxxx'
         // };
 
-        $scope.teamlist = [{
-            id: 123,
-            name: 'my team',
-            code: 'MAX',
-            description: 'xxxxxxxxxxxxxxxxx'
-        }, {
-            id: 123,
-            name: 'my team',
-            code: 'MAX',
-            description: 'xxxxxxxxxxxxxxxxx'
-        }];
+
 
         $scope.postNewTeam = function() {
             console.log('post new team');
@@ -99,23 +103,23 @@ angular.module('myApp')
             });
         };
 
-        $ctrl.openComponentModal = function() {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                component: 'modalComponent',
-                resolve: {
-                    items: function() {
-                        return $ctrl.items;
-                    }
-                }
-            });
+        // $ctrl.openComponentModal = function() {
+        //     var modalInstance = $uibModal.open({
+        //         animation: true,
+        //         component: 'modalComponent',
+        //         resolve: {
+        //             items: function() {
+        //                 return $ctrl.items;
+        //             }
+        //         }
+        //     });
 
-            modalInstance.result.then(function(selectedItem) {
-                $ctrl.selected = selectedItem;
-            }, function() {
-                $log.info('modal-component dismissed at: ' + new Date());
-            });
-        };
+        //     modalInstance.result.then(function(selectedItem) {
+        //         $ctrl.selected = selectedItem;
+        //     }, function() {
+        //         $log.info('modal-component dismissed at: ' + new Date());
+        //     });
+        // };
         //end dialog
     }
 ])
@@ -138,30 +142,30 @@ angular.module('myApp')
     };
 }])
 
-// Please note that the close and dismiss bindings are from $uibModalInstance.
-.component('modalComponent', {
-    templateUrl: '/components/team/addMenber.html',
-    bindings: {
-        resolve: '<',
-        close: '&',
-        dismiss: '&'
-    },
-    controller: function() {
-        var $ctrl = this;
+// // Please note that the close and dismiss bindings are from $uibModalInstance.
+// .component('modalComponent', {
+//     templateUrl: '/components/team/addMenber.html',
+//     bindings: {
+//         resolve: '<',
+//         close: '&',
+//         dismiss: '&'
+//     },
+//     controller: function() {
+//         var $ctrl = this;
 
-        $ctrl.$onInit = function() {
-            $ctrl.items = $ctrl.resolve.items;
-            $ctrl.selected = {
-                item: $ctrl.items[0]
-            };
-        };
+//         $ctrl.$onInit = function() {
+//             $ctrl.items = $ctrl.resolve.items;
+//             $ctrl.selected = {
+//                 item: $ctrl.items[0]
+//             };
+//         };
 
-        $ctrl.ok = function() {
-            $ctrl.close({ $value: $ctrl.selected.item });
-        };
+//         $ctrl.ok = function() {
+//             $ctrl.close({ $value: $ctrl.selected.item });
+//         };
 
-        $ctrl.cancel = function() {
-            $ctrl.dismiss({ $value: 'cancel' });
-        };
-    }
-});
+//         $ctrl.cancel = function() {
+//             $ctrl.dismiss({ $value: 'cancel' });
+//         };
+//     }
+// });

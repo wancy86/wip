@@ -6,13 +6,10 @@
         <p><b>团队成员：</b><span ng-repeat="user in [10000000,20000000,30000000,40000000]" class="label label-default" style="margin-left:10px;">{{user}}</span></p>
         <p><b>团队项目：</b><span ng-repeat="project in [10011111,20011111,30011111,40011111]" class="label label-default" style="margin-left:10px;">{{project}}</span></p>
         <p>
-            <a ui-sref="#" class="btn btn-default">编辑</a>
-            <a ui-sref="#" class="btn btn-default">删除</a>
-            <a ui-sref="#" class="btn btn-default">添加成员</a>
-            <a ui-sref="#" class="btn btn-default">删除成员</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">编辑</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">删除</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">添加成员</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">删除成员</a>
         </p>
-        <div>
-            <button type="button" class="btn btn-default" ng-click="$ctrl.open()">Open me!</button>
-        </div>
     </div>
 </div>

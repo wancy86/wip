@@ -30,11 +30,6 @@ angular.module('myApp')
                     console.log('登录成功');
                     console.log(Resp);
 
-                    // $rootScope.session_id = Resp.data.session_id;
-                    // $rootScope.first_name = Resp.data.first_name;
-                    // $rootScope.last_name = Resp.data.last_name;
-                    // $rootScope.email = Resp.data.email;
-                    // $rootScope.mobile = Resp.data.mobile;
                     $rootScope.session = Resp.data;
                     console.log('$rootScope.session:' + $rootScope.session);
                     $rootScope.login = 1;
@@ -54,14 +49,33 @@ angular.module('myApp')
     }
 }])
 
-.service('TeamServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+.service('TeamServe', ['$resource', '$rootScope', '$http', function($resource, $rootScope, $http) {
+    // return {
+    //     getTeamByID: function function_name(argument) {
+    //         $http({
+    //             url: '',
+    //             method: 'post',
+    //             data: '',
+    //             headers: { 'Content-Type': 'application/x-www-form-urlendoced;charset=utf-8' }
+    //         }).then(function(resp) {
+    //             console.log(resp);
+    //         });
+    //     }
+    // }
     return $resource(ServerName + 'team', {}, {
         save: {
             method: 'POST',
             params: {
                 session_id: "$rootScope.session.session_id"
             }
-        }
+        },
+        query: {
+            method: 'GET',
+            params: {
+                session_id: "$rootScope.session.session_id"
+            },
+            isArray: true
+        },
     });
 }])
 
