@@ -1,26 +1,37 @@
 <div class="col-md-12">
-    <h3>Team Edit - {{team.id}}</h3>
+    <h3>添加团队</h3>
 </div>
 <div class="col-md-6">
-    <div class="form-group">
-        <label for="account">
-            Team Name
-        </label>
-        <input type="text" class="form-control" ng-model="team.name" />
-    </div>
-    <div class="form-group">
-        <label for="account">
-            Team Code
-        </label>
-        <input type="text" class="form-control" ng-model="team.TeamCode" />
-    </div>
-    <div class="form-group">
-        <label for="email">
-            Description
-        </label>
-        <textarea class="form-control" ng-model="team.description"></textarea>
-    </div>
-    <button type="submit" class="btn btn-default">
-        OK
-    </button>
+    <form novalidate name="newteamForm" ng-submit="postNewTeam()">
+        <div class="form-group">
+            <label for="account">
+                团队名称
+            </label>
+            <input name="team_name" required ng-maxlength="50" type="text" class="form-control" ng-model="team.name" />
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.team_name.$error.required">*请填写团队名称</span>
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.team_name.$error.maxlength">*最大长度50</span>
+        </div>
+        <div class="form-group">
+            <label for="account">
+                团队代号
+            </label>
+            <input type="text" name="code" ng-maxlength="50" newteamForm class="form-control" ng-model="team.code" />
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.code.$error.required">*请填写团队代号</span>
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.code.$error.maxlength">*最大长度50</span>
+        </div>
+        <div class="form-group">
+            <label for="email">
+                团队简介
+            </label>
+            <textarea rows="5" name="description" ng-maxlength="8000" class="form-control" ng-model="team.description"></textarea>
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.description.$error.required">*请填写团队简介</span>
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.description.$error.maxlength">*最大长度8000</span>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            保存
+        </button>
+        <a class="btn btn-default" ui-sref="app.team">
+        取消
+    </a>
+    </form>
 </div>

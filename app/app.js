@@ -18,8 +18,9 @@ angular.module('myApp', [
     $rootScope.login = 0;
 }])
 
-.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+.config(['$urlRouterProvider', '$stateProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $httpProvider) {
     // $locationProvider.hashPrefix('!');
+    // $httpProvider.defaults.withCredentials = true;
 
     $stateProvider.state('app', {
         url: '/',

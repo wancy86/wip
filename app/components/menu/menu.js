@@ -6,7 +6,8 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
     // $scope.menu = 'home';
     $scope.menuItems2 = [
         { text: '项目管理', sref: 'app.project' },
-        { text: '团队管理', sref: 'app.team' }
+        { text: '我的团队', sref: 'app.team' },
+        { text: '添加团队', sref: 'app.team_new' }
     ];
 
     $scope.menuItems1 = [

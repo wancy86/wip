@@ -1,12 +1,12 @@
 'use strict';
 
 //Back end API server name
-var ServerName = 'http://192.168.1.6:8000/service';
+var ServerName = 'http://192.168.1.6:8000/service/';
 
 angular.module('myApp')
 
 .service('RegisterServe', ['$resource', function($resource) {
-    return $resource(ServerName + '/account/register', { userid: '@userid' }, {
+    return $resource(ServerName + 'account/register', { userid: '@userid' }, {
         query: {
             method: 'GET',
             params: {
@@ -17,21 +17,34 @@ angular.module('myApp')
     });
 }])
 
-.service('AccountServe', ['$http', '$rootScope','$state', function($http, $rootScope,$state) {
+.service('AccountServe', ['$http', '$rootScope', '$state', function($http, $rootScope, $state) {
     return {
         login: function(account) {
             $http({
-                url: ServerName + '/account/login',
+                url: ServerName + 'account/login',
                 method: "post",
                 data: $.param(account),
                 headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" }
-            }).success(function(data) {                
-                console.log('登录成功');
-                console.log(data);
+            }).success(function(Resp) {
+                if (Resp.code == "50000") {
+                    console.log('登录成功');
+                    console.log(Resp);
 
-                $rootScope.login = 1;
-                //set cookie
-                $state.go('app.home');
+                    // $rootScope.session_id = Resp.data.session_id;
+                    // $rootScope.first_name = Resp.data.first_name;
+                    // $rootScope.last_name = Resp.data.last_name;
+                    // $rootScope.email = Resp.data.email;
+                    // $rootScope.mobile = Resp.data.mobile;
+                    $rootScope.session = Resp.data;
+                    console.log('$rootScope.session:' + $rootScope.session);
+                    $rootScope.login = 1;
+
+                    //set cookie
+                    $state.go('app.home');
+                } else {
+                    console.log(Resp.msg);
+                }
+
             });
         },
         logoff: function() {
@@ -40,6 +53,18 @@ angular.module('myApp')
         }
     }
 }])
+
+.service('TeamServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'team', {}, {
+        save: {
+            method: 'POST',
+            params: {
+                session_id: "$rootScope.session.session_id"
+            }
+        }
+    });
+}])
+
 
 .factory('TasksServe', ['$resource', function($resource) {
     return $resource('/data/task/tasks.json', {}, {
@@ -81,18 +106,6 @@ angular.module('myApp')
             method: 'GET',
             params: {
                 projectid: 'projectid'
-            },
-            isArray: true
-        }
-    });
-}])
-
-.service('TeamServe', ['$resource', function($resource) {
-    return $resource(ServerName + 'team/:teamid', { teamid: '@teamid' }, {
-        query: {
-            method: 'GET',
-            params: {
-                teamid: 'teamid'
             },
             isArray: true
         }
