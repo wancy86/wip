@@ -50,35 +50,19 @@ angular.module('myApp')
 }])
 
 .service('TeamServe', ['$resource', '$rootScope', '$http', function($resource, $rootScope, $http) {
-    // return {
-    //     getTeamByID: function function_name(argument) {
-    //         $http({
-    //             url: '',
-    //             method: 'post',
-    //             data: '',
-    //             headers: { 'Content-Type': 'application/x-www-form-urlendoced;charset=utf-8' }
-    //         }).then(function(resp) {
-    //             console.log(resp);
-    //         });
-    //     }
-    // }
     return $resource(ServerName + 'team', {}, {
-        save: {
-            method: 'POST',
-            params: {
-                session_id: "$rootScope.session.session_id"
-            }
-        },
         query: {
             method: 'GET',
             params: {
-                session_id: "$rootScope.session.session_id"
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
             },
-            isArray: true
-        },
+            cache: false,
+            isArray: false
+        }
     });
 }])
-
 
 .factory('TasksServe', ['$resource', function($resource) {
     return $resource('/data/task/tasks.json', {}, {

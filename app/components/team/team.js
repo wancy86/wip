@@ -5,76 +5,73 @@ angular.module('myApp')
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider
         .state('app.team_new', {
-            url: '/team/new',
+            url: 'team/new',
             templateUrl: 'components/team/team.html',
             controller: 'TeamCtrl'
         })
 
     .state('app.team_edit', {
-        url: '/team/teamid/:teamid',
+        url: 'team/id/:teamid',
         templateUrl: 'components/team/team.html',
         controller: 'TeamCtrl'
+            // params: {
+            //     teamid: { value: 0 }
+            // }
     });
 }])
 
-.controller('TeamCtrl', ['TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log',
-    function(TeamServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log) {
+.controller('TeamCtrl', ['TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log', '$filter', '$state',
+    function(TeamServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log, $filter, $state) {
         console.log('now in TeamCtrl...');
-
-        if ($scope.teamlist) {
-            $scope.teamlist = [{
-                id: 123,
-                name: 'my team',
-                code: 'MAX',
-                description: 'xxxxxxxxxxxxxxxxx'
-            }, {
-                id: 123,
-                name: 'my team',
-                code: 'MAX',
-                description: 'xxxxxxxxxxxxxxxxx'
-            }];
+        //显示列表
+        if (!$stateParams.teamid) {
+            TeamServe.query(function(resp) {
+                console.log(resp);
+                if (resp.code == '50000') {
+                    $scope.teamlist = resp.data.teams;
+                    $scope.userlist = resp.data.users;
+                }
+            });
+        } else {
+            // 单个编辑
+            TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
+                console.log(resp);
+                $scope.team = resp.data.teams[0];
+                console.log($scope.team);
+            });
         }
-        
-        // if (!$stateParams.teamid) {
-        //     $http({
-        //         method: 'GET',
-        //         url: 'data/team/teams.json'
-        //     }).then(function(resp) {
-        //         $scope.teamlist = resp.data;
-        //         console.log(resp.data);
-        //     });
-        // } else {
-        //     $scope.team = TeamServe.get({ teamid: $stateParams.teamid }, function(data) {
-        //         console.log(data);
-        //     });
-        // }
-        // $scope.team = {
-        //     id: 123,
-        //     name: 'my team',
-        //     code: 'MAX',
-        //     description: 'xxxxxxxxxxxxxxxxx'
-        // };
 
-
-
-        $scope.postNewTeam = function() {
+        //添加/编辑团队
+        $scope.saveTeam = function() {
             console.log('post new team');
             if ($scope.newteamForm.$valid) {
                 console.log('save...');
                 console.log($rootScope.session);
                 console.log('$rootScope.session.session_id:' + $rootScope.session.session_id);
-                // $scope.team.session_id = $rootScope.session.session_id;
 
                 var teamResource = new TeamServe($scope.team);
                 console.log(teamResource);
-                teamResource.$save(function(data) {
+                teamResource.$save({ session_id: $rootScope.session.session_id }, function(data) {
                     console.log(data);
-                    console.log('添加团队成功');
+                    console.log('添加/编辑团队成功');
                 }, function() {
-                    console.log('添加团队失败');
+                    console.log('添加/编辑团队失败');
                 })
             }
-        }
+        };
+
+        //删除团队
+        $scope.deleteTeam = function(team_id) {
+            console.log('删除团队...');
+            var teamResource = new TeamServe($scope.team);
+            teamResource.remove({ session_id: $rootScope.session.session_id }, function(resp) {
+                console.log(resp);
+                console.log('删除成功');
+
+                //本地数据移除删除掉的team
+                $scope.teamlist = $filter('filter', $scope.teamlist, { id: '!' + team_id });
+            });
+        };
 
         //dialog代码
         var $ctrl = this;
