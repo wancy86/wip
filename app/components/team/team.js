@@ -25,6 +25,7 @@ angular.module('myApp')
         console.log('now in TeamCtrl...');
         //显示列表
         if (!$stateParams.teamid) {
+            console.log('get team list...');
             TeamServe.query(function(resp) {
                 console.log(resp);
                 if (resp.code == '50000') {
@@ -54,6 +55,7 @@ angular.module('myApp')
                 teamResource.$save({ session_id: $rootScope.session.session_id }, function(data) {
                     console.log(data);
                     console.log('添加/编辑团队成功');
+                    $state.go('app.team');
                 }, function() {
                     console.log('添加/编辑团队失败');
                 })
@@ -64,12 +66,12 @@ angular.module('myApp')
         $scope.deleteTeam = function(team_id) {
             console.log('删除团队...');
             var teamResource = new TeamServe($scope.team);
-            teamResource.remove({ session_id: $rootScope.session.session_id }, function(resp) {
+            teamResource.$remove({ session_id: $rootScope.session.session_id, id: team_id }, function(resp) {
                 console.log(resp);
                 console.log('删除成功');
 
                 //本地数据移除删除掉的team
-                $scope.teamlist = $filter('filter', $scope.teamlist, { id: '!' + team_id });
+                $scope.teamlist = $filter('filter')($scope.teamlist, { id: '!' + team_id });
             });
         };
 
