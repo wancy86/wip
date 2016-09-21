@@ -1,51 +1,45 @@
 <div>
-<div class="list-group">
-    <div class="list-group-item active">
-        <a ui-sref="app.home">
-            <p style="color:#FFF">常用功能</p>
-        </a>
+    <div class="list-group">
+        <div class="list-group-item active">
+            <a ui-sref="app.home">
+                <p style="color:#FFF">常用功能</p>
+            </a>
+        </div>
+        <div ng-repeat="item in menuItems1" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
+            <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
+                <p><span ng-class="item.icon"></span> {{item.text}}</p>
+            </a>
+        </div>
     </div>
-    <div ng-repeat="item in menuItems1" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
-        <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
-            <p>{{item.text}}</p>
-        </a>
-    </div> 
-</div>
-
-<div class="list-group">
-    <div class="list-group-item active">
-        <a ui-sref="app.home">
-            <p style="color:#FFF">基本功能</p>
-        </a>
+    <div class="list-group">
+        <div class="list-group-item active">
+            <a ui-sref="app.home">
+                <p style="color:#FFF">基本功能</p>
+            </a>
+        </div>
+        <div ng-repeat="item in menuItems2" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
+            <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
+                <p><span ng-class="item.icon"></span> {{item.text}}</p>
+            </a>
+        </div>
     </div>
-    <div ng-repeat="item in menuItems2" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
-        <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
-            <p>{{item.text}}</p>
-        </a>
-    </div> 
+<!--     <div class="list-group">
+        <div class="list-group-item active">
+            <a ui-sref="app.home">
+                <p style="color:#FFF">基本功能</p>
+            </a>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Dropdown
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+        </div>
+    </div> -->
 </div>
-
-<div class="list-group">
-    <div class="list-group-item active">
-        <a ui-sref="app.home">
-            <p style="color:#FFF">基本功能</p>
-        </a>
-    </div>
-    <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-    Dropdown
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-  </ul>
-</div>
-
-</div>
-</div>
-
-
-

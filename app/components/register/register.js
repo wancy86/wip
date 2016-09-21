@@ -25,7 +25,7 @@ angular.module('myApp')
                 console.log('注册成功');
 
                 //TODO 注册完成后进入 主页
-                //$state.go('app.home');
+                $state.go('app.home');
             });
         }
     };

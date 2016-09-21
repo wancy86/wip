@@ -1,15 +1,21 @@
+<div class="col-md-12">
+    <h3>我的团队</h3>
+</div>
 <div ng-controller="TeamCtrl as $ctrl">
-    <div class="col-md-12" style="border:1px solid #ccc;margin-bottom:20px;" ng-repeat="t in teamlist">
+    <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;" ng-repeat="t in teamlist">
         <p><b>团队名称：</b>{{t.name}}</p>
         <p><b>团队代码：</b>{{t.code}}</p>
         <p><b>团队简介：</b>{{t.description}}</p>
         <p><b>团队成员：</b><span ng-repeat="user in userlist | filter:{team:t.id}" class="label label-default" style="margin-left:10px;">{{user.last_name + ' ' + user.first_name}}</span></p>
         <p><b>团队项目：</b><span ng-repeat="project in [10011111,20011111,30011111,40011111]" class="label label-default" style="margin-left:10px;">{{project}}</span></p>
         <p>
-            <a ui-sref="app.team_edit({teamid:t.id})" class="btn btn-default">编辑</a>
-            <a ng-click="deleteTeam(t.id)" class="btn btn-default">删除</a>
-            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">添加成员</a>
-            <a href="javascript:void(0)" ng-click="$ctrl.open()" class="btn btn-default">删除成员</a>
+            <a ui-sref="app.team_edit({teamid:t.id})" class="btn btn-success">编辑</a>
+            <a ng-click="deleteTeam(t.id)" class="btn btn-danger">删除</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.openAddMember(t.id)" class="btn btn-info">添加成员</a>
+            <a href="javascript:void(0)" ng-click="$ctrl.openRemoveMember(t.id)" class="btn btn-warning">删除成员</a>
         </p>
+    </div>
+    <div ng-show="teamlist.length==0">
+        <h4>你还没有创建任何团队</h4>
     </div>
 </div>

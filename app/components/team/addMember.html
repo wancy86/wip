@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">添加成员</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-inline">
+        <div class="form-group col-md-6" style="padding-left: 0px;">
+            <input class="form-control" type="text" ng-model="mobile_email" name="mobile_email" placeholder="手机号或邮箱" />
+        </div>
+        <div class="form-group">
+            <button class="form-control" ng-click="searchUser(mobile_email)"><span class="glyphicon glyphicon-search"></span> 搜索</butotn>
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed" style="margin-top: 10px;">
+        <tr ng-repeat="user in searchUsers">
+            <td>{{$index+1}}</td>
+            <td>{{user.last_name}} {{user.first_name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.mobile}}</td>
+            <td style="padding:0px;">
+                <select style="height:33px;border: 0px;" ng-model="searchUsers[$index].team_role_type_code">
+                    <option value="M">Manager</option>
+                    <option value="T">Teamleader</option>
+                    <option value="N">Normal</option>
+                </select>
+            </td>
+            <td>
+                <input type="checkbox" ng-model="searchUsers[$index].selected" ng-change="selectUser('add')" />
+            </td>
+        </tr>
+    </table>
+    <p class="error" ng-show="addMenberInvalid">*请选择要添加的成员</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="postAddMembers();">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="closeAddMemberDialog()">取消</button>
+</div>

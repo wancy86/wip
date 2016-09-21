@@ -25,3 +25,7 @@
 .error{
     color:#f44336;
 }
+
+.box{
+    box-shadow: 5px 5px 2px #888;
+}

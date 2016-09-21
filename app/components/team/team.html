@@ -1,5 +1,6 @@
 <div class="col-md-12">
-    <h3>添加团队</h3>
+    <h3 ng-show="team.id">编辑项目</h3>
+    <h3 ng-hide="team.id">添加项目</h3>
 </div>
 <div class="col-md-6">
     <form novalidate name="newteamForm" ng-submit="saveTeam()">
@@ -15,7 +16,7 @@
             <label for="account">
                 团队代号
             </label>
-            <input type="text" name="code" ng-maxlength="50" newteamForm class="form-control" ng-model="team.code" />
+            <input type="text" name="code" ng-maxlength="50" required class="form-control" ng-model="team.code" />
             <span class="error" ng-show="newteamForm.$submitted && newteamForm.code.$error.required">*请填写团队代号</span>
             <span class="error" ng-show="newteamForm.$submitted && newteamForm.code.$error.maxlength">*最大长度50</span>
         </div>
@@ -23,9 +24,9 @@
             <label for="email">
                 团队简介
             </label>
-            <textarea rows="5" name="description" ng-maxlength="8000" class="form-control" ng-model="team.description"></textarea>
+            <textarea rows="6" name="description" ng-maxlength="2000" class="form-control" ng-model="team.description"></textarea>
             <span class="error" ng-show="newteamForm.$submitted && newteamForm.description.$error.required">*请填写团队简介</span>
-            <span class="error" ng-show="newteamForm.$submitted && newteamForm.description.$error.maxlength">*最大长度8000</span>
+            <span class="error" ng-show="newteamForm.$submitted && newteamForm.description.$error.maxlength">*最大长度2000</span>
         </div>
         <button type="submit" class="btn btn-primary">
             保存

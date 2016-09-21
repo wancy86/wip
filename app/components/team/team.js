@@ -14,18 +14,13 @@ angular.module('myApp')
         url: 'team/id/:teamid',
         templateUrl: 'components/team/team.html',
         controller: 'TeamCtrl'
-            // params: {
-            //     teamid: { value: 0 }
-            // }
     });
 }])
 
-.controller('TeamCtrl', ['TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log', '$filter', '$state',
-    function(TeamServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log, $filter, $state) {
+.controller('TeamCtrl', ['TeamServe', 'TeamMemberServe', 'UserServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log', '$filter', '$state',
+    function(TeamServe, TeamMemberServe, UserServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log, $filter, $state) {
         console.log('now in TeamCtrl...');
-        //显示列表
-        if (!$stateParams.teamid) {
-            console.log('get team list...');
+        $scope.updateTeamUserList = function() {
             TeamServe.query(function(resp) {
                 console.log(resp);
                 if (resp.code == '50000') {
@@ -33,6 +28,11 @@ angular.module('myApp')
                     $scope.userlist = resp.data.users;
                 }
             });
+        };
+        //显示列表
+        if (!$stateParams.teamid) {
+            console.log('get team list...');
+            $scope.updateTeamUserList();
         } else {
             // 单个编辑
             TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
@@ -75,19 +75,18 @@ angular.module('myApp')
             });
         };
 
-        //dialog代码
+        //添加成员dialog代码
         var $ctrl = this;
-        $ctrl.items = ['item1', 'item2', 'item3'];
-
-        $ctrl.open = function(size) {
-            var modalInstance = $uibModal.open({
+        $ctrl.openAddMember = function(teamid) {
+            $scope.selected_teamid = teamid;
+            $scope.addmodalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: '/components/team/addMenber.html',
+                templateUrl: '/components/team/addMember.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: '$ctrl',
-                size: size,
+                scope: $scope,
                 resolve: {
                     items: function() {
                         return $ctrl.items;
@@ -95,76 +94,132 @@ angular.module('myApp')
                 }
             });
 
-            modalInstance.result.then(function(selectedItem) {
-                $ctrl.selected = selectedItem;
+            console.log($scope.addmodalInstance);
+            $scope.closeAddMemberDialog = function() {
+                $scope.addmodalInstance.dismiss();
+            }
+
+        };
+
+        $ctrl.openRemoveMember = function(teamid) {
+            $scope.selected_teamid = teamid;
+            $scope.teamMembers = $filter('filter')($scope.userlist, { team: teamid });
+            console.log($scope.teamMembers);
+
+            $scope.delmodalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: '/components/team/removeMember.html',
+                controller: 'ModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                scope: $scope,
+                resolve: {
+                    items: function() {
+                        return $ctrl.items;
+                    }
+                }
+            });
+
+            console.log($scope.delmodalInstance);
+            $scope.closeRemoveMemberDialog = function() {
+                $scope.delmodalInstance.dismiss();
+            }
+        };
+
+        // test
+        // $scope.mobile_email = '13028865078';
+
+        $scope.searchUser = function(mobile_email) {
+            console.log('search user by email or mobile...');
+            console.log(mobile_email);
+            $scope.addMenberInvalid = 0;
+            UserServe.query({ mobile_or_email: mobile_email }, function(resp) {
+                $scope.searchUsers = resp.data;
+                angular.forEach($scope.searchUsers, function(user, key) {
+                    user.team_role_type_code = 'N'; /*设置默认值*/
+                });
             }, function() {
-                $log.info('Modal dismissed at: ' + new Date());
+                console.log('user search error...');
             });
         };
 
-        // $ctrl.openComponentModal = function() {
-        //     var modalInstance = $uibModal.open({
-        //         animation: true,
-        //         component: 'modalComponent',
-        //         resolve: {
-        //             items: function() {
-        //                 return $ctrl.items;
-        //             }
-        //         }
-        //     });
+        //check user on screen
+        $scope.selectUser = function(type, selectedUsers) {
+            var selectedUsers;
+            if (type == 'add')
+                selectedUsers = selectedUsers || $filter('filter')($scope.searchUsers, { selected: true });
+            else if (type == 'del')
+                selectedUsers = selectedUsers || $filter('filter')($scope.teamMembers, { selected: true });
 
-        //     modalInstance.result.then(function(selectedItem) {
-        //         $ctrl.selected = selectedItem;
-        //     }, function() {
-        //         $log.info('modal-component dismissed at: ' + new Date());
-        //     });
-        // };
-        //end dialog
+            if (selectedUsers.length == 0) {
+                $scope.addMenberInvalid = 1;
+            } else {
+                $scope.addMenberInvalid = 0;
+            }
+            return $scope.addMenberInvalid;
+        };
+
+        $scope.postAddMembers = function() {
+            console.log('selected users:');
+            var selectedUsers = $filter('filter')($scope.searchUsers, { selected: true });
+            console.log(selectedUsers);
+            if ($scope.selectUser('add', selectedUsers)) {
+                return false;
+            }
+
+            var params = {
+                session_id: $rootScope.session.session_id,
+                team_id: $scope.selected_teamid,
+                user_id: '',
+                team_role_type_code: 'N' /*T M N*/
+            }
+
+            //TODO 后端支持后可以一次提交多个
+            angular.forEach(selectedUsers, function(user, key) {
+                params.user_id = user.id;
+                params.team_role_type_code = user.team_role_type_code;
+                console.log(params);
+                TeamMemberServe.save(params, function(resp) {
+                    console.log(resp.msg);
+                    $scope.updateTeamUserList();
+                });
+            });
+            $scope.searchUsers = [];
+            $scope.closeAddMemberDialog();
+        };
+
+        $scope.postRemoveMembers = function() {
+            var selectedUsers = $filter('filter')($scope.teamMembers, { selected: true });
+            console.log('selected users:');
+            console.log(selectedUsers);
+            if ($scope.selectUser('del', selectedUsers)) {
+                return false;
+            }
+
+            var params = {
+                session_id: $rootScope.session.session_id,
+                team_id: $scope.selected_teamid,
+                user_id: ''
+            }
+
+            //TODO 后端支持后可以一次提交多个
+            angular.forEach(selectedUsers, function(user, key) {
+                params.user_id = user.id;
+                console.log(params);
+                TeamMemberServe.delete(params, function(resp) {
+                    console.log(resp.msg);
+                    $scope.updateTeamUserList();
+                });
+            });
+            $scope.teamMembers = [];
+            $scope.closeRemoveMemberDialog();
+        };
     }
 ])
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
-.controller('ModalInstanceCtrl', ['$uibModalInstance', 'items', function($uibModalInstance, items) {
+.controller('ModalInstanceCtrl', ['$uibModalInstance', function($uibModalInstance) {
     var $ctrl = this;
-    $ctrl.items = items;
-    $ctrl.selected = {
-        item: $ctrl.items[0]
-    };
-
-    $ctrl.ok = function() {
-        $uibModalInstance.close($ctrl.selected.item);
-    };
-
-    $ctrl.cancel = function() {
-        $uibModalInstance.dismiss('cancel');
-    };
 }])
-
-// // Please note that the close and dismiss bindings are from $uibModalInstance.
-// .component('modalComponent', {
-//     templateUrl: '/components/team/addMenber.html',
-//     bindings: {
-//         resolve: '<',
-//         close: '&',
-//         dismiss: '&'
-//     },
-//     controller: function() {
-//         var $ctrl = this;
-
-//         $ctrl.$onInit = function() {
-//             $ctrl.items = $ctrl.resolve.items;
-//             $ctrl.selected = {
-//                 item: $ctrl.items[0]
-//             };
-//         };
-
-//         $ctrl.ok = function() {
-//             $ctrl.close({ $value: $ctrl.selected.item });
-//         };
-
-//         $ctrl.cancel = function() {
-//             $ctrl.dismiss({ $value: 'cancel' });
-//         };
-//     }
-// });

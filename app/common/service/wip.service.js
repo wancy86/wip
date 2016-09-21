@@ -35,7 +35,7 @@ angular.module('myApp')
                     $rootScope.login = 1;
 
                     //set cookie
-                    $state.go('app.home');
+                    $state.go('app.project');
                 } else {
                     console.log(Resp.msg);
                 }
@@ -64,6 +64,49 @@ angular.module('myApp')
     });
 }])
 
+.service('UserServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'user', {}, {
+        query: {
+            method: 'GET',
+            isArray: false,
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+        }
+    });
+}])
+
+.service('TeamMemberServe', ['$resource', '$rootScope', '$http', function($resource, $rootScope, $http) {
+    return $resource(ServerName + 'team_member', {}, {
+        query: {
+            method: 'GET',
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+            cache: false,
+            isArray: false
+        }
+    });
+}])
+
+.service('ProjectServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'project', {}, {
+        query: {
+            method: 'GET',
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+            isArray: false
+        }
+    });
+}])
+
 .factory('TasksServe', ['$resource', function($resource) {
     return $resource('/data/task/tasks.json', {}, {
         query: {
@@ -79,32 +122,6 @@ angular.module('myApp')
         query: {
             method: 'GET',
             params: { taskid: 'taskid' },
-            isArray: true
-        }
-    });
-}])
-
-.service('UserServe', ['$resource', function($resource) {
-    return $resource('data/user/:userid.json', {}, {
-        //query action:
-        query: {
-            // url:'www.xx.com/xx/xx',
-            // timeout: 10000,
-            method: 'GET',
-            params: { userid: 'userid' },
-            isArray: true
-        }
-    });
-}])
-
-.service('ProjectServe', ['$resource', function($resource) {
-    //$resource(url, [paramDefaults], [actions], options);
-    return $resource('data/project/:projectid.json', {}, {
-        query: {
-            method: 'GET',
-            params: {
-                projectid: 'projectid'
-            },
             isArray: true
         }
     });
