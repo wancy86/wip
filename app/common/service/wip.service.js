@@ -107,22 +107,16 @@ angular.module('myApp')
     });
 }])
 
-.factory('TasksServe', ['$resource', function($resource) {
-    return $resource('/data/task/tasks.json', {}, {
+.factory('TaskServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'item', {}, {
         query: {
             method: 'GET',
-            // params: { taskid: 'taskid' },
-            isArray: true
-        }
-    });
-}])
-
-.factory('TaskServe', ['$resource', function($resource) {
-    return $resource('/data/task/:taskid.json', {}, {
-        query: {
-            method: 'GET',
-            params: { taskid: 'taskid' },
-            isArray: true
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+            isArray: false
         }
     });
 }])

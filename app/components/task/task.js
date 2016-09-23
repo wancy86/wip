@@ -17,7 +17,7 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$stateParams', 'TaskServe', '$state', '$window', function($scope, $stateParams, TaskServe, $state, $window) {
+.controller('TaskCtrl', ['$scope', '$rootScope', '$stateParams', 'TaskServe', '$state', '$window', function($scope, $rootScope, $stateParams, TaskServe, $state, $window) {
     console.log('now in TaskCtrl...');
 
     $scope.showLog = false;
@@ -28,25 +28,29 @@ angular.module('myApp')
         $scope.taskQuery = {
             id: '',
             name: 'xxx',
-            projectCode: 'OIC',
-            status: 'QA',
-            user: 'Mark'
-        }
+            description: 'xxx',
+            estimated_time: 'xxx',
+            project_id: 'xxx',
+            developer_id: 'xxx',
+            tester_id: 'xxx'
+        };
     }
 
     if ($stateParams.taskid) {
         //get task by id
         TaskServe.get({ session_id: $rootScope.session.session_id, task_id: $stateParams.taskid }, function(resp) {
             if (resp.code == '50000') {
-                // $scope.task = resp.data;
-                $scope.task = [{
-                    id: 'xxxxxxx',
-                    projectCode: 'xxxxxxx',
-                    user: 'xxxxxxx',
-                    title: 'xxxxxxx',
-                    status: 'xxxxxxx',
-                    entry_date: 'xxxxxxx'
-                }];
+                console.log(resp);
+                $scope.task = resp.data;
+                // $scope.task = [{
+                //     id: '',
+                //     name: 'xxx',
+                //     description: 'xxx',
+                //     estimated_time: 'xxx',
+                //     project_id: 'xxx',
+                //     developer_id: 'xxx',
+                //     tester_id: 'xxx'
+                // }];
             } else {
                 console.log(resp.msg);
             }
@@ -55,15 +59,8 @@ angular.module('myApp')
         //get all task by default search task query
         TaskServe.query({}, function(resp) {
             if (resp.code == '50000') {
-                // $scope.searched_tasks = resp.data;
-                $scope.searched_tasks = [{
-                    id: 'xxxxxxx',
-                    projectCode: 'xxxxxxx',
-                    user: 'xxxxxxx',
-                    title: 'xxxxxxx',
-                    status: 'xxxxxxx',
-                    entry_date: 'xxxxxxx'
-                }];
+                console.log(resp);
+                $scope.searched_tasks = resp.data;
             } else {
                 console.log(resp.msg);
             }
@@ -71,33 +68,13 @@ angular.module('myApp')
         });
     }
 
-    // //tabs
-    // $scope.tabs = [
-    //     { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
-    //     { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
-    // ];
-
-    // $scope.model = {
-    //     name: 'Tabs'
-    // };
-    // //end test
-
     $scope.tabClick = function(tab) {
-        // console.log(tab);
-        // console.log($state.current.name);
-
-        // console.log($scope.showLog);
-
         switch (tab) {
             case 'comment':
                 $scope.showLog = false;
-                // console.log('showLog:');
-                // console.log($scope.showLog);
                 break;
             case 'log':
                 $scope.showComment = false;
-                // console.log('showComment:');
-                // console.log($scope.showComment);
                 break;
             case 'attachment':
                 $scope.showLog = false;
@@ -124,6 +101,18 @@ angular.module('myApp')
 
     $scope.saveTask = function() {
         console.log('save task.0..');
+        if ($scope.newTaskForm.$valid) {
+            var taskServer = new TaskServe(task);
+            taskServer.$save({ session_id: $rootScope.session.session_id }, function(resp) {
+                console.log(resp);
+                if (resp.code == '50000') {
+                    console.log(rep.msg);
+                    $state.go('app.task');
+                } else {
+                    alert(resp.msg);
+                }
+            });
+        }
     };
 
     // 搜索的结果

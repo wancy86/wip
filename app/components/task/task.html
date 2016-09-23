@@ -7,7 +7,7 @@
         <label for="password">
             选择项目
         </label>
-        <select class="form-control" ng-model="task.projectCode">
+        <select class="form-control" ng-model="task.project_id">
             <option value="OIC">OIC</option>
             <option value="LIS">LIS</option>
         </select>
@@ -22,7 +22,7 @@
         <label for="email">
             选择开发人员
         </label>
-        <select class="form-control" ng-model="task.developer">
+        <select class="form-control" ng-model="task.developer_id">
             <option>1</option>
             <option>2</option>
         </select>
@@ -31,7 +31,7 @@
         <label for="password">
             选择测试人员
         </label>
-        <select class="form-control" ng-model="task.QA">
+        <select class="form-control" ng-model="task.tester_id">
             <option>1</option>
             <option>2</option>
         </select>
@@ -41,7 +41,7 @@
             预估时间
         </label>
         <div class="input-group">
-            <input type="text" class="form-control" ng-model="task.time" />
+            <input type="text" class="form-control" ng-model="task.estimated_time" />
             <span class="input-group-addon">分钟</span>
         </div>
     </div>
@@ -54,6 +54,7 @@
         <a ui-sref="app.task" class="btn btn-default">取消</a>
     </div>
 </form>
+<!-- 编辑项目 日志、评论 -->
 <div class="col-md-12" ng-show="task.id">
     <uib-tabset active="active">
         <uib-tab index="0" heading="评论" select="tabClick('comment')">
