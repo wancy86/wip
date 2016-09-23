@@ -34,12 +34,6 @@ angular.module('myApp', [
         controller: 'HomeCtrl'
     })
 
-    .state('app.taskdetail', {
-        url: 'task/taskid/:taskid',
-        templateUrl: 'components/task/task.html',
-        controller: 'TaskCtrl'
-    })
-
     .state('register', {
         url: '/register',
         templateUrl: 'components/register/register.html',
@@ -59,7 +53,7 @@ angular.module('myApp', [
     })
 
     .state('app.project', {
-        url: 'project',
+        url: 'project/list',
         templateUrl: 'components/project/projectlist.html',
         controller: 'ProjectCtrl'
     })
@@ -71,7 +65,7 @@ angular.module('myApp', [
     })
 
     .state('app.task', {
-        url: 'task',
+        url: 'task/list',
         templateUrl: 'components/task/tasklist.html',
         controller: 'TaskCtrl'
     })

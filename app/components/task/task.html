@@ -54,7 +54,7 @@
         <a ui-sref="app.task" class="btn btn-default">取消</a>
     </div>
 </form>
-<div class="col-md-12" ng-show="!task.id">
+<div class="col-md-12" ng-show="task.id">
     <uib-tabset active="active">
         <uib-tab index="0" heading="评论" select="tabClick('comment')">
             <a ng-click="newSubItem('comment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加评论</a>

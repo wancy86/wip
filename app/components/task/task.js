@@ -4,7 +4,7 @@ angular.module('myApp')
 
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
     $stateProvider.state('app.task_new', {
-        url: 'task',
+        url: 'task/new',
         templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
     })

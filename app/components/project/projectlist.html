@@ -3,13 +3,13 @@
 </div>
 <div ng-controller="ProjectCtrl as $ctrl">
     <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;" ng-repeat="t in projectList">
-        <p><b>项目名称：</b>{{t.name}}</p>
-        <p><b>团队简介：</b>{{t.description}}</p>
+        <p><b>项目名称：</b>{{t.project.name}}</p>
+        <p><b>团队简介：</b>{{t.project.description}}</p>
         <p>
-            <a ui-sref="app.project_edit({project_id:t.id})" class="btn btn-success">编辑</a>
-            <a ng-click="deleteproject(t.id)" class="btn btn-danger">删除</a>
-            <a ui-sref="app.task_new({project_id:t.id})" class="btn btn-info">添加任务</a>
-            <!-- <a ui-sref="app.task_new({project_id:t.id})" class="btn btn-info">所有任务</a> -->
+            <a ui-sref="app.project_edit({project_id:t.project.id})" class="btn btn-success">编辑</a>
+            <a ng-click="deleteProject(t.project.id)" class="btn btn-danger">删除</a>
+            <a ui-sref="app.task_new({project_id:t.project.id})" class="btn btn-info">添加任务</a>
+            <!-- <a ui-sref="app.task_new({project_id:t.project.id})" class="btn btn-info">所有任务</a> -->
         </p>
     </div>
     <div ng-show="projectList.length==0">
