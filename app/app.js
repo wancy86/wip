@@ -70,6 +70,12 @@ angular.module('myApp', [
         controller: 'TeamCtrl'
     })
 
+    .state('app.task', {
+        url: 'task',
+        templateUrl: 'components/task/tasklist.html',
+        controller: 'TaskCtrl'
+    })
+
     .state('app.log', {
         url: 'log',
         templateUrl: 'components/log/log.html',

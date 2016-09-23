@@ -1,63 +1,63 @@
-<h3 class="col-md-12">New / Edit Task -{{task.id}}</h3>
-<div class="form-group col-md-4">
-    <label for="password">
-        Project
-    </label>
-    <select class="form-control" ng-model="task.projectCode">
-        <option value="OIC">OIC</option>
-        <option value="LIS">LIS</option>
-    </select>
-</div>
-<div class="form-group col-md-4">
-    <label for="account">
-        Name
-    </label>
-    <input type="text" class="form-control" ng-model="task.name" />
-</div>
-<div class="form-group col-md-4">
-    <label for="email">
-        Report To
-    </label>
-    <select class="form-control" ng-model="task.reportTo">
-        <option>1</option>
-        <option>2</option>
-    </select>
-</div>
-<div class="form-group col-md-4">
-    <label for="password">
-        Developer
-    </label>
-    <select class="form-control" ng-model="task.developer">
-        <option>1</option>
-        <option>2</option>
-    </select>
-</div>
-<div class="form-group col-md-4">
-    <label for="password">
-        Code Reviewer
-    </label>
-    <select class="form-control" ng-model="task.codeReviewer">
-        <option>1</option>
-        <option>2</option>
-    </select>
-</div>
-<div class="form-group col-md-4">
-    <label for="password">
-        QA
-    </label>
-    <select class="form-control" ng-model="task.QA">
-        <option>1</option>
-        <option>2</option>
-    </select>
-</div>
-<div class="form-group col-md-12">
-    <label></label>
-    <textarea class="form-control" ng-model="task.description" rows="3"></textarea>
-</div>
 <div class="col-md-12">
+    <h3 ng-show="task.id">编辑任务</h3>
+    <h3 ng-hide="task.id">添加任务</h3>
+</div>
+<form novalidate name="newTaskForm" ng-submit="saveTask()">
+    <div class="form-group col-md-6">
+        <label for="password">
+            选择项目
+        </label>
+        <select class="form-control" ng-model="task.projectCode">
+            <option value="OIC">OIC</option>
+            <option value="LIS">LIS</option>
+        </select>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="account">
+            标题
+        </label>
+        <input type="text" class="form-control" ng-model="task.name" />
+    </div>
+    <div class="form-group col-md-6">
+        <label for="email">
+            选择开发人员
+        </label>
+        <select class="form-control" ng-model="task.developer">
+            <option>1</option>
+            <option>2</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            选择测试人员
+        </label>
+        <select class="form-control" ng-model="task.QA">
+            <option>1</option>
+            <option>2</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            预估时间
+        </label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="task.time" />
+            <span class="input-group-addon">分钟</span>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <label>介绍</label>
+        <textarea class="form-control" ng-model="task.description" rows="6"></textarea>
+    </div>
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a ui-sref="app.task" class="btn btn-default">取消</a>
+    </div>
+</form>
+<div class="col-md-12" ng-show="!task.id">
     <uib-tabset active="active">
-        <uib-tab index="0" heading="Comment" select="tabClick('comment')">
-            <a ng-click="newSubItem('comment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Comment</a>
+        <uib-tab index="0" heading="评论" select="tabClick('comment')">
+            <a ng-click="newSubItem('comment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加评论</a>
             <table class="table table-bordered">
                 <tr>
                     <th>#</th>
@@ -72,8 +72,8 @@
             </table>
             <comment ng-show="showComment"></comment>
         </uib-tab>
-        <uib-tab index="1" heading="Log" select="tabClick('log')">
-            <a ng-click="newSubItem('log')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> Add Log</a>
+        <uib-tab index="1" heading="日志" select="tabClick('log')">
+            <a ng-click="newSubItem('log')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加日志</a>
             <table class="table table-bordered">
                 <tr>
                     <th>#</th>
@@ -94,8 +94,8 @@
             </table>
             <log ng-show="showLog"></log>
         </uib-tab>
-        <uib-tab index="2" heading="Attachment" select="tabClick('attachment')">
-            <a ng-click="newSubItem('attachment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> New Attachment</a>
+        <uib-tab index="2" heading="附件" select="tabClick('attachment')">
+            <a ng-click="newSubItem('attachment')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加附件</a>
             <table class="table table-bordered">
                 <tr>
                     <th>#</th>
@@ -112,10 +112,9 @@
             </table>
         </uib-tab>
     </uib-tabset>
-</div>
-<!-- <div ui-view></div> -->
-<div class="form-group col-md-12" style="text-align: right">
-    <button type="submit" class="btn btn-default">
-        Save
-    </button>
+    <!-- <div ui-view></div> -->
+<!--     <div class="form-group col-md-12" style="text-align: left" ng-show="showLog || showComment">
+        <button type="submit" class="btn btn-primary"> 保存 </button>
+        <button class="btn btn-default"> 取消 </button>
+    </div> -->
 </div>

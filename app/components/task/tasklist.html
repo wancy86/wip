@@ -1,0 +1,67 @@
+<div class="col-md-12">
+    <h3>我的任务</h3>
+</div>
+<form novalidate name="seachTaskFrom">
+    <div class="form-group col-md-6">
+        <label for="account">
+            任务序号
+        </label>
+        <input type="text" class="form-control" ng-model="taskQuery.id" />
+    </div>
+    <div class="form-group col-md-6">
+        <label for="account">
+            标题/介绍
+        </label>
+        <input type="text" class="form-control" ng-model="taskQuery.name" />
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            选择项目
+        </label>
+        <select class="form-control" ng-model="taskQuery.projectCode">
+            <option value="OIC">OIC</option>
+            <option value="LIS">LIS</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            选择状态
+        </label>
+        <select class="form-control" ng-model="taskQuery.status">
+            <option value="Inprogress">Inprogress</option>
+            <option value="QA">QA</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            选择用户
+        </label>
+        <select class="form-control" ng-model="taskQuery.user">
+            <option value="Mark">Mark</option>
+            <option value="Lion">Lion</option>
+        </select>
+    </div>
+    <div class="form-group col-md-12">
+        <button ng-click="searchTask()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+    </div>
+</form>
+<div class="col-md-12" ng-show="searched_tasks.length">
+    <table class="table table-bordered">
+        <tr>
+            <th>序列号</th>
+            <th>项目</th>
+            <th>姓名</th>
+            <th>任务</th>
+            <th>当前状态</th>
+            <th>创建时间</th>
+        </tr>
+        <tr ng-repeat="(key, v) in searched_tasks">
+            <td>{{v.id}}</td>
+            <td>{{v.projectCode}}</td>
+            <td>{{v.user}}</td>
+            <td>{{v.title}}</td>
+            <td>{{v.status}}</td>
+            <td>{{v.entry_date}}</td>
+        </tr>
+    </table>
+</div>

@@ -3,14 +3,14 @@
 angular.module('myApp')
 
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
-    $stateProvider.state('task_new', {
-        url: 'task/new',
+    $stateProvider.state('app.task_new', {
+        url: 'task',
         templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
     })
 
-    .state('task_edit', {
-        url: '/task/taskid/:taskid',
+    .state('app.task_edit', {
+        url: '/task/id/:taskid',
         templateUrl: 'components/task/task.html',
         controller: 'TaskCtrl'
     });
@@ -19,31 +19,68 @@ angular.module('myApp')
 
 .controller('TaskCtrl', ['$scope', '$stateParams', 'TaskServe', '$state', '$window', function($scope, $stateParams, TaskServe, $state, $window) {
     console.log('now in TaskCtrl...');
-    console.log($stateParams);
-    console.log($stateParams.taskid);
 
     $scope.showLog = false;
     $scope.showComment = false;
 
-    // window.stateProvider=$stateProvider;
-    // console.log($state);
-    // $state.go('task_edit.newlog', { taskid: 1 });
+    //查询条件
+    if (!$scope.taskQuery) {
+        $scope.taskQuery = {
+            id: '',
+            name: 'xxx',
+            projectCode: 'OIC',
+            status: 'QA',
+            user: 'Mark'
+        }
+    }
 
+    if ($stateParams.taskid) {
+        //get task by id
+        TaskServe.get({ session_id: $rootScope.session.session_id, task_id: $stateParams.taskid }, function(resp) {
+            if (resp.code == '50000') {
+                // $scope.task = resp.data;
+                $scope.task = [{
+                    id: 'xxxxxxx',
+                    projectCode: 'xxxxxxx',
+                    user: 'xxxxxxx',
+                    title: 'xxxxxxx',
+                    status: 'xxxxxxx',
+                    entry_date: 'xxxxxxx'
+                }];
+            } else {
+                console.log(resp.msg);
+            }
+        });
+    } else {
+        //get all task by default search task query
+        TaskServe.query({}, function(resp) {
+            if (resp.code == '50000') {
+                // $scope.searched_tasks = resp.data;
+                $scope.searched_tasks = [{
+                    id: 'xxxxxxx',
+                    projectCode: 'xxxxxxx',
+                    user: 'xxxxxxx',
+                    title: 'xxxxxxx',
+                    status: 'xxxxxxx',
+                    entry_date: 'xxxxxxx'
+                }];
+            } else {
+                console.log(resp.msg);
+            }
 
-    $scope.task = TaskServe.get({ taskid: $stateParams.taskid }, function(data) {
-        console.log(data);
-    });
+        });
+    }
 
-    //tabs
-    $scope.tabs = [
-        { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
-        { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
-    ];
+    // //tabs
+    // $scope.tabs = [
+    //     { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
+    //     { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
+    // ];
 
-    $scope.model = {
-        name: 'Tabs'
-    };
-    //end test
+    // $scope.model = {
+    //     name: 'Tabs'
+    // };
+    // //end test
 
     $scope.tabClick = function(tab) {
         // console.log(tab);
@@ -83,6 +120,31 @@ angular.module('myApp')
                 $scope.showComment = false;
                 break;
         }
+    };
+
+    $scope.saveTask = function() {
+        console.log('save task.0..');
+    };
+
+    // 搜索的结果
+    $scope.searched_tasks = [{
+        id: '123',
+        projectCode: '123',
+        user: '123',
+        title: '123',
+        status: '123',
+        entry_date: '123'
+    }];
+
+    $scope.searchTask = function() {
+        $scope.searched_tasks = [{
+            id: 'xxxxxxx',
+            projectCode: 'xxxxxxx',
+            user: 'xxxxxxx',
+            title: 'xxxxxxx',
+            status: 'xxxxxxx',
+            entry_date: 'xxxxxxx'
+        }];
     };
 
 }]);
