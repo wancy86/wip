@@ -66,6 +66,10 @@ angular.module('myApp')
             }
 
         });
+        // TODO 需要项目列表 用户列表，一个项目属于一个team, 一个team下面所有的用户
+        $scope.projectList = [];
+        $scope.userList = [];
+
     }
 
     $scope.tabClick = function(tab) {
@@ -102,11 +106,16 @@ angular.module('myApp')
     $scope.saveTask = function() {
         console.log('save task.0..');
         if ($scope.newTaskForm.$valid) {
-            var taskServer = new TaskServe(task);
+            $scope.task.project_id = parseInt($scope.task.project_id);
+            $scope.task.estimated_time = parseInt($scope.task.estimated_time);
+            $scope.task.developer_id = 'ba37aff9-e2a3-4c80-b7ae-efd81845cfa1';
+            $scope.task.tester_id = 'ba37aff9-e2a3-4c80-b7ae-efd81845cfa1';
+
+            var taskServer = new TaskServe($scope.task);
             taskServer.$save({ session_id: $rootScope.session.session_id }, function(resp) {
                 console.log(resp);
                 if (resp.code == '50000') {
-                    console.log(rep.msg);
+                    console.log(resp.msg);
                     $state.go('app.task');
                 } else {
                     alert(resp.msg);
