@@ -17,24 +17,52 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$rootScope', '$stateParams', 'TaskServe', '$state', '$window', function($scope, $rootScope, $stateParams, TaskServe, $state, $window) {
+.controller('TaskCtrl', ['$scope', '$rootScope', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', '$state', '$window', function($scope, $rootScope, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, $state, $window) {
     console.log('now in TaskCtrl...');
 
     $scope.showLog = false;
     $scope.showComment = false;
 
-    //查询条件
-    if (!$scope.taskQuery) {
-        $scope.taskQuery = {
-            id: '',
-            name: 'xxx',
-            description: 'xxx',
-            estimated_time: 'xxx',
-            project_id: 'xxx',
-            developer_id: 'xxx',
-            tester_id: 'xxx'
-        };
+    //All user
+    if (!$scope.taskUserList) {
+        //for Test
+        $scope.taskUserList = [
+            { name: 'Mark Wan', id: '3bf8752d-a498-47d6-b61a-060ca7ed6b44' },
+            { name: 'Carrie Ling', id: 'e46e175f-5946-4fe3-a933-c0ebecec20bc' }
+        ];
+
+        // if (0) {
+        //     UserServe.query({
+        //             team_id: 123,
+        //             task_id: 123
+        //         },
+        //         function(resp) {
+        //             console.log('taskUserList...');
+        //             console.log(resp);
+        //             if (resp.code == '50000') {
+        //                 $scope.taskUserList = resp.data;
+        //             } else {
+        //                 console.log(resp.msg);
+        //             }
+        //         })
+        // }
     }
+
+    //All Project
+    if (!$scope.projectList) {
+        ProjectServe.query({}, function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                $scope.projectList = resp.data;
+                console.log('------------------------');
+
+                $scope.team = resp.data.team;
+            } else {
+                console.log(resp.msg);
+            }
+        })
+    }
+
 
     if ($stateParams.taskid) {
         //get task by id
@@ -57,7 +85,7 @@ angular.module('myApp')
         });
     } else {
         //get all task by default search task query
-        TaskServe.query({}, function(resp) {
+        MyTaskServe.query({}, function(resp) {
             if (resp.code == '50000') {
                 console.log(resp);
                 $scope.searched_tasks = resp.data;
@@ -66,10 +94,6 @@ angular.module('myApp')
             }
 
         });
-        // TODO 需要项目列表 用户列表，一个项目属于一个team, 一个team下面所有的用户
-        $scope.projectList = [];
-        $scope.userList = [];
-
     }
 
     $scope.tabClick = function(tab) {
@@ -134,15 +158,35 @@ angular.module('myApp')
         entry_date: '123'
     }];
 
+    //查询条件
+    if (!$scope.condition) {
+        $scope.condition = {
+            conditon_item_id: '1',
+            conditon_item_name: '1',
+            conditon_project_id: '1',
+            conditon_status_id: '1',
+            conditon_user_id: '1'
+        };
+    }
+
     $scope.searchTask = function() {
-        $scope.searched_tasks = [{
-            id: 'xxxxxxx',
-            projectCode: 'xxxxxxx',
-            user: 'xxxxxxx',
-            title: 'xxxxxxx',
-            status: 'xxxxxxx',
-            entry_date: 'xxxxxxx'
-        }];
+        MyTaskServe.query($scope.condition, function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                $scope.searched_tasks = resp.data;
+                $scope.searched_tasks = [{
+                    id: 'xxxxxxx',
+                    projectCode: 'xxxxxxx',
+                    user: 'xxxxxxx',
+                    title: 'xxxxxxx',
+                    status: 'xxxxxxx',
+                    entry_date: 'xxxxxxx'
+                }];
+            }
+
+        });
+
+
     };
 
 }]);

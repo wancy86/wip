@@ -6,37 +6,37 @@
         <label for="account">
             任务序号
         </label>
-        <input type="text" class="form-control" ng-model="taskQuery.id" />
+        <input type="text" class="form-control" ng-model="condition.conditon_item_id" />
     </div>
     <div class="form-group col-md-6">
         <label for="account">
             标题/介绍
         </label>
-        <input type="text" class="form-control" ng-model="taskQuery.name" />
+        <input type="text" class="form-control" ng-model="condition.conditon_item_name" />
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择项目
         </label>
-        <select class="form-control" ng-model="taskQuery.projectCode">
-            <option value="OIC">OIC</option>
-            <option value="LIS">LIS</option>
+        <select class="form-control" ng-model="condition.conditon_project_id">
+            <option value="1">OIC</option>
+            <option value="2">LIS</option>
         </select>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择状态
         </label>
-        <select class="form-control" ng-model="taskQuery.status">
-            <option value="Inprogress">Inprogress</option>
-            <option value="QA">QA</option>
+        <select class="form-control" ng-model="condition.conditon_status_id">
+            <option value="1">Inprogress</option>
+            <option value="2">QA</option>
         </select>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择用户
         </label>
-        <select class="form-control" ng-model="taskQuery.user">
+        <select class="form-control" ng-model="condition.conditon_user_id">
             <option value="Mark">Mark</option>
             <option value="Lion">Lion</option>
         </select>

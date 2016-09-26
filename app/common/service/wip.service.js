@@ -120,3 +120,21 @@ angular.module('myApp')
         }
     });
 }])
+
+.factory('MyTaskServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'my_item', {}, {
+        query: {
+            method: 'GET',
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+            isArray: false
+        }
+    });
+}])
+
+
+
+
