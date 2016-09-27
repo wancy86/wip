@@ -29,3 +29,7 @@
 .box{
     box-shadow: 5px 5px 2px #888;
 }
+
+.bordered{
+    border:1px solid #A19D9D;
+}

@@ -1,0 +1,66 @@
+<div class="col-md-12">
+    <h3 ng-hide="0">添加日志</h3>
+</div>
+<div class="col-md-12">
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="任务信息">
+            <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;">
+                <p><b>任务名称：</b>{{task.name}}</p>
+                <p><b>所属项目：</b>{{task.project}}</p>
+                <p><b>任务状态：</b>{{task.status}}</p>
+                <p><b>任务简介：</b>{{task.description}}</p>
+                <p><b>开发人员：</b>{{task.developer}}</p>
+                <p><b>测试人员：</b>{{task.QA}}</p>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="工作日志" select="tabClick('log')">
+            <a ng-click="newSubItem('log')" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加日志</a>
+            <div class="form">
+                <div class="form-group col-md-4">
+                    <label>工作日期</label>
+                    <input class="form-control" type="text" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label>工作时间</label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" />
+                        <span class="input-group-addon">分钟</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>工作类型</label>
+                    <select class="form-control">
+                        <option value="PTO">PTO</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12">
+                    <label>工作内容</label>
+                    <textarea class="form-control" rows="6" placeholder="请输入工作内容"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                    <button class="btn btn-primary">保存</button>
+                    <button class="btn btn-default">取消</button>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>工作日期</th>
+                    <th>用户</th>
+                    <th>类型</th>
+                    <th>所用时间</th>
+                    <th>工作内容</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="log in logList">
+                    <td>2016/08/26 10:21:32</td>
+                    <td>52</td>
+                    <td>Billable</td>
+                    <td>Mark</td>
+                    <td>Mark</td>
+                    <td><a ng-click="editLog(log.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a> | <a ng-click="delLog(log.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
+                </tr>
+            </table>
+            <log ng-show="showLog"></log>
+        </uib-tab>
+    </uib-tabset>
+</div>

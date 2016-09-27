@@ -10,8 +10,14 @@ angular.module('myApp')
     })
 
     .state('app.task_edit', {
-        url: '/task/id/:taskid',
+        url: 'task/id/:taskid',
         templateUrl: 'components/task/task.html',
+        controller: 'TaskCtrl'
+    })
+
+    .state('app.task_detail', {
+        url: 'task/id/:taskid/log',
+        templateUrl: 'components/task/tasklog.html',
         controller: 'TaskCtrl'
     });
 
@@ -185,8 +191,20 @@ angular.module('myApp')
             }
 
         });
-
-
     };
+
+    //日志部分
+    $scope.logList=[1,2];
+    $scope.editLog = function(logid) {
+        console.log('编辑日志');
+    }
+
+    $scope.delLog = function(logid) {
+        console.log('删除日志');
+    }
+
+    $scope.addLog = function() {
+        console.log('添加日志');
+    }
 
 }]);

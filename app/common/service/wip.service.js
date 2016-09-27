@@ -34,8 +34,8 @@ angular.module('myApp')
                     console.log('$rootScope.session:' + $rootScope.session);
                     $rootScope.login = 1;
 
-                    //set cookie
-                    $state.go('app.project');
+                    //TODO set cookie
+                    $state.go('app.task_detail', { taskid: 1 });
                 } else {
                     console.log(Resp.msg);
                 }
@@ -134,7 +134,3 @@ angular.module('myApp')
         }
     });
 }])
-
-
-
-
