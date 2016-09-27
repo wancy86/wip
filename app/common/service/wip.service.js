@@ -134,3 +134,17 @@ angular.module('myApp')
         }
     });
 }])
+
+.factory('LogServe', ['$resource', '$rootScope', function($resource, $rootScope) {
+    return $resource(ServerName + 'log', {}, {
+        query: {
+            method: 'GET',
+            params: {
+                session_id: function() {
+                    return $rootScope.session.session_id;
+                }
+            },
+            isArray: false
+        }
+    });
+}])

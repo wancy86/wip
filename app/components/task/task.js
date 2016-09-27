@@ -23,7 +23,7 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$rootScope', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', '$state', '$window', function($scope, $rootScope, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, $state, $window) {
+.controller('TaskCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $state, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
     console.log('now in TaskCtrl...');
 
     $scope.showLog = false;
@@ -60,8 +60,6 @@ angular.module('myApp')
             console.log(resp);
             if (resp.code == '50000') {
                 $scope.projectList = resp.data;
-                console.log('------------------------');
-
                 $scope.team = resp.data.team;
             } else {
                 console.log(resp.msg);
@@ -101,37 +99,6 @@ angular.module('myApp')
 
         });
     }
-
-    $scope.tabClick = function(tab) {
-        switch (tab) {
-            case 'comment':
-                $scope.showLog = false;
-                break;
-            case 'log':
-                $scope.showComment = false;
-                break;
-            case 'attachment':
-                $scope.showLog = false;
-                $scope.showComment = false;
-                break;
-        }
-    };
-
-    $scope.newSubItem = function(item) {
-        // console.log(item);
-        switch (item) {
-            case 'comment':
-                $scope.showComment = true;
-                break;
-            case 'log':
-                $scope.showLog = true;
-                break;
-            case 'attachment':
-                $scope.showLog = false;
-                $scope.showComment = false;
-                break;
-        }
-    };
 
     $scope.saveTask = function() {
         console.log('save task.0..');
@@ -193,18 +160,84 @@ angular.module('myApp')
         });
     };
 
-    //日志部分
-    $scope.logList=[1,2];
+    //日志部分    
+    console.log('$state.$current---------------------');
+    console.log($state.is('app.task_detail'));
+
+    $scope.showLog = false;
+    if ($state.is('app.task_detail')) {
+        //获取log列表
+        $scope.logList = [1, 2];
+    }
+    $scope.log = {
+        work_date: '09/27/2016',
+        work_time: '09/27/2016',
+        log_type: '09/27/2016',
+        content: '09/27/2016'
+    };
+
+
+    $scope.tabClick = function(tab) {
+        console.log('tab change...');
+    };
+
+    $scope.newSubItem = function(item) {
+        // console.log(item);
+        switch (item) {
+            case 'comment':
+                $scope.showComment = true;
+                break;
+            case 'log':
+                $scope.showLog = true;
+                break;
+            case 'attachment':
+                $scope.showLog = false;
+                $scope.showComment = false;
+                break;
+        }
+    };
+    $scope.addLog = function() {
+        console.log('添加日志');
+        $scope.showLog = 1;
+    }
+    $scope.cancelLog = function() {
+        console.log('取消添加/编辑日志');
+        $scope.showLog = 0;
+    }
     $scope.editLog = function(logid) {
         console.log('编辑日志');
+        LogServe.get({ task_id: 1, log_id: 1 }, function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                console.log(resp.msg);
+                $scope.log = resp.data;
+                $scope.addLog();
+            } else {
+                console.log(resp.msg);
+            }
+        });
     }
 
     $scope.delLog = function(logid) {
         console.log('删除日志');
+        // LogServe.remove({ task_id: 1, log_id: 1 }, function(resp) {
+        //     console.log(resp);
+        //     if (resp.code == '50000') {
+        //         console.log(resp.msg);
+        // $scope.log = {
+        //     work_date: '09/27/2016',
+        //     work_time: '09/27/2016',
+        //     log_type: '09/27/2016',
+        //     content: '09/27/2016'
+        // };
+        //     } else {
+        //         console.log(resp.msg);
+        //     }
+        // });
+    }
+    $scope.saveLog = function(logid) {
+        console.log('保存日志');
     }
 
-    $scope.addLog = function() {
-        console.log('添加日志');
-    }
 
 }]);
