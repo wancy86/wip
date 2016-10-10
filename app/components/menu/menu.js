@@ -15,7 +15,6 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
 
     $scope.menuItems1 = [
         { text: 'register', sref: 'register', icon: 'glyphicon glyphicon-pushpin' },
-        { text: 'login', sref: 'login', icon: 'glyphicon glyphicon-pushpin' },
         { text: 'user', sref: 'app.user', icon: 'glyphicon glyphicon-pushpin' },
         { text: 'comment', sref: 'app.comment', icon: 'glyphicon glyphicon-pushpin' },
         { text: 'log', sref: 'app.log', icon: 'glyphicon glyphicon-pushpin' }
