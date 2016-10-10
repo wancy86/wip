@@ -29,6 +29,9 @@ angular.module('myApp')
     $scope.showLog = false;
     $scope.showComment = false;
 
+    //选中的项目，关联项目的状态列表
+    $scope.selectedProject=null;
+
     //All user
     if (!$scope.taskUserList) {
         //for Test
@@ -60,6 +63,7 @@ angular.module('myApp')
             console.log(resp);
             if (resp.code == '50000') {
                 $scope.projectList = resp.data;
+                console.log($scope.projectList);
                 $scope.team = resp.data.team;
             } else {
                 console.log(resp.msg);

@@ -7,8 +7,8 @@
         <label for="account">
             选择团队
         </label>
-        <select class="form-control" ng-model="project.team_id" required>
-            <option value="1">1</option>
+        <select class="form-control" ng-model="project.team_id" required >
+            <option ng-repeat="team in teamlist" value="{{team.id}}">{{team.name}}</option>
         </select>
         <span class="error" ng-show="newProjectForm.$submitted && newProjectForm.team_id.$error.required">*请填写项目代号</span>
     </div>

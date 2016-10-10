@@ -18,9 +18,7 @@
         <label for="password">
             选择项目
         </label>
-        <select class="form-control" ng-model="condition.conditon_project_id">
-            <option value="1">OIC</option>
-            <option value="2">LIS</option>
+        <select class="form-control" ng-model="condition.conditon_project_id" ng-options="pro.id as pro.name for pro in projectList">
         </select>
     </div>
     <div class="form-group col-md-6">
@@ -28,8 +26,7 @@
             选择状态
         </label>
         <select class="form-control" ng-model="condition.conditon_status_id">
-            <option value="1">Inprogress</option>
-            <option value="2">QA</option>
+            <option ng-repeat="prostat in selectedProject.status_list" value="{{prostat.id}}">{{prostat.name}}</option>
         </select>
     </div>
     <div class="form-group col-md-6">

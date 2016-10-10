@@ -18,8 +18,8 @@ angular.module('myApp')
     });
 }])
 
-.controller('ProjectCtrl', ['ProjectServe', '$stateParams', '$scope', '$http', '$rootScope', '$filter', '$state',
-    function(ProjectServe, $stateParams, $scope, $http, $rootScope, $filter, $state) {
+.controller('ProjectCtrl', ['ProjectServe', 'TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$filter', '$state',
+    function(ProjectServe, TeamServe, $stateParams, $scope, $http, $rootScope, $filter, $state) {
         console.log('now in ProjectCtrl...');
 
         $scope.updateProjectUserList = function() {
@@ -30,6 +30,42 @@ angular.module('myApp')
                 }
             });
         };
+
+        //get team list
+        $scope.teamlist = [];
+        TeamServe.query(function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                $scope.teamlist = resp.data.teams;
+                console.log($scope.teamlist);
+                $scope.userlist = resp.data.users;
+            }
+        });
+
+// code
+// :
+// "123"
+// description
+// :
+// "123123123"
+// entry_date
+// :
+// "2016-10-10 18:44"
+// entry_user
+// :
+// ""
+// id
+// :
+// "2"
+// level
+// :
+// "0"
+// name
+// :
+// "123"
+// parent_id
+// :
+// ""
 
         //显示列表
         if (!$stateParams.project_id) {
