@@ -6,36 +6,34 @@
         <label for="account">
             任务序号
         </label>
-        <input type="text" class="form-control" ng-model="condition.conditon_item_id" />
+        <input type="text" class="form-control" ng-model="condition.item_id" />
     </div>
     <div class="form-group col-md-6">
         <label for="account">
             标题/介绍
         </label>
-        <input type="text" class="form-control" ng-model="condition.conditon_item_name" />
+        <input type="text" class="form-control" ng-model="condition.item_name" />
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择项目
         </label>
-        <select class="form-control" ng-model="condition.conditon_project_id" ng-options="pro.id as pro.name for pro in projectList">
+        <select class="form-control" ng-model="condition.selectedProject" ng-options="pro.project.name for pro in projectList track by pro.project.id">
         </select>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择状态
         </label>
-        <select class="form-control" ng-model="condition.conditon_status_id">
-            <option ng-repeat="prostat in selectedProject.status_list" value="{{prostat.id}}">{{prostat.name}}</option>
+        <select class="form-control" ng-model="condition.status_id">
+            <option ng-repeat="prostat in condition.selectedProject.status_list" value="{{prostat.id}}">{{prostat.name}}</option>
         </select>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择用户
         </label>
-        <select class="form-control" ng-model="condition.conditon_user_id">
-            <option value="Mark">Mark</option>
-            <option value="Lion">Lion</option>
+        <select class="form-control" ng-model="condition.user_id" ng-options="user.id as user.last_name+' '+user.first_name for user in taskUserList">
         </select>
     </div>
     <div class="form-group col-md-12">
@@ -51,14 +49,16 @@
             <th>任务</th>
             <th>当前状态</th>
             <th>创建时间</th>
+            <th>操作</th>
         </tr>
         <tr ng-repeat="(key, v) in searched_tasks">
-            <td>{{v.id}}</td>
-            <td>{{v.projectCode}}</td>
-            <td>{{v.user}}</td>
-            <td>{{v.title}}</td>
-            <td>{{v.status}}</td>
-            <td>{{v.entry_date}}</td>
+            <td title="点击查看详情"><a ui-sref="app.task_detail({taskid:v.item_id})">{{v.item_id}}</a></td>
+            <td>{{v.project_name}}</td>
+            <td>{{v.last_name + ' ' + v.first_name}}</td>
+            <td>v.title</td>
+            <td>v.status</td>
+            <td>v.entry_date</td>
+            <td><a ui-sref="app.task_edit({taskid:v.item_id})"><span class="glyphicon glyphicon-edit"></span> 编辑</a></td>
         </tr>
     </table>
 </div>

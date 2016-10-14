@@ -42,31 +42,6 @@ angular.module('myApp')
             }
         });
 
-// code
-// :
-// "123"
-// description
-// :
-// "123123123"
-// entry_date
-// :
-// "2016-10-10 18:44"
-// entry_user
-// :
-// ""
-// id
-// :
-// "2"
-// level
-// :
-// "0"
-// name
-// :
-// "123"
-// parent_id
-// :
-// ""
-
         //显示列表
         if (!$stateParams.project_id) {
             console.log('get Project list...');
@@ -87,13 +62,7 @@ angular.module('myApp')
         $scope.saveProject = function() {
             console.log('post new Project');
             if ($scope.newProjectForm.$valid) {
-                console.log('save...');
-                // todo
-                $scope.project.team_id = '1';
-                // $scope.project.status_list = [{
-                //     name: 'aaa',
-                //     sequence_order: '1'
-                // }];
+
                 angular.forEach($scope.project.status_list, function(value, key) {
                     value.sequence_order = key + 1;
                 });
