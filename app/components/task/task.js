@@ -23,8 +23,13 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $state, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
+.controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $filter, $state, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
     console.log('now in TaskCtrl...');
+
+    console.log($state.is('app.task_detail'));
+    console.log($state.current.name);
+
+    window.$state = $state;
 
     if ($stateParams.project_id) {
         console.log('$stateParams.project_id: ' + $stateParams.project_id);
@@ -59,12 +64,22 @@ angular.module('myApp')
 
     if ($stateParams.taskid) {
         //get task by id
-        console.log('item 编辑/详情：');
-        console.log($stateParams.taskid);
-        TaskServe.get({ session_id: $rootScope.session.session_id, task_id: $stateParams.taskid }, function(resp) {
+        console.log('item 编辑/详情：' + $stateParams.taskid);
+        TaskServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.taskid }, function(resp) {
+            console.log('获取item详情.');
+            console.log(resp);
             if (resp.code == '50000') {
-                console.log(resp);
                 $scope.task = resp.data;
+                $scope.task.id = $stateParams.taskid;
+                $scope.task.developer = $filter('filter')($scope.taskUserList, { id: $scope.task.developer_id })[0];
+                $scope.task.QA = $filter('filter')($scope.taskUserList, { id: $scope.task.tester_id })[0];
+                $scope.task.project = $filter('filter')($scope.projectList, function(value, index, array) {
+                    return value.project.id = $scope.task.project_id;
+                })[0];
+                // TODO 任务状态没有
+                $scope.task.status = 'TODO';
+                console.log($scope.projectList);
+                console.log($scope.task);
             } else {
                 console.log(resp.msg);
             }
@@ -106,35 +121,42 @@ angular.module('myApp')
 
     $scope.searchTask = function() {
         console.log($scope.condition);
-        $scope.condition.project_id=$scope.condition.selectedProject.id;
+        $scope.condition.project_id = $scope.condition.selectedProject.id;
         MyTaskServe.query($scope.condition, function(resp) {
             console.log('任务搜索结果');
             console.log(resp);
             if (resp.code == '50000') {
                 $scope.searched_tasks = resp.data;
-            }
-            else{
+            } else {
                 $scope.searched_tasks = [];
             }
         });
     };
 
     //日志部分    
-    console.log('$state.$current---------------------');
-    console.log($state.is('app.task_detail'));
-
     $scope.showLog = false;
+    //详情页获取日志列表
     if ($state.is('app.task_detail')) {
-        //获取log列表
-        $scope.logList = [1, 2];
-    }
-    $scope.log = {
-        work_date: '09/27/2016',
-        work_time: '09/27/2016',
-        log_type: '09/27/2016',
-        content: '09/27/2016'
-    };
+        $scope.workLogList = [];
+        console.log('日志列表');
+        LogServe.query(function(resp) {
+            console.log(resp);
+            $scope.workLogList = resp.data;
+            $scope.workLogList = [1, 2];
+        });
 
+        //获取logType 列表 
+        // TODO 需要接口
+        $scope.logTypes = [{ code: 'B', name: 'Billable' }, { code: 'NB', name: 'Nonbillable' }]
+    }
+
+    //for test save log
+    $scope.workLog = {
+        work_date: $filter('date')(new Date(), 'yyyy/MM/dd'),
+        minutes: '120',
+        item_work_type_code: 'B',
+        detail: 'Did Nothing...'
+    };
 
     $scope.tabClick = function(tab) {
         console.log('tab change...');
@@ -169,7 +191,7 @@ angular.module('myApp')
             console.log(resp);
             if (resp.code == '50000') {
                 console.log(resp.msg);
-                $scope.log = resp.data;
+                $scope.workLog = resp.data;
                 $scope.addLog();
             } else {
                 console.log(resp.msg);
@@ -179,24 +201,28 @@ angular.module('myApp')
 
     $scope.delLog = function(logid) {
         console.log('删除日志');
-        // LogServe.remove({ task_id: 1, log_id: 1 }, function(resp) {
-        //     console.log(resp);
-        //     if (resp.code == '50000') {
-        //         console.log(resp.msg);
-        // $scope.log = {
-        //     work_date: '09/27/2016',
-        //     work_time: '09/27/2016',
-        //     log_type: '09/27/2016',
-        //     content: '09/27/2016'
-        // };
-        //     } else {
-        //         console.log(resp.msg);
-        //     }
-        // });
+        LogServe.remove({ task_id: 1, log_id: logid }, function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                console.log(resp.msg);
+            } else {
+                console.log(resp.msg);
+            }
+        });
     }
-    $scope.saveLog = function(logid) {
+    $scope.saveLog = function() {
         console.log('保存日志');
+        $scope.workLog.item_id = $scope.task.id;
+        console.log($scope.workLog);
+        var logServe = new LogServe($scope.workLog);
+        logServe.$save({ session_id: $rootScope.session.session_id }, function(resp) {
+            // body... 
+            console.log(resp);
+            if (resp.code == '50000') {
+                $scope.workLog.detail = '';
+                $scope.workLog.minutes = '';
+                $scope.workLog.item_work_type_code = '';
+            }
+        });
     }
-
-
 }]);

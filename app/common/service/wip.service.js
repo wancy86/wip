@@ -1,7 +1,7 @@
 'use strict';
 
 //Back end API server name
-var ServerName = 'http://192.168.1.6:8000/service/';
+var ServerName = 'http://127.0.0.1:8000/service/';
 
 angular.module('myApp')
 
@@ -136,7 +136,7 @@ angular.module('myApp')
 }])
 
 .factory('LogServe', ['$resource', '$rootScope', function($resource, $rootScope) {
-    return $resource(ServerName + 'log', {}, {
+    return $resource(ServerName + 'item_work', {}, {
         query: {
             method: 'GET',
             params: {

@@ -6,41 +6,42 @@
         <uib-tab index="0" heading="任务信息">
             <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;">
                 <p><b>任务名称：</b>{{task.name}}</p>
-                <p><b>所属项目：</b>{{task.project}}</p>
+                <p><b>所属项目：</b>{{task.project.project.name}}</p>
                 <p><b>任务状态：</b>{{task.status}}</p>
                 <p><b>任务简介：</b>{{task.description}}</p>
-                <p><b>开发人员：</b>{{task.developer}}</p>
-                <p><b>测试人员：</b>{{task.QA}}</p>
+                <p><b>开发人员：</b>{{task.developer.last_name + ' ' + task.developer.first_name }}</p>
+                <p><b>测试人员：</b>{{task.QA.last_name + ' ' + task.QA.first_name }}</p>
             </div>
         </uib-tab>
         <uib-tab index="1" heading="工作日志" select="tabClick('log')">
             <a ng-hide="showLog" ng-click="addLog()" class="btn btn-primary" style="margin:10px 0px;"><span class="glyphicon glyphicon-plus"></span> 添加日志</a>
             <div class="form" ng-show="showLog" style="margin-top: 20px;">
-                <div class="form-group col-md-4">
-                    <label>工作日期</label>
-                    <input class="form-control" type="text" ng-model="log.work_date" />
-                </div>
-                <div class="form-group col-md-4">
-                    <label>工作时间</label>
-                    <div class="input-group">
-                        <input class="form-control" type="text" ng-model="log.work_time" />
-                        <span class="input-group-addon">分钟</span>
+                <form name="logForm" novalidate ng-submit="saveLog()">
+                    <div class="form-group col-md-4">
+                        <label>工作日期</label>
+                        <input class="form-control" type="text" ng-model="workLog.work_date" />
                     </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>工作类型</label>
-                    <select class="form-control" ng-model="log.log_type">
-                        <option value="PTO">PTO</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-12">
-                    <label>工作内容</label>
-                    <textarea class="form-control" rows="6" placeholder="请输入工作内容" ng-model="log.content"></textarea>
-                </div>
-                <div class="form-group col-md-12">
-                    <button ng-click="saveLog()" class="btn btn-primary">保存</button>
-                    <button ng-click="cancelLog()" class="btn btn-default">取消</button>
-                </div>
+                    <div class="form-group col-md-4">
+                        <label>工作时间</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" ng-model="workLog.minutes" />
+                            <span class="input-group-addon">分钟</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>工作类型</label>
+                        <select class="form-control" ng-model="workLog.item_work_type_code" ng-options="t.code as t.name for t in logTypes">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>工作内容</label>
+                        <textarea class="form-control" rows="6" placeholder="请输入工作内容" ng-model="workLog.detail"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button ng-click="cancelLog()" class="btn btn-default">取消</button>
+                    </div>
+                </form>
             </div>
             <table class="table table-bordered">
                 <tr>
@@ -51,13 +52,13 @@
                     <th>工作内容</th>
                     <th>操作</th>
                 </tr>
-                <tr ng-repeat="log in logList">
+                <tr ng-repeat="log in workLogList">
                     <td>2016/08/26 10:21:32</td>
                     <td>52</td>
                     <td>Billable</td>
                     <td>Mark</td>
                     <td>Mark</td>
-                    <td><a ng-click="editLog(log.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a> | <a ng-click="delLog(log.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
+                    <td><a ng-click="editLog(workLog.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a> | <a ng-click="delLog(workLog.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
                 </tr>
             </table>
         </uib-tab>
