@@ -80,6 +80,12 @@ angular.module('myApp')
                 $scope.task.status = 'TODO';
                 console.log($scope.projectList);
                 console.log($scope.task);
+
+                //task获取完成之后再获取log信息
+                if ($state.is('app.task_detail')) {
+                    console.log('日志列表');
+                    $scope.getLogList();
+                }
             } else {
                 console.log(resp.msg);
             }
@@ -133,21 +139,24 @@ angular.module('myApp')
         });
     };
 
-    //日志部分    
+    //日志部分
+    $scope.getLogList = function() {
+        LogServe.query({ item_id: $scope.task.id }, function(resp) {
+            console.log('日志列表：');
+            console.log(resp);
+            console.log(resp.msg);
+            if (resp.code == '50000') {
+                $scope.workLogList = resp.data;
+            }
+        });
+    };
+
     $scope.showLog = false;
     //详情页获取日志列表
     if ($state.is('app.task_detail')) {
-        $scope.workLogList = [];
-        console.log('日志列表');
-        LogServe.query(function(resp) {
-            console.log(resp);
-            $scope.workLogList = resp.data;
-            $scope.workLogList = [1, 2];
-        });
-
         //获取logType 列表 
         // TODO 需要接口
-        $scope.logTypes = [{ code: 'B', name: 'Billable' }, { code: 'NB', name: 'Nonbillable' }]
+        $scope.logTypes = [{ code: 'B', name: 'Billable' }, { code: 'NB', name: 'Nonbillable' }];
     }
 
     //for test save log
@@ -178,16 +187,23 @@ angular.module('myApp')
         }
     };
     $scope.addLog = function() {
-        console.log('添加日志');
+        console.log('添加/编辑日志');
         $scope.showLog = 1;
     }
-    $scope.cancelLog = function() {
+    $scope.cancelLog = function(reset) {
         console.log('取消添加/编辑日志');
-        $scope.showLog = 0;
+        if (reset) {
+            $scope.showLog = 0;
+        }
+        $scope.workLog.detail = '';
+        $scope.workLog.minutes = '';
+        $scope.workLog.item_work_type_code = '';
+        delete $scope.workLog.id;
     }
+
     $scope.editLog = function(logid) {
-        console.log('编辑日志');
-        LogServe.get({ task_id: 1, log_id: 1 }, function(resp) {
+        LogServe.get({ session_id: $rootScope.session.session_id, id: logid }, function(resp) {
+            console.log('编辑日志');
             console.log(resp);
             if (resp.code == '50000') {
                 console.log(resp.msg);
@@ -199,17 +215,6 @@ angular.module('myApp')
         });
     }
 
-    $scope.delLog = function(logid) {
-        console.log('删除日志');
-        LogServe.remove({ task_id: 1, log_id: logid }, function(resp) {
-            console.log(resp);
-            if (resp.code == '50000') {
-                console.log(resp.msg);
-            } else {
-                console.log(resp.msg);
-            }
-        });
-    }
     $scope.saveLog = function() {
         console.log('保存日志');
         $scope.workLog.item_id = $scope.task.id;
@@ -219,9 +224,22 @@ angular.module('myApp')
             // body... 
             console.log(resp);
             if (resp.code == '50000') {
-                $scope.workLog.detail = '';
-                $scope.workLog.minutes = '';
-                $scope.workLog.item_work_type_code = '';
+                $scope.cancelLog($scope.workLog.id);
+                $scope.getLogList();
+            }
+        });
+    }
+    $scope.delLog = function(logid) {
+        console.log('TODO 删除日志, 无接口');
+        return;
+
+        LogServe.remove({ task_id: 1, log_id: logid }, function(resp) {
+            console.log(resp);
+            if (resp.code == '50000') {
+                console.log(resp.msg);
+                $scope.getLogList();
+            } else {
+                console.log(resp.msg);
             }
         });
     }

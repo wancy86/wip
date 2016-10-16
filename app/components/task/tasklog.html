@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-primary">保存</button>
-                        <button ng-click="cancelLog()" class="btn btn-default">取消</button>
+                        <button ng-click="cancelLog(1)" class="btn btn-default">取消</button>
                     </div>
                 </form>
             </div>
@@ -53,12 +53,12 @@
                     <th>操作</th>
                 </tr>
                 <tr ng-repeat="log in workLogList">
-                    <td>2016/08/26 10:21:32</td>
-                    <td>52</td>
-                    <td>Billable</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td><a ng-click="editLog(workLog.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a> | <a ng-click="delLog(workLog.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
+                    <td>{{log.work_date}}</td>
+                    <td>TODO user</td>
+                    <td>TODO work type</td>
+                    <td>{{log.minutes}}</td>
+                    <td>{{log.detail}}</td>
+                    <td><a ng-click="editLog(log.id)"><span class="glyphicon glyphicon-edit"></span> 编辑</a> | <a ng-click="delLog(log.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
                 </tr>
             </table>
         </uib-tab>
