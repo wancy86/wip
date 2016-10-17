@@ -2,7 +2,7 @@
 
 angular.module('myApp.menu', ['ngRoute', 'myApp'])
 
-.controller('MenuCtrl', ['$scope', '$location', function($scope, $location) {
+.controller('MenuCtrl', ['$scope','$rootScope', '$location', function($scope,$rootScope, $location) {
     // $scope.menu = 'home';
     $scope.menuItems2 = [
         { text: '我的团队', sref: 'app.team', icon: 'glyphicon glyphicon-user' },
@@ -21,7 +21,7 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
     ];
 
     $scope.menuClick = function(item) {
-        $scope.menu = item;
+        $rootScope.menu = item;
         // console.log($location.absUrl());
     }
 }])

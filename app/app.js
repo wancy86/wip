@@ -7,16 +7,13 @@ angular.module('myApp', [
     'ui.router',
     'ui.bootstrap',
     'myApp.menu',
-    // 'myApp.user',
-    // 'myApp.project',
-    // 'myApp.log',
-    // 'myApp.comment',
     'myApp.version'
 ])
 
-.controller('AppCtrl', ['$rootScope', function($rootScope) {
-    $rootScope.login = 0;
-}])
+//run after all DI done
+// .run(['$state', function($state) {
+//     $state.go('register');
+// }])
 
 .config(['$urlRouterProvider', '$stateProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $httpProvider) {
     // $locationProvider.hashPrefix('!');
@@ -25,13 +22,6 @@ angular.module('myApp', [
     $stateProvider.state('app', {
         url: '/',
         templateUrl: 'app.html'
-            // controller: 'HomeCtrl'
-    })
-
-    .state('app.home', {
-        url: 'home',
-        templateUrl: 'components/home/home.html',
-        controller: 'HomeCtrl'
     })
 
     .state('register', {
@@ -40,10 +30,10 @@ angular.module('myApp', [
         controller: 'RegisterCtrl'
     })
 
-    .state('login', {
-        url: '/login',
-        templateUrl: 'components/login/login.html',
-        controller: 'LoginCtrl'
+    .state('app.home', {
+        url: 'home',
+        templateUrl: 'components/home/home.html',
+        controller: 'HomeCtrl'
     })
 
     .state('app.user', {
@@ -68,19 +58,22 @@ angular.module('myApp', [
         url: 'task/list',
         templateUrl: 'components/task/tasklist.html',
         controller: 'TaskCtrl'
-    })
-
-    .state('app.log', {
-        url: 'log',
-        templateUrl: 'components/log/log.html',
-        controller: 'LogCtrl'
-    })
-
-    .state('app.comment', {
-        url: 'comment',
-        templateUrl: 'components/comment/comment.html',
-        controller: 'CommentCtrl'
     });
 
     $urlRouterProvider.otherwise('register');
-}]);
+}])
+
+.controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.login = 0;
+
+    //添加事件监听
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        if (toState.name == 'register') return; // 如果是进入登录界面则允许
+        // 如果用户不存在
+        if (!$rootScope.session || !$rootScope.session.session_id) {
+            event.preventDefault(); // 取消默认跳转行为
+            $state.go("register", { from: fromState.name, w: 'notLogin' }); //跳转到登录界面
+        }
+    });
+}])
+

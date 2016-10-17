@@ -31,6 +31,13 @@
     </div>
     <div class="form-group col-md-6">
         <label for="password">
+            指派类型
+        </label>
+        <select class="form-control" ng-model="condition.assign_type" ng-options="t.code as t.name for t in assignTypes">
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
             选择用户
         </label>
         <select class="form-control" ng-model="condition.user_id" ng-options="user.id as user.last_name+' '+user.first_name for user in taskUserList">
@@ -45,7 +52,8 @@
         <tr>
             <th>序列号</th>
             <th>项目</th>
-            <th>姓名</th>
+            <th>开发人员</th>
+            <th>测试人员</th>
             <th>任务</th>
             <th>当前状态</th>
             <th>创建时间</th>
@@ -55,7 +63,8 @@
             <td title="点击查看详情"><a ui-sref="app.task_detail({taskid:v.item_id})">{{v.item_id}}</a></td>
             <td>{{v.project_name}}</td>
             <td>{{v.last_name + ' ' + v.first_name}}</td>
-            <td>v.title</td>
+            <td>{{v.last_name + ' ' + v.first_name}}</td>
+            <td>{{v.item_name}}</td>
             <td>v.status</td>
             <td>v.entry_date</td>
             <td><a ui-sref="app.task_edit({taskid:v.item_id})"><span class="glyphicon glyphicon-edit"></span> 编辑</a></td>

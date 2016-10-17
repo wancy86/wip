@@ -7,7 +7,7 @@
         <p><b>团队代码：</b>{{t.code}}</p>
         <p><b>团队简介：</b>{{t.description}}</p>
         <p><b>团队成员：</b><span ng-repeat="user in userlist | filter:{team:t.id}" class="label label-default" style="margin-left:10px;">{{user.last_name + ' ' + user.first_name}}</span></p>
-        <p><b>团队项目：</b><span ng-repeat="project in [10011111,20011111,30011111,40011111]" class="label label-default" style="margin-left:10px;">{{project}}</span></p>
+        <p><b>团队项目：</b><span ng-repeat="project in teamProjects" class="label label-default" style="margin-left:10px;">{{project}}</span></p>
         <p>
             <a ui-sref="app.team_edit({teamid:t.id})" class="btn btn-success">编辑</a>
             <a ng-click="deleteTeam(t.id)" class="btn btn-danger">删除</a>

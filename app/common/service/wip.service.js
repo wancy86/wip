@@ -35,7 +35,8 @@ angular.module('myApp')
                     $rootScope.login = 1;
 
                     //TODO set cookie
-                    $state.go('app.task_detail', { taskid: 1 });
+                    // $state.go('app.task_detail', { taskid: 1 });
+                    $state.go('app.task');
                 } else {
                     console.log(Resp.msg);
                 }

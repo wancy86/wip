@@ -29,13 +29,7 @@ angular.module('myApp')
     console.log($state.is('app.task_detail'));
     console.log($state.current.name);
 
-    window.$state = $state;
-
-    if ($stateParams.project_id) {
-        console.log('$stateParams.project_id: ' + $stateParams.project_id);
-        $scope.task = {};
-        $scope.task.project_id = $stateParams.project_id;
-    }
+    $scope.assignTypes=[{code:"all",name:"所有"},{code:"Dev",name:"开发"},{code:"QA",name:"测试"}];
 
     //All user
     if (!$scope.taskUserList) {
@@ -58,6 +52,13 @@ angular.module('myApp')
                 $scope.team = resp.data.team;
             } else {
                 console.log(resp.msg);
+            }
+
+            //preset the project id
+            if ($stateParams.project_id) {
+                console.log('$stateParams.project_id: ' + $stateParams.project_id);
+                // $scope.task = {};
+                $scope.task.project_id = $stateParams.project_id;
             }
         })
     }

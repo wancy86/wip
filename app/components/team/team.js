@@ -29,10 +29,17 @@ angular.module('myApp')
                 }
             });
         };
+
+        if(!$state.is('app.team_edit') && $scope.team){
+            delete $scope.team.teamid;
+        }
         //显示列表
         if (!$stateParams.teamid) {
             console.log('get team list...');
             $scope.updateTeamUserList();
+
+            //project list
+            $scope.teamProjects=[1,2,3];
         } else {
             // 单个编辑
             TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
