@@ -23,11 +23,19 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $filter, $state, $stateParams, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
+.controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', '$log', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $filter, $state, $stateParams, $log, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
     console.log('now in TaskCtrl...');
 
     console.log($state.is('app.task_detail'));
     console.log($state.current.name);
+
+    //pagnination
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.maxSize = 10;
+    $scope.pageChanged = function() {
+        $log.log('Page changed to: ' + $scope.currentPage);
+    };
 
     $scope.assignTypes = [{ code: "all", name: "所有" }, { code: "Dev", name: "开发" }, { code: "QA", name: "测试" }];
 
@@ -99,6 +107,8 @@ angular.module('myApp')
             if (resp.code == '50000') {
                 console.log(resp);
                 $scope.searched_tasks = resp.data;
+                $scope.totalItems = $scope.searched_tasks.length;
+                $scope.currentPage = 1;
             } else {
                 console.log(resp.msg);
             }
@@ -135,6 +145,8 @@ angular.module('myApp')
             console.log(resp);
             if (resp.code == '50000') {
                 $scope.searched_tasks = resp.data;
+                $scope.totalItems = $scope.searched_tasks.length;
+                $scope.currentPage = 1;
             } else {
                 $scope.searched_tasks = [];
             }

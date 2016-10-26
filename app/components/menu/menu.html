@@ -1,25 +1,13 @@
 <div>
-    <!-- <div class="list-group">
-        <div class="list-group-item active">
-            <a ui-sref="app.home">
-                <p style="color:#FFF">常用功能</p>
-            </a>
-        </div>
-        <div ng-repeat="item in menuItems1" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
-            <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
-                <p><span ng-class="item.icon"></span> {{item.text}}</p>
-            </a>
-        </div>
-    </div> -->
     <div class="list-group">
         <div class="list-group-item active">
             <a ui-sref="app.task">
                 <p style="color:#FFF">基本功能</p>
             </a>
         </div>
-        <div ng-repeat="item in menuItems2" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
+        <div ng-repeat="item in menuItems" ng-class="{'list-group-item':1, current: menu=='{{item.text}}'}">
             <a ui-sref="{{item.sref}}" ng-click="menuClick(item.text)">
-                <p><span ng-class="item.icon"></span> {{item.text}}</p>
+                <p><span ng-show="item.subitem">&nbsp;&nbsp;&nbsp;</span><span class="{{item.icon}}"></span> {{item.text}}</p>
             </a>
         </div>
     </div>

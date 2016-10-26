@@ -33,3 +33,7 @@
 .bordered{
     border:1px solid #A19D9D;
 }
+
+.submenu{
+    padding-left: 34px;
+}

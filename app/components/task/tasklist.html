@@ -59,7 +59,7 @@
             <th>创建时间</th>
             <th>操作</th>
         </tr>
-        <tr ng-repeat="(key, v) in searched_tasks">
+        <tr ng-repeat="(key, v) in searched_tasks | limitTo:maxSize:(currentPage-1)*maxSize">
             <td title="点击查看详情"><a ui-sref="app.task_detail({taskid:v.item_id})">{{v.item_id}}</a></td>
             <td>{{v.project_name}}</td>
             <td>{{v.last_name + ' ' + v.first_name}}</td>
@@ -70,4 +70,6 @@
             <td><a ui-sref="app.task_edit({taskid:v.item_id})"><span class="glyphicon glyphicon-edit"></span> 编辑</a></td>
         </tr>
     </table>
+    <!-- 分页组件 -->
+    <ul ng-show="totalItems" uib-pagination total-items="totalItems" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="pageChanged()" ng-model="currentPage"></ul>
 </div>
