@@ -7,37 +7,43 @@
         <label for="password">
             选择项目
         </label>
-        <select class="form-control" ng-model="task.project_id" ng-options="pro.project.id as pro.project.name for pro in projectList">
+        <select required class="form-control" ng-model="task.project_id" ng-options="pro.project.id as pro.project.name for pro in projectList" name="project">
         </select>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.project.$error.required">*请选择项目</span>
     </div>
     <div class="form-group col-md-12">
         <label for="account">
             标题
         </label>
-        <input type="text" class="form-control" ng-model="task.name" />
+        <input required ng-maxlength="150" type="text" class="form-control" ng-model="task.name" name="name" />
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.name.$error.required">*请填写标题</span>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.name.$error.maxlength">*标题最大长度150</span>
     </div>
     <div class="form-group col-md-6">
         <label for="email">
             选择开发人员
         </label>
-        <select class="form-control" ng-model="task.developer_id" ng-options="dev.id as dev.last_name+' '+dev.last_name for dev in taskUserList">
+        <select required class="form-control" ng-model="task.developer_id" ng-options="dev.id as dev.last_name+' '+dev.last_name for dev in taskUserList" name="developer">
         </select>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.developer.$error.required">*请选择开发人员</span>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             选择测试人员
         </label>
-        <select class="form-control" ng-model="task.tester_id" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList">
+        <select required class="form-control" ng-model="task.tester_id" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList" name="QA">
         </select>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.QA.$error.required">*请选择测试人员</span>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
             预估时间
         </label>
         <div class="input-group">
-            <input type="text" class="form-control" ng-model="task.estimated_time" />
+            <input required type="number" class="form-control" ng-model="task.estimated_time" name="time" />
             <span class="input-group-addon">分钟</span>
         </div>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.time.$error.required">*请预估时间</span> 
     </div>
     <div class="form-group col-md-12">
         <label>介绍</label>
