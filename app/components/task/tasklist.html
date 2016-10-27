@@ -2,26 +2,14 @@
     <h3>我的任务</h3>
 </div>
 <form novalidate name="seachTaskFrom">
-    <div class="form-group col-md-6">
-        <label for="account">
-            任务序号
-        </label>
-        <input type="text" class="form-control" ng-model="condition.item_id" />
-    </div>
-    <div class="form-group col-md-6">
-        <label for="account">
-            标题/介绍
-        </label>
-        <input type="text" class="form-control" ng-model="condition.item_name" />
-    </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
         <label for="password">
             选择项目
         </label>
         <select class="form-control" ng-model="condition.selectedProject" ng-options="pro.project.name for pro in projectList track by pro.project.id">
         </select>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
         <label for="password">
             选择状态
         </label>
@@ -29,19 +17,31 @@
             <option ng-repeat="prostat in condition.selectedProject.status_list" value="{{prostat.id}}">{{prostat.name}}</option>
         </select>
     </div>
-    <div class="form-group col-md-6">
-        <label for="password">
-            指派类型
-        </label>
-        <select class="form-control" ng-model="condition.assign_type" ng-options="t.code as t.name for t in assignTypes">
-        </select>
-    </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
         <label for="password">
             选择用户
         </label>
         <select class="form-control" ng-model="condition.user_id" ng-options="user.id as user.last_name+' '+user.first_name for user in taskUserList">
         </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="password">
+            指派类型
+        </label>
+        <select class="form-control" ng-model="condition.assign_type" ng-options="t.code as t.name for t in assignTypes">
+        </select>
+    </div>    
+    <div class="form-group col-md-4">
+        <label for="account">
+            标题/介绍
+        </label>
+        <input type="text" class="form-control" ng-model="condition.item_name" />
+    </div>
+    <div class="form-group col-md-4">
+        <label for="account">
+            任务序号
+        </label>
+        <input type="text" class="form-control" ng-model="condition.item_id" />
     </div>
     <div class="form-group col-md-12">
         <button ng-click="searchTask()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜索</button>
