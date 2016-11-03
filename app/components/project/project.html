@@ -33,7 +33,7 @@
             任务状态表
         </label>
         <button style="margin-left: 30px;" ng-click="addTaskStatus()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
-        <div class="form-group form-inline" ng-repeat="s in project.status_list" style="margin-top:10px;">
+        <div class="form-group form-inline" ng-repeat="s in project.status_list | orderBy : sequence_order" style="margin-top:10px;">
             <div class="input-group">
                 <input type="text" ng-model="s.name" class="form-control" required ng-maxlength="50" />
                 <span class="input-group-addon">{{$index+1}}</span>

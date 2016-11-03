@@ -32,7 +32,7 @@ angular.module('myApp')
     //pagnination
     $scope.totalItems = 0;
     $scope.currentPage = 1;
-    $scope.maxSize = 10;
+    $scope.pageSize = 10;
     $scope.pageChanged = function() {
         $log.log('Page changed to: ' + $scope.currentPage);
     };
@@ -50,26 +50,27 @@ angular.module('myApp')
     }
 
     //All Project
-    if (!$scope.projectList) {
+    if (!$scope.proUserTeam) {
         ProjectServe.query(function(resp) {
             console.log('所有的项目');
             console.log(resp);
             if (resp.code == '50000') {
-                $scope.projectList = resp.data;
-                console.log($scope.projectList);
-                $scope.team = resp.data.team;
+                $scope.proUserTeam = resp.data;
+                console.log($scope.proUserTeam);
+
+                //preset the project id
+                if (!$scope.task) $scope.task = {};
+                if ($stateParams.project_id || $scope.task.project_id) {
+                    console.log('$stateParams.project_id: ', $stateParams.project_id);
+                    console.log('$scope.task.project_id: ', $scope.task.project_id);
+                    $scope.task.project = $filter('filter')($scope.proUserTeam, function(value) {
+                        return value.project.id == ($stateParams.project_id || $scope.task.project_id);
+                    })[0];
+                }
             } else {
                 console.log(resp.msg);
             }
         })
-    }
-
-    //preset the project id
-    if ($stateParams.project_id) {
-        console.log('$stateParams.project_id: ' + $stateParams.project_id);
-        if (!$scope.task) $scope.task = {};
-        // 类型必须匹配，否则无法初始化值
-        $scope.task.project_id = parseInt($stateParams.project_id);
     }
 
     if ($stateParams.taskid) {
@@ -80,16 +81,10 @@ angular.module('myApp')
             console.log(resp);
             if (resp.code == '50000') {
                 $scope.task = resp.data;
-                $scope.task.id = $stateParams.taskid;
-                $scope.task.developer = $filter('filter')($scope.taskUserList, { id: $scope.task.developer_id })[0];
-                $scope.task.QA = $filter('filter')($scope.taskUserList, { id: $scope.task.tester_id })[0];
-                $scope.task.project = $filter('filter')($scope.projectList, function(value, index, array) {
-                    return value.project.id = $scope.task.project_id;
-                })[0];
-                // TODO 任务状态没有
-                $scope.task.status = 'TODO';
-                console.log($scope.projectList);
-                console.log($scope.task);
+                if ($scope.proUserTeam)
+                    $scope.task.project = $filter('filter')($scope.proUserTeam, function(value) {
+                        return value.project.id == $scope.task.project_id;
+                    })[0];
 
                 //task获取完成之后再获取log信息
                 if ($state.is('app.task_detail')) {
@@ -121,7 +116,7 @@ angular.module('myApp')
         if ($scope.newTaskForm.$valid) {
             console.log('$scope.task:');
             console.log($scope.task);
-            $scope.task.project_id = parseInt($scope.task.project_id);
+            $scope.task.project_id = parseInt($scope.task.project.project.id);
             $scope.task.estimated_time = parseInt($scope.task.estimated_time);
 
             var taskServer = new TaskServe($scope.task);
@@ -138,9 +133,13 @@ angular.module('myApp')
     };
 
     $scope.searchTask = function() {
-        console.log($scope.condition);
-        $scope.condition.project_id = $scope.condition.selectedProject.id;
-        MyTaskServe.query($scope.condition, function(resp) {
+        console.log($scope.search);
+        if ($scope.search) {
+            if ($scope.search.selectedProject) {
+                $scope.search.project_id = $scope.search.selectedProject.project.id;
+            }
+        }
+        MyTaskServe.query($scope.search, function(resp) {
             console.log('任务搜索结果');
             console.log(resp);
             if (resp.code == '50000') {

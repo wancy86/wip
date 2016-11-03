@@ -7,7 +7,7 @@
         <label for="password">
             选择项目
         </label>
-        <select required class="form-control" ng-model="task.project_id" ng-options="pro.project.id as pro.project.name for pro in projectList" name="project">
+        <select required class="form-control" ng-model="task.project" ng-options="pro as pro.project.name for pro in proUserTeam | orderBy : 'project.name'" name="project">
         </select>
         <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.project.$error.required">*请选择项目</span>
     </div>
@@ -44,6 +44,14 @@
             <span class="input-group-addon">分钟</span>
         </div>
         <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.time.$error.required">*请预估时间</span> 
+    </div>
+    <div class="form-group col-md-6">
+        <label for="password">
+            状态
+        </label>
+        <select required class="form-control" ng-model="task.status_id" ng-options="status.id as status.name for status in task.project.status_list | orderBy : status.sequence_order" name="status_id">
+        </select>
+        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.status_id.$error.required">*请选择当前状态</span>
     </div>
     <div class="form-group col-md-12">
         <label>介绍</label>

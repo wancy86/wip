@@ -26,6 +26,7 @@ angular.module('myApp')
                 if (resp.code == '50000') {
                     $scope.teamlist = resp.data.teams;
                     $scope.userlist = resp.data.users;
+                    $scope.projectList = resp.data.projects;                    
                 }
             });
         };
@@ -37,9 +38,6 @@ angular.module('myApp')
         if (!$stateParams.teamid) {
             console.log('get team list...');
             $scope.updateTeamUserList();
-
-            //project list
-            $scope.teamProjects=[1,2,3];
         } else {
             // 单个编辑
             TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
@@ -90,7 +88,7 @@ angular.module('myApp')
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: '/components/team/addMember.html',
+                templateUrl: 'components/team/addMember.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 scope: $scope,
@@ -117,7 +115,7 @@ angular.module('myApp')
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: '/components/team/removeMember.html',
+                templateUrl: 'components/team/removeMember.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 scope: $scope,

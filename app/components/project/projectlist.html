@@ -2,7 +2,7 @@
     <h3>我的项目</h3>
 </div>
 <div ng-controller="ProjectCtrl as $ctrl">
-    <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;" ng-repeat="t in projectList">
+    <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;" ng-repeat="t in projectList | orderBy : 'project.name'">
         <p><b>项目名称：</b>{{t.project.name}}</p>
         <p><b>团队简介：</b>{{t.project.description}}</p>
         <p>
