@@ -154,7 +154,7 @@ angular.module('myApp')
 
     //日志部分
     $scope.getLogList = function() {
-        LogServe.query({ item_id: $scope.task.id }, function(resp) {
+        LogServe.query({ item_id: $stateParams.taskid }, function(resp) {
             console.log('日志列表：');
             console.log(resp);
             console.log(resp.msg);
@@ -184,21 +184,21 @@ angular.module('myApp')
         console.log('tab change...');
     };
 
-    $scope.newSubItem = function(item) {
-        // console.log(item);
-        switch (item) {
-            case 'comment':
-                $scope.showComment = true;
-                break;
-            case 'log':
-                $scope.showLog = true;
-                break;
-            case 'attachment':
-                $scope.showLog = false;
-                $scope.showComment = false;
-                break;
-        }
-    };
+    // $scope.newSubItem = function(item) {
+    //     // console.log(item);
+    //     switch (item) {
+    //         case 'comment':
+    //             $scope.showComment = true;
+    //             break;
+    //         case 'log':
+    //             $scope.showLog = true;
+    //             break;
+    //         case 'attachment':
+    //             $scope.showLog = false;
+    //             $scope.showComment = false;
+    //             break;
+    //     }
+    // };
     $scope.addLog = function() {
         console.log('添加/编辑日志');
         $scope.showLog = 1;
@@ -230,7 +230,8 @@ angular.module('myApp')
 
     $scope.saveLog = function() {
         console.log('保存日志');
-        $scope.workLog.item_id = $scope.task.id;
+        $scope.workLog.item_id = $stateParams.taskid;
+        console.log('XXXX: ',$scope.workLog)
         console.log($scope.workLog);
         var logServe = new LogServe($scope.workLog);
         logServe.$save({ session_id: $rootScope.session.session_id }, function(resp) {
