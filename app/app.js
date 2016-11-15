@@ -4,6 +4,7 @@
 angular.module('myApp', [
     'ngResource',
     'ngCookies',
+    'ngMessages',
     'ui.router',
     'ui.bootstrap',
     'menu'
