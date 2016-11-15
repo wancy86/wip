@@ -184,21 +184,6 @@ angular.module('myApp')
         console.log('tab change...');
     };
 
-    // $scope.newSubItem = function(item) {
-    //     // console.log(item);
-    //     switch (item) {
-    //         case 'comment':
-    //             $scope.showComment = true;
-    //             break;
-    //         case 'log':
-    //             $scope.showLog = true;
-    //             break;
-    //         case 'attachment':
-    //             $scope.showLog = false;
-    //             $scope.showComment = false;
-    //             break;
-    //     }
-    // };
     $scope.addLog = function() {
         console.log('添加/编辑日志');
         $scope.showLog = 1;

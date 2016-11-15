@@ -75,3 +75,6 @@
     <!-- 分页组件 -->
     <ul ng-show="totalItems" uib-pagination total-items="totalItems" max-size="pageSize" class="pagination-sm" boundary-link-numbers="true" ng-change="pageChanged()" ng-model="currentPage"></ul>
 </div>
+<div class="col-md-12" ng-hide="searched_tasks.length">
+    <h3>没有对应的结果</h3>
+</div>
