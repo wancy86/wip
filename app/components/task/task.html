@@ -9,15 +9,19 @@
         </label>
         <select required class="form-control" ng-model="task.project" ng-options="pro as pro.project.name for pro in proUserTeam | orderBy : 'project.name'" name="project">
         </select>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.project.$error.required">*请选择项目</span>
+        <div ng-messages="newTaskForm.project.$error" ng-if="newTaskForm.$submitted || newTaskForm.project.$touched">
+            <p class="error" ng-message="required">*请选择项目</p>
+        </div>
     </div>
     <div class="form-group col-md-12">
         <label for="account">
             标题
         </label>
         <input required ng-maxlength="150" type="text" class="form-control" ng-model="task.name" name="name" />
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.name.$error.required">*请填写标题</span>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.name.$error.maxlength">*标题最大长度150</span>
+        <div ng-messages="newTaskForm.name.$error" ng-if="newTaskForm.$submitted || newTaskForm.name.$touched">
+            <p class="error" ng-message="required">*请填写标题</p>
+            <p class="error" ng-message="maxlength">*标题最大长度150</p>
+        </div>
     </div>
     <div class="form-group col-md-6">
         <label for="email">
@@ -25,7 +29,10 @@
         </label>
         <select required class="form-control" ng-model="task.developer_id" ng-options="dev.id as dev.last_name+' '+dev.last_name for dev in taskUserList" name="developer">
         </select>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.developer.$error.required">*请选择开发人员</span>
+        <!-- <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.developer.$error.required">*请选择开发人员</span> -->
+        <div ng-messages="newTaskForm.developer.$error" ng-if="newTaskForm.$submitted || newTaskForm.developer.$touched">
+            <p class="error" ng-message="required">*请选择开发人员</p>
+        </div>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
@@ -33,7 +40,9 @@
         </label>
         <select required class="form-control" ng-model="task.tester_id" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList" name="QA">
         </select>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.QA.$error.required">*请选择测试人员</span>
+        <div ng-messages="newTaskForm.QA.$error" ng-if="newTaskForm.$submitted || newTaskForm.QA.$touched">
+            <p class="error" ng-message="required">*请选择测试人员</p>
+        </div>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
@@ -43,7 +52,9 @@
             <input required type="number" class="form-control" ng-model="task.estimated_time" name="time" />
             <span class="input-group-addon">分钟</span>
         </div>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.time.$error.required">*请预估时间</span> 
+        <div ng-messages="newTaskForm.time.$error" ng-if="newTaskForm.$submitted || newTaskForm.time.$touched">
+            <p class="error" ng-message="required">*请预估时间</p>
+        </div>
     </div>
     <div class="form-group col-md-6">
         <label for="password">
@@ -51,7 +62,9 @@
         </label>
         <select required class="form-control" ng-model="task.status_id" ng-options="status.id as status.name for status in task.project.status_list | orderBy : status.sequence_order" name="status_id">
         </select>
-        <span class="error" ng-show="newTaskForm.$submitted && newTaskForm.status_id.$error.required">*请选择当前状态</span>
+        <div ng-messages="newTaskForm.status_id.$error" ng-if="newTaskForm.$submitted || newTaskForm.status_id.$touched">
+            <p class="error" ng-message="required">*请选择当前状态</p>
+        </div>
     </div>
     <div class="form-group col-md-12">
         <label>介绍</label>
