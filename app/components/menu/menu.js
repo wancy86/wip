@@ -1,9 +1,8 @@
 'use strict';
 
-angular.module('myApp.menu', ['ngRoute', 'myApp'])
+angular.module('menu', [])
 
 .controller('MenuCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
-    // $scope.menu = 'home';
     $scope.menuItems = [
         { text: '我的任务', sref: 'app.task', subitem: 0, icon: 'glyphicon glyphicon-leaf' },
         { text: '添加任务', sref: 'app.task_new', subitem: 1, icon: 'glyphicon glyphicon-plus' },
@@ -15,7 +14,6 @@ angular.module('myApp.menu', ['ngRoute', 'myApp'])
 
     $scope.menuClick = function(item) {
         $rootScope.menu = item;
-        // console.log($location.absUrl());
     }
 }])
 

@@ -2,9 +2,7 @@
 
 angular.module('myApp')
 
-.controller('RegisterCtrl', ['$scope', '$stateParams', 'RegisterServe', '$http', '$state', function($scope, $stateParams, RegisterServe, $http, $state) {
-    console.log('RegisterCtrl');
-    // $scope.account = {};
+.controller('RegisterCtrl', ['$scope', '$rootScope', '$http', '$state', '$stateParams', '$cookies', 'RegisterServe', function($scope, $rootScope, $http, $state, $stateParams, $cookies, RegisterServe) {
 
     $scope.mobileRegx = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
     $scope.emailRegx = "^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$";
@@ -12,23 +10,24 @@ angular.module('myApp')
 
     // process the form
     $scope.processForm = function() {
-        console.log('processForm...');
-        console.log($scope.registerForm);
-        console.log($scope.account);
 
         if ($scope.registerForm.$valid) {
             var acoount = new RegisterServe($scope.account);
-            // window.acoount = acoount;
-            // console.log(acoount.$save);
-            acoount.$save({ /*params*/ }).then(function() {
+            acoount.$save().then(function(resp) {
                 //on success
-                console.log('注册成功');
+                console.log('XXXX: ', resp)
+                if (resp.code == '50000') {
+                    //TODO 注册完成之后，需要返回session
+                    $rootScope.session = Resp.data;
+                    $cookies.put('session',Resp.data.session_id);
+                    $rootScope.login = 1;
+                    $state.go('app.task');
+                } else {
+                    alert(resp.msg);
+                }
 
-                //TODO 注册完成后进入 主页
-                $state.go('app.home');
             });
         }
     };
 
 }]);
-

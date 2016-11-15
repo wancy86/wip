@@ -17,7 +17,7 @@ angular.module('myApp')
     });
 }])
 
-.service('AccountServe', ['$http', '$rootScope', '$state', function($http, $rootScope, $state) {
+.service('AccountServe', ['$http', '$rootScope', '$state', '$cookies', function($http, $rootScope, $state, $cookies) {
     return {
         login: function(account) {
             $http({
@@ -27,25 +27,20 @@ angular.module('myApp')
                 headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" }
             }).success(function(Resp) {
                 if (Resp.code == "50000") {
-                    console.log('登录成功');
-                    console.log(Resp);
 
                     $rootScope.session = Resp.data;
-                    console.log('$rootScope.session:' + $rootScope.session);
+                    $cookies.put('session', Resp.data.session_id);
                     $rootScope.login = 1;
 
-                    //TODO set cookie
-                    // $state.go('app.task_detail', { taskid: 1 });
                     $state.go('app.task');
-                } else {
-                    console.log(Resp.msg);
-                }
+                } else {}
 
             });
         },
         logoff: function() {
-            console.log('logoff');
             $rootScope.login = 0;
+            $rootScope.session = null;
+            $cookies.remove('session');
         }
     }
 }])

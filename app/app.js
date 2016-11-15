@@ -2,18 +2,12 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-    'ngRoute',
     'ngResource',
+    'ngCookies',
     'ui.router',
     'ui.bootstrap',
-    'myApp.menu',
-    'myApp.version'
+    'menu'
 ])
-
-//run after all DI done
-// .run(['$state', function($state) {
-//     $state.go('register');
-// }])
 
 .config(['$urlRouterProvider', '$stateProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $httpProvider) {
     // $locationProvider.hashPrefix('!');
@@ -63,17 +57,20 @@ angular.module('myApp', [
     $urlRouterProvider.otherwise('register');
 }])
 
-.controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.login = 0;
+.controller('AppCtrl', ['$rootScope', '$state', '$cookies', function($rootScope, $state, $cookies) {
+    // $rootScope.login = 0;
 
     //添加事件监听
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if (toState.name == 'register') return; // 如果是进入登录界面则允许
-        // 如果用户不存在
+        // // 如果用户不存在
+        // if (!$rootScope.session && $cookies.get('session')) {
+        //     $rootScope.session.session_id = $cookies.get('session');
+        //     $rootScope.login = 1;
+        // }
         if (!$rootScope.session || !$rootScope.session.session_id) {
             event.preventDefault(); // 取消默认跳转行为
             $state.go("register", { from: fromState.name, w: 'notLogin' }); //跳转到登录界面
         }
     });
 }])
-

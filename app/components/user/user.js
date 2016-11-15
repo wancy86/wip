@@ -5,12 +5,6 @@ angular.module('myApp')
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider
 
-    // .state('user', {
-    //     url:'/user',
-    //     templateUrl: 'user/userlist.html',
-    //     controller: 'UserCtrl'
-    // })
-
     .state('app.user_edit', {
         url:'user/userid/:userid',
         templateUrl: 'components/user/user.html',
@@ -25,7 +19,6 @@ angular.module('myApp')
 }])
 
 .controller('UserCtrl', ['$http', '$scope', '$stateParams', 'UserServe', function($http, $scope, $stateParams, UserServe) {
-    console.log('now in UserCtrl...');
     if (!$stateParams.userid) {
         //get all user
         $http({

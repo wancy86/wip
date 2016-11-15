@@ -3,13 +3,6 @@
 angular.module('myApp')
 
 .controller('HeaderCtrl', ['$scope', 'AccountServe', function($scope, AccountServe) {
-    console.log('now in HeaderCtrl...');
-
-    $scope.account = {
-        user_name: "13028865078",
-        password: "123123"
-    }
-
     $scope.loginPost = function() {
         if ($scope.loginForm.$valid) {
             AccountServe.login($scope.account);
