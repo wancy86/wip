@@ -17,7 +17,7 @@ angular.module('myApp')
     });
 }])
 
-.service('AccountServe', ['$http', '$rootScope', '$state', '$cookies', function($http, $rootScope, $state, $cookies) {
+.service('AccountServe', ['$http', '$rootScope', '$state', '$cookies', 'alertMsgServe', function($http, $rootScope, $state, $cookies, alertMsgServe) {
     return {
         login: function(account) {
             $http({
@@ -25,16 +25,16 @@ angular.module('myApp')
                 method: "post",
                 data: $.param(account),
                 headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" }
-            }).success(function(Resp) {
-                if (Resp.code == "50000") {
+            }).success(function(resp) {
+                if (resp.code == "50000") {
 
-                    $rootScope.session = Resp.data;
-                    $cookies.put('session', Resp.data.session_id);
+                    $rootScope.session = resp.data;
+                    $cookies.put('session', resp.data.session_id);
                     $rootScope.login = 1;
-
                     $state.go('app.task');
-                } else {}
-
+                } else {
+                    alertMsgServe.alert(resp.msg);
+                }
             });
         },
         logoff: function() {

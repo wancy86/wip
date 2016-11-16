@@ -23,8 +23,7 @@ angular.module('myApp')
 
 }])
 
-.controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', '$log', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', function($scope, $rootScope, $filter, $state, $stateParams, $log, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe) {
-
+.controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', '$log', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', 'alertMsgServe', function($scope, $rootScope, $filter, $state, $stateParams, $log, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe, alertMsgServe) {
 
     //pagnination
     $scope.totalItems = 0;
@@ -40,7 +39,11 @@ angular.module('myApp')
     if (!$scope.taskUserList) {
         //TODO 需要正确的用户列表接口
         UserServe.query({ mobile_or_email: '%' }, function(resp) {
-            $scope.taskUserList = resp.data;
+            if (resp.code == '50000') {
+                $scope.taskUserList = resp.data;
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
         });
     }
 
@@ -57,7 +60,9 @@ angular.module('myApp')
                         return value.project.id == ($stateParams.project_id || $scope.task.project_id);
                     })[0];
                 }
-            } else {}
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
         })
     }
 
@@ -75,7 +80,9 @@ angular.module('myApp')
                 if ($state.is('app.task_detail')) {
                     $scope.getLogList();
                 }
-            } else {}
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
         });
     } else {
         //get all task by default search task query
@@ -85,7 +92,9 @@ angular.module('myApp')
                 $scope.searched_tasks = resp.data;
                 $scope.totalItems = $scope.searched_tasks.length;
                 $scope.currentPage = 1;
-            } else {}
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
 
         });
     }
@@ -100,7 +109,7 @@ angular.module('myApp')
                 if (resp.code == '50000') {
                     $state.go('app.task');
                 } else {
-                    alert(resp.msg);
+                    alertMsgServe.alert(resp.msg);
                 }
             });
         }
@@ -121,6 +130,7 @@ angular.module('myApp')
                 $scope.currentPage = 1;
             } else {
                 $scope.searched_tasks = [];
+                alertMsgServe.alert(resp.msg);
             }
         });
     };
@@ -130,6 +140,8 @@ angular.module('myApp')
         LogServe.query({ item_id: $stateParams.taskid }, function(resp) {
             if (resp.code == '50000') {
                 $scope.workLogList = resp.data;
+            } else {
+                alertMsgServe.alert(resp.msg);
             }
         });
     };
@@ -170,7 +182,9 @@ angular.module('myApp')
             if (resp.code == '50000') {
                 $scope.workLog = resp.data;
                 $scope.addLog();
-            } else {}
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
         });
     }
 
@@ -182,6 +196,8 @@ angular.module('myApp')
             if (resp.code == '50000') {
                 $scope.cancelLog($scope.workLog.id);
                 $scope.getLogList();
+            } else {
+                alertMsgServe.alert(resp.msg);
             }
         });
     }
@@ -191,7 +207,9 @@ angular.module('myApp')
         LogServe.remove({ task_id: 1, log_id: logid }, function(resp) {
             if (resp.code == '50000') {
                 $scope.getLogList();
-            } else {}
+            } else {
+                alertMsgServe.alert(resp.msg);
+            }
         });
     }
 }]);

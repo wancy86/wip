@@ -58,20 +58,20 @@ angular.module('myApp', [
     $urlRouterProvider.otherwise('register');
 }])
 
-.controller('AppCtrl', ['$rootScope', '$state', '$cookies', function($rootScope, $state, $cookies) {
+.controller('AppCtrl', ['$rootScope', '$state', '$cookies', 'alertMsgServe', function($rootScope, $state, $cookies, alertMsgServe) {
     // $rootScope.login = 0;
 
-    //æ·»åŠ äº‹ä»¶ç›‘å¬
+    //Ìí¼ÓÊÂ¼ş¼àÌı
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        if (toState.name == 'register') return; // å¦‚æœæ˜¯è¿›å…¥ç™»å½•ç•Œé¢åˆ™å…è®¸
-        // // å¦‚æœç”¨æˆ·ä¸å­˜åœ¨
-        // if (!$rootScope.session && $cookies.get('session')) {
-        //     $rootScope.session.session_id = $cookies.get('session');
-        //     $rootScope.login = 1;
-        // }
+        if (toState.name == 'register') return; // Èç¹ûÊÇ½øÈëµÇÂ¼½çÃæÔòÔÊĞí
         if (!$rootScope.session || !$rootScope.session.session_id) {
-            event.preventDefault(); // å–æ¶ˆé»˜è®¤è·³è½¬è¡Œä¸º
-            $state.go("register", { from: fromState.name, w: 'notLogin' }); //è·³è½¬åˆ°ç™»å½•ç•Œé¢
+            event.preventDefault(); // È¡ÏûÄ¬ÈÏÌø×ªĞĞÎª
+            $state.go("register", { from: fromState.name, w: 'notLogin' }); //Ìø×ªµ½µÇÂ¼½çÃæ
         }
     });
+
+    //test the alert message
+    // alertMsgServe.alert("test the alert message", "111");
+    // alertMsgServe.alert("test the alert message", "222");
+    // alertMsgServe.alert("test the alert message", "333");
 }])

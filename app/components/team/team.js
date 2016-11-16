@@ -17,19 +17,21 @@ angular.module('myApp')
     });
 }])
 
-.controller('TeamCtrl', ['TeamServe', 'TeamMemberServe', 'UserServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log', '$filter', '$state',
-    function(TeamServe, TeamMemberServe, UserServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log, $filter, $state) {
+.controller('TeamCtrl', ['TeamServe', 'TeamMemberServe', 'UserServe', '$stateParams', '$scope', '$http', '$rootScope', '$uibModal', '$log', '$filter', '$state', 'alertMsgServe',
+    function(TeamServe, TeamMemberServe, UserServe, $stateParams, $scope, $http, $rootScope, $uibModal, $log, $filter, $state, alertMsgServe) {
         $scope.updateTeamUserList = function() {
             TeamServe.query(function(resp) {
                 if (resp.code == '50000') {
                     $scope.teamlist = resp.data.teams;
                     $scope.userlist = resp.data.users;
-                    $scope.projectList = resp.data.projects;                    
+                    $scope.projectList = resp.data.projects;
+                } else {
+                    alertMsgServe.alert(resp.msg);
                 }
             });
         };
 
-        if(!$state.is('app.team_edit') && $scope.team){
+        if (!$state.is('app.team_edit') && $scope.team) {
             delete $scope.team.teamid;
         }
         //显示列表
@@ -37,19 +39,25 @@ angular.module('myApp')
             $scope.updateTeamUserList();
         } else {
             // 单个编辑
-            TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
-                $scope.team = resp.data.teams[0];
+            TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }).then(function(resp) {
+                if (resp.code == '50000') {
+                    $scope.team = resp.data.teams[0];
+                } else {
+                    alertMsgServe.alert(resp.msg);
+                }
             });
         }
 
         //添加/编辑团队
         $scope.saveTeam = function() {
             if ($scope.newteamForm.$valid) {
-
                 var teamResource = new TeamServe($scope.team);
-                teamResource.$save({ session_id: $rootScope.session.session_id }, function(data) {
-                    $state.go('app.team');
-                }, function() {
+                teamResource.$save({ session_id: $rootScope.session.session_id }).then(function(resp) {
+                    if (resp.code == '50000') {
+                        $state.go('app.team');
+                    } else {
+                        alertMsgServe.alert(resp.msg);
+                    }
                 })
             }
         };
@@ -57,10 +65,13 @@ angular.module('myApp')
         //删除团队
         $scope.deleteTeam = function(team_id) {
             var teamResource = new TeamServe($scope.team);
-            teamResource.$remove({ session_id: $rootScope.session.session_id, id: team_id }, function(resp) {
-
-                //本地数据移除删除掉的team
-                $scope.teamlist = $filter('filter')($scope.teamlist, { id: '!' + team_id });
+            teamResource.$remove({ session_id: $rootScope.session.session_id, id: team_id }).then(function(resp) {
+                if (resp.code == '50000') {
+                    //本地数据移除删除掉的team
+                    $scope.teamlist = $filter('filter')($scope.teamlist, { id: '!' + team_id });
+                } else {
+                    alertMsgServe.alert(resp.msg);
+                }
             });
         };
 
@@ -118,12 +129,16 @@ angular.module('myApp')
 
         $scope.searchUser = function(mobile_email) {
             $scope.addMenberInvalid = 0;
-            UserServe.query({ mobile_or_email: mobile_email }, function(resp) {
-                $scope.searchUsers = resp.data;
-                angular.forEach($scope.searchUsers, function(user, key) {
-                    user.team_role_type_code = 'N'; /*设置默认值*/
-                });
-            }, function() {
+            UserServe.query({ mobile_or_email: mobile_email }).then(function(resp) {
+                if (resp.code == '50000') {
+                    $scope.searchUsers = resp.data;
+                    angular.forEach($scope.searchUsers, function(user, key) {
+                        user.team_role_type_code = 'N'; /*设置默认值*/
+                    });
+
+                } else {
+                    alertMsgServe.alert(resp.msg);
+                }
             });
         };
 
@@ -160,8 +175,13 @@ angular.module('myApp')
             angular.forEach(selectedUsers, function(user, key) {
                 params.user_id = user.id;
                 params.team_role_type_code = user.team_role_type_code;
-                TeamMemberServe.save(params, function(resp) {
-                    $scope.updateTeamUserList();
+                TeamMemberServe.save(params).then(function(resp) {
+                    if (resp.code == '50000') {
+                        $scope.updateTeamUserList();
+
+                    } else {
+                        alertMsgServe.alert(resp.msg);
+                    }
                 });
             });
             $scope.searchUsers = [];
@@ -183,8 +203,13 @@ angular.module('myApp')
             //TODO 后端支持后可以一次提交多个
             angular.forEach(selectedUsers, function(user, key) {
                 params.user_id = user.id;
-                TeamMemberServe.delete(params, function(resp) {
-                    $scope.updateTeamUserList();
+                TeamMemberServe.delete(params).then(function(resp) {
+                    if (resp.code == '50000') {
+
+                        $scope.updateTeamUserList();
+                    } else {
+                        alertMsgServe.alert(resp.msg);
+                    }
                 });
             });
             $scope.teamMembers = [];

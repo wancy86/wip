@@ -18,13 +18,15 @@ angular.module('myApp')
     });
 }])
 
-.controller('ProjectCtrl', ['ProjectServe', 'TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$filter', '$state',
-    function(ProjectServe, TeamServe, $stateParams, $scope, $http, $rootScope, $filter, $state) {
+.controller('ProjectCtrl', ['ProjectServe', 'TeamServe', '$stateParams', '$scope', '$http', '$rootScope', '$filter', '$state', 'alertMsgServe',
+    function(ProjectServe, TeamServe, $stateParams, $scope, $http, $rootScope, $filter, $state, alertMsgServe) {
 
         $scope.updateProjectUserList = function() {
             ProjectServe.query(function(resp) {
                 if (resp.code == '50000') {
                     $scope.projectList = resp.data;
+                } else {
+                    alertMsgServe.alert(resp.msg);
                 }
             });
         };
@@ -35,6 +37,8 @@ angular.module('myApp')
             if (resp.code == '50000') {
                 $scope.teamlist = resp.data.teams;
                 $scope.userlist = resp.data.users;
+            } else {
+                alertMsgServe.alert(resp.msg);
             }
         });
 
@@ -43,17 +47,20 @@ angular.module('myApp')
             $scope.updateProjectUserList();
         } else {
             // 单个编辑
-            ProjectServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.project_id }, function(resp) {
-                $scope.project = resp.data[0].project;
-                $scope.project.status_list = resp.data[0].status_list;
-                $scope.project.team_id = resp.data[0].team.id.toString();
+            ProjectServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.project_id }).then(function(resp) {
+                if (resp.code == '50000') {
+                    $scope.project = resp.data[0].project;
+                    $scope.project.status_list = resp.data[0].status_list;
+                    $scope.project.team_id = resp.data[0].team.id.toString();
+                } else {
+                    alertMsgServe.alert(resp.msg);
+                }
             });
         }
 
         //添加/编辑项目
         $scope.saveProject = function() {
             if ($scope.newProjectForm.$valid) {
-
                 angular.forEach($scope.project.status_list, function(value, key) {
                     value.sequence_order = key + 1;
                 });
@@ -63,6 +70,7 @@ angular.module('myApp')
                     if (resp.code == '50000') {
                         $state.go('app.project');
                     } else {
+                        alertMsgServe.alert(resp.msg);
                     }
                 })
             }

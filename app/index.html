@@ -32,8 +32,13 @@
         <div class="row">
             <!-- header -->
             <header></header>
+        </div>
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-12" style="padding:0px;">
+                <alert-msg alert-messages="alertMessages"></alert-msg>
+            </div>
             <!-- content -->
-            <div class="col-md-12" style="margin-top: 60px;">
+            <div class="col-md-12">
                 <div ui-view></div>
             </div>
         </div>
@@ -47,6 +52,7 @@
     <script src="app.js"></script>
     <script src="service/wip.service.js"></script>
     <script src="components/menu/menu.js"></script>
+    <script src="components/alert_msg/alert_msg.js"></script>
     <script src="components/header/header.js"></script>
     <script src="components/footer/footer.js"></script>
     <script src="components/register/register.js"></script>

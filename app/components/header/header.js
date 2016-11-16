@@ -2,7 +2,10 @@
 
 angular.module('myApp')
 
-.controller('HeaderCtrl', ['$scope', 'AccountServe', function($scope, AccountServe) {
+.controller('HeaderCtrl', ['$scope', '$rootScope', 'AccountServe', function($scope, $rootScope, AccountServe) {
+    if (!$rootScope.account) {
+        $rootScope.account = {}
+    }
     $scope.loginPost = function() {
         if ($scope.loginForm.$valid) {
             AccountServe.login($scope.account);
@@ -12,14 +15,12 @@ angular.module('myApp')
     $scope.logoff = function() {
         AccountServe.logoff();
     }
-
-
 }])
 
 .directive('header', function() {
     return {
         restrict: 'AE',
-        scope: false,
+        scope: true,
         templateUrl: 'components/header/header.html'
     }
 });
