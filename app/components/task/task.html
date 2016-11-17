@@ -7,7 +7,7 @@
         <label for="password">
             选择项目
         </label>
-        <select required class="form-control" ng-model="task.project" ng-options="pro as pro.project.name for pro in proUserTeam | orderBy : 'project.name'" name="project">
+        <select ng-change="changeProject()" required class="form-control" ng-model="task.project" ng-options="pro as pro.project.name for pro in proUserTeam | orderBy : 'project.name'" name="project">
         </select>
         <div ng-messages="newTaskForm.project.$error" ng-if="newTaskForm.$submitted || newTaskForm.project.$touched">
             <p class="error" ng-message="required">*请选择项目</p>
@@ -23,31 +23,15 @@
             <p class="error" ng-message="maxlength">*标题最大长度150</p>
         </div>
     </div>
-    <div class="form-group col-md-6" ng-repeat="status in task.project.status_list | orderBy : status.sequence_order">
-        <label>{{status.name}} 负责人</label>
-        <select required class="form-control" ng-model="'task.status'+status.name" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList" name="{{status.name}}">
+    <!-- 动态显示状态的负责人 -->
+    <div class="form-group col-md-6" ng-repeat="sta in task.status_table | orderBy : sta.sequence_order">
+        <label>{{sta.status_name}} 负责人</label>
+        <select required class="form-control" ng-model="sta.user_id" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList" name="{{sta.status_name}}">
         </select>
-    </div>
-    <!-- <div class="form-group col-md-6">
-        <label for="email">
-            选择开发人员
-        </label>
-        <select required class="form-control" ng-model="task.developer_id" ng-options="dev.id as dev.last_name+' '+dev.last_name for dev in taskUserList" name="developer">
-        </select>
-        <div ng-messages="newTaskForm.developer.$error" ng-if="newTaskForm.$submitted || newTaskForm.developer.$touched">
-            <p class="error" ng-message="required">*请选择开发人员</p>
+        <div ng-messages="newTaskForm[sta.status_name].$error" ng-if="newTaskForm.$submitted || newTaskForm[sta.status_name].$touched">
+            <p class="error" ng-message="required">*请选择负责人</p>
         </div>
     </div>
-    <div class="form-group col-md-6">
-        <label for="password">
-            选择测试人员
-        </label>
-        <select required class="form-control" ng-model="task.tester_id" ng-options="qa.id as qa.last_name+' '+qa.last_name for qa in taskUserList" name="QA">
-        </select>
-        <div ng-messages="newTaskForm.QA.$error" ng-if="newTaskForm.$submitted || newTaskForm.QA.$touched">
-            <p class="error" ng-message="required">*请选择测试人员</p>
-        </div>
-    </div> -->
     <div class="form-group col-md-6">
         <label for="password">
             预估时间

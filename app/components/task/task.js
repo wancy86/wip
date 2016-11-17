@@ -66,6 +66,22 @@ angular.module('myApp')
         })
     }
 
+    //change project need to generate the status array
+    $scope.changeProject = function() {
+        console.log('changeProject: ', $scope.task.project)
+        if ($scope.task.project) {
+            $scope.task.status_table = [];
+            angular.forEach($scope.task.project.status_list, function(value, key) {
+                $scope.task.status_table.push({
+                    status_id: value.id,
+                    status_name: value.name,
+                    // sequence_order: value.sequence_order,
+                    user_id: ''
+                });
+            });
+        }
+    }
+
     if ($stateParams.taskid) {
         //get task by id
         TaskServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.taskid }, function(resp) {
