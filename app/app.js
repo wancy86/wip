@@ -60,18 +60,24 @@ angular.module('myApp', [
 
 .controller('AppCtrl', ['$rootScope', '$state', '$cookies', 'alertMsgServe', function($rootScope, $state, $cookies, alertMsgServe) {
     // $rootScope.login = 0;
-
-    //添加事件监听
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        if (toState.name == 'register') return; // 如果是进入登录界面则允许
+        if (toState.name == 'register') return; // 
         if (!$rootScope.session || !$rootScope.session.session_id) {
-            event.preventDefault(); // 取消默认跳转行为
-            $state.go("register", { from: fromState.name, w: 'notLogin' }); //跳转到登录界面
+            event.preventDefault(); // 
+            $state.go("register", { from: fromState.name, w: 'notLogin' }); //
         }
     });
 
-    //test the alert message
-    // alertMsgServe.alert("test the alert message", "111");
-    // alertMsgServe.alert("test the alert message", "222");
-    // alertMsgServe.alert("test the alert message", "333");
+    $rootScope.$watch('session', function() {
+        if ($rootScope.session) {
+            var re = /[\u4e00-\u9fa5]/;
+            if (re.test($rootScope.session.last_name + $rootScope.session.first_name)) {
+                //has Chinese in name then firstname+lastname
+                $rootScope.session.display_name = $rootScope.session.last_name + $rootScope.session.first_name;
+            } else {
+                $rootScope.session.display_name = $rootScope.session.last_name + ' ' + $rootScope.session.first_name;
+            }
+        }
+    });
+
 }])

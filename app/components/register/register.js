@@ -12,7 +12,7 @@ angular.module('myApp')
     $scope.processForm = function() {
 
         if ($scope.registerForm.$valid) {
-            var acoount = new RegisterServe($scope.account);
+            var acoount = new RegisterServe($scope.register);
             acoount.$save().then(function(resp) {
                 //on success
                 // console.log('XXXX: ', resp)

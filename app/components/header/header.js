@@ -15,6 +15,7 @@ angular.module('myApp')
     $scope.logoff = function() {
         AccountServe.logoff();
     }
+    
 }])
 
 .directive('header', function() {

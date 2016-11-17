@@ -5,29 +5,29 @@
     <form name='registerForm' novalidate ng-submit="processForm()">
     <fake-autocomplete></fake-autocomplete>
         <div class="form-group col-md-6">
-            <input placeholder="姓" name="last_name" type="text" class="form-control" ng-model="account.last_name" ng-minlength="1" required ng-maxlength="50" />
+            <input placeholder="姓" name="last_name" type="text" class="form-control" ng-model="register.last_name" ng-minlength="1" required ng-maxlength="50" />
             <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.required">*姓不能为空</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.minlength">*最小长度为1</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.last_name.$error.maxlength">*最大长度为50</span>
         </div>
         <div class="form-group col-md-6">
-            <input placeholder="名" name="first_name" type="text" class="form-control" ng-model="account.first_name" ng-minlength="1" required ng-maxlength="50" />
+            <input placeholder="名" name="first_name" type="text" class="form-control" ng-model="register.first_name" ng-minlength="1" required ng-maxlength="50" />
             <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.required">*名不能为空</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.minlength">*最小长度为1</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.first_name.$error.maxlength">*最大长度为50</span>
         </div>
         <div class="form-group col-md-12">
-            <input placeholder="邮箱" name="email" type="email" class="form-control" ng-model="account.email" required/>
+            <input placeholder="邮箱" name="email" type="email" class="form-control" ng-model="register.email" required/>
             <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.required">*email不能为空</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.email">*email地址不合法</span>
         </div>
         <div class="form-group col-md-12">
-            <input placeholder="手机号" name="mobile" type="text" class="form-control" ng-model="account.mobile" required ng-pattern="mobileRegx" />
+            <input placeholder="手机号" name="mobile" type="text" class="form-control" ng-model="register.mobile" required ng-pattern="mobileRegx" />
             <span class="error" ng-show="registerForm.$submitted && registerForm.mobile.$error.required">*手机号不能为空</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.mobile.$error.pattern">*手机号不合法</span>
         </div>
         <div class="form-group col-md-12">
-            <input placeholder="创建密码" name="password" type="password" class="form-control" ng-model="account.password" required ng-minlength="6" ng-maxlength="50" ng-pattern="pwdRegx" />
+            <input placeholder="创建密码" name="password" type="password" class="form-control" ng-model="register.password" required ng-minlength="6" ng-maxlength="50" ng-pattern="pwdRegx" />
             <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.required">*密码不能为空</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.minlength">*密码至少6为</span>
             <span class="error" ng-show="registerForm.$submitted && registerForm.password.$error.maxlength">*密码最大长度50</span>
@@ -37,7 +37,7 @@
             <label>
                 Confirm Password
             </label>
-            <input name="password2" type="password" class="form-control" ng-model="account.password2" />
+            <input name="password2" type="password" class="form-control" ng-model="register.password2" />
             <span class="error" ng-show="registerForm.$submitted && (registerForm.password.$$rawModelValue !=registerForm.password2.$$rawModelValue)">两次输入的密码不一致</span>
         </div> -->
         <div class="col-md-12">

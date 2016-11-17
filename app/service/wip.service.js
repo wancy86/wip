@@ -28,7 +28,7 @@ angular.module('myApp')
             }).success(function(resp) {
                 if (resp.code == "50000") {
 
-                    $rootScope.session = resp.data;
+                    $rootScope.session = resp.data;                    
                     $cookies.put('session', resp.data.session_id);
                     $rootScope.login = 1;
                     $state.go('app.task');
