@@ -21,9 +21,9 @@
             <span class="error" ng-show="registerForm.$submitted && registerForm.mobile.$error.pattern">*手机号不合法</span>
         </div>
         <div class="form-group col-md-12">
-            <input placeholder="邮箱" name="email" type="email" class="form-control" ng-model="account.email" required ng-/>
+            <input placeholder="邮箱" name="email" type="email" class="form-control" ng-model="account.email" required/>
             <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.required">*email不能为空</span>
-            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.pattern">*email地址不合法</span>
+            <span class="error" ng-show="registerForm.$submitted && registerForm.email.$error.email">*email地址不合法</span>
         </div>
         <div class="form-group col-md-12">
             <input placeholder="创建密码" name="password" type="password" class="form-control" ng-model="account.password" required ng-minlength="6" ng-maxlength="50" ng-pattern="pwdRegx" />

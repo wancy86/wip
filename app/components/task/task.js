@@ -105,7 +105,7 @@ angular.module('myApp')
             $scope.task.estimated_time = parseInt($scope.task.estimated_time);
 
             var taskServer = new TaskServe($scope.task);
-            taskServer.$save({ session_id: $rootScope.session.session_id }, function(resp) {
+            taskServer.$save({ session_id: $rootScope.session.session_id }).then(function(resp) {
                 if (resp.code == '50000') {
                     $state.go('app.task');
                 } else {

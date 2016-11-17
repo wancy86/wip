@@ -47,7 +47,7 @@ angular.module('myApp')
             $scope.updateProjectUserList();
         } else {
             // 单个编辑
-            ProjectServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.project_id }).then(function(resp) {
+            ProjectServe.get({ session_id: $rootScope.session.session_id, id: $stateParams.project_id }, function(resp) {
                 if (resp.code == '50000') {
                     $scope.project = resp.data[0].project;
                     $scope.project.status_list = resp.data[0].status_list;

@@ -39,7 +39,7 @@ angular.module('myApp')
             $scope.updateTeamUserList();
         } else {
             // 单个编辑
-            TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }).then(function(resp) {
+            TeamServe.get({ session_id: $rootScope.session.session_id, team_id: $stateParams.teamid }, function(resp) {
                 if (resp.code == '50000') {
                     $scope.team = resp.data.teams[0];
                 } else {
@@ -129,7 +129,7 @@ angular.module('myApp')
 
         $scope.searchUser = function(mobile_email) {
             $scope.addMenberInvalid = 0;
-            UserServe.query({ mobile_or_email: mobile_email }).then(function(resp) {
+            UserServe.query({ mobile_or_email: mobile_email }, function(resp) {
                 if (resp.code == '50000') {
                     $scope.searchUsers = resp.data;
                     angular.forEach($scope.searchUsers, function(user, key) {
@@ -175,7 +175,7 @@ angular.module('myApp')
             angular.forEach(selectedUsers, function(user, key) {
                 params.user_id = user.id;
                 params.team_role_type_code = user.team_role_type_code;
-                TeamMemberServe.save(params).then(function(resp) {
+                TeamMemberServe.save(params, function(resp) {
                     if (resp.code == '50000') {
                         $scope.updateTeamUserList();
 
@@ -203,7 +203,7 @@ angular.module('myApp')
             //TODO 后端支持后可以一次提交多个
             angular.forEach(selectedUsers, function(user, key) {
                 params.user_id = user.id;
-                TeamMemberServe.delete(params).then(function(resp) {
+                TeamMemberServe.delete(params, function(resp) {
                     if (resp.code == '50000') {
 
                         $scope.updateTeamUserList();
