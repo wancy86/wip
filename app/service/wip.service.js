@@ -1,7 +1,7 @@
 'use strict';
 
 //Back end API server name
-var ServerName = 'http://127.0.0.1:8000/service/';
+var ServerName = 'http://coomark.51vip.biz:8000/service/';
 
 angular.module('myApp')
 

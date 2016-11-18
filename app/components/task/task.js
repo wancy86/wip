@@ -35,6 +35,8 @@ angular.module('myApp')
 
     $scope.assignTypes = [{ code: "all", name: "所有" }, { code: "Dev", name: "开发" }, { code: "QA", name: "测试" }];
 
+    //$scope.satatus_list=[{code:'',name:'未开始'}，{code:'',name:'进行中'}，{code:'',name:'已完成'}];
+    
     //All user
     if (!$scope.taskUserList) {
         //TODO 需要正确的用户列表接口
