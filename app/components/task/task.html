@@ -10,7 +10,7 @@
         <select ng-change="changeProject()" required class="form-control" ng-model="task.project" ng-options="pro as pro.project.name for pro in proUserTeam | orderBy : 'project.name'" name="project">
         </select>
         <div ng-messages="newTaskForm.project.$error" ng-if="newTaskForm.$submitted || newTaskForm.project.$touched">
-            <p class="error" ng-message="required">*请选择项目</p>
+            <span class="error" ng-message="required">*请选择项目</span>
         </div>
     </div>
     <div class="form-group col-md-12">
@@ -19,8 +19,8 @@
         </label>
         <input required ng-maxlength="150" type="text" class="form-control" ng-model="task.name" name="name" />
         <div ng-messages="newTaskForm.name.$error" ng-if="newTaskForm.$submitted || newTaskForm.name.$touched">
-            <p class="error" ng-message="required">*请填写标题</p>
-            <p class="error" ng-message="maxlength">*标题最大长度150</p>
+            <span class="error" ng-message="required">*请填写标题</span>
+            <span class="error" ng-message="maxlength">*标题最大长度150</span>
         </div>
     </div>
     <!-- 动态显示状态的负责人 -->
@@ -29,7 +29,7 @@
         <select required class="form-control" ng-model="sta.user_id" ng-options="qa.id as qa.last_name+' '+qa.first_name for qa in taskUserList" name="{{sta.status_name}}">
         </select>
         <div ng-messages="newTaskForm[sta.status_name].$error" ng-if="newTaskForm.$submitted || newTaskForm[sta.status_name].$touched">
-            <p class="error" ng-message="required">*请选择负责人</p>
+            <span class="error" ng-message="required">*请选择负责人</span>
         </div>
     </div>
     <div class="form-group col-md-6">
@@ -41,7 +41,7 @@
             <span class="input-group-addon">分钟</span>
         </div>
         <div ng-messages="newTaskForm.time.$error" ng-if="newTaskForm.$submitted || newTaskForm.time.$touched">
-            <p class="error" ng-message="required">*请预估时间</p>
+            <span class="error" ng-message="required">*请预估时间</span>
         </div>
     </div>
     <div class="form-group col-md-6">
@@ -51,7 +51,7 @@
         <select required class="form-control" ng-model="task.status_id" ng-options="status.id as status.name for status in task.project.status_list | orderBy : status.sequence_order" name="status_id">
         </select>
         <div ng-messages="newTaskForm.status_id.$error" ng-if="newTaskForm.$submitted || newTaskForm.status_id.$touched">
-            <p class="error" ng-message="required">*请选择当前状态</p>
+            <span class="error" ng-message="required">*请选择当前状态</span>
         </div>
     </div>
     <div class="form-group col-md-12">

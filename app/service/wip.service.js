@@ -1,7 +1,8 @@
 'use strict';
 
 //Back end API server name
-var ServerName = 'http://coomark.51vip.biz:8000/service/';
+// var ServerName = 'http://coomark.51vip.biz:8000/service/';
+var ServerName = 'http://127.0.0.1:8000/service/';
 
 angular.module('myApp')
 
@@ -118,7 +119,7 @@ angular.module('myApp')
 }])
 
 .factory('MyTaskServe', ['$resource', '$rootScope', function($resource, $rootScope) {
-    return $resource(ServerName + 'my_item', {}, {
+    return $resource(ServerName + 'item_search', {}, {
         query: {
             method: 'GET',
             params: {

@@ -14,7 +14,7 @@
         <label for="password">
             选择状态
         </label>
-        <select class="form-control" ng-model="search.status_id" ng-options="prostat.id as prostat.name for prostat in search.selectedProject.status_list">
+        <select class="form-control" ng-model="search.item_status_id" ng-options="prostat.id as prostat.name for prostat in search.selectedProject.status_list">
             <option value="">All</option>
         </select>
     </div>
@@ -22,17 +22,17 @@
         <label for="password">
             选择用户
         </label>
-        <select class="form-control" ng-model="search.user_id" ng-options="user.id as user.last_name+' '+user.first_name for user in taskUserList">
+        <select class="form-control" ng-model="search.manager_id" ng-options="user.id as user.last_name+' '+user.first_name for user in taskUserList">
             <option value="">All</option>
         </select>
     </div>
-    <div class="form-group col-md-4">
+    <!-- <div class="form-group col-md-4">
         <label for="password">
             指派类型
         </label>
         <select class="form-control" ng-model="search.assign_type" ng-options="t.code as t.name for t in assignTypes">
         </select>
-    </div>
+    </div> -->
     <div class="form-group col-md-4">
         <label for="account">
             标题/介绍
@@ -54,26 +54,23 @@
         <tr>
             <th>序列号</th>
             <th>项目</th>
-            <th>开发人员</th>
-            <th>测试人员</th>
             <th>任务</th>
             <th>当前状态</th>
-            <th>创建时间</th>
+            <th>负责人</th>
             <th>操作</th>
         </tr>
-        <tr ng-repeat="(key, v) in searched_tasks | limitTo:pageSize:(currentPage-1)*pageSize">
+        <!-- <tr ng-repeat="(key, v) in searched_tasks | limitTo:search.pageSize:(search.currentPage-1)*search.pageSize"> -->
+        <tr ng-repeat="(key, v) in searched_tasks">
             <td title="点击查看详情"><a ui-sref="app.task_detail({taskid:v.item_id})">{{v.item_id}}</a></td>
             <td>{{v.project_name}}</td>
-            <td>{{v.Dev_full_name}}</td>
-            <td>{{v.QA_full_name}}</td>
             <td>{{v.item_name}}</td>
-            <td>{{v.status}}</td>
-            <td>{{v.create_date}}</td>
+            <td>{{v.item_status_name}}</td>
+            <td>{{v.manager_full_name}}</td>
             <td><a ui-sref="app.task_edit({taskid:v.item_id})"><span class="glyphicon glyphicon-edit"></span> 编辑</a></td>
         </tr>
     </table>
     <!-- 分页组件 -->
-    <ul ng-show="totalItems" uib-pagination total-items="totalItems" max-size="pageSize" class="pagination-sm" boundary-link-numbers="true" ng-change="pageChanged()" ng-model="currentPage"></ul>
+    <ul ng-show="search.totalItems" uib-pagination total-items="search.totalItems" max-size="search.pageSize" class="pagination-sm" boundary-link-numbers="true" ng-change="pageChanged()" ng-model="search.currentPage"></ul>
 </div>
 <div class="col-md-12" ng-hide="searched_tasks.length">
     <h3>没有对应的结果</h3>

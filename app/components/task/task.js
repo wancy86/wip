@@ -25,18 +25,10 @@ angular.module('myApp')
 
 .controller('TaskCtrl', ['$scope', '$rootScope', '$filter', '$state', '$stateParams', '$log', 'TaskServe', 'MyTaskServe', 'ProjectServe', 'UserServe', 'LogServe', 'alertMsgServe', function($scope, $rootScope, $filter, $state, $stateParams, $log, TaskServe, MyTaskServe, ProjectServe, UserServe, LogServe, alertMsgServe) {
 
-    //pagnination
-    $scope.totalItems = 0;
-    $scope.currentPage = 1;
-    $scope.pageSize = 10;
-    $scope.pageChanged = function() {
-        $log.log('Page changed to: ' + $scope.currentPage);
-    };
-
     $scope.assignTypes = [{ code: "all", name: "所有" }, { code: "Dev", name: "开发" }, { code: "QA", name: "测试" }];
 
     //$scope.satatus_list=[{code:'',name:'未开始'}，{code:'',name:'进行中'}，{code:'',name:'已完成'}];
-    
+
     //All user
     if (!$scope.taskUserList) {
         //TODO 需要正确的用户列表接口
@@ -61,6 +53,7 @@ angular.module('myApp')
                     $scope.task.project = $filter('filter')($scope.proUserTeam, function(value) {
                         return value.project.id == ($stateParams.project_id || $scope.task.project_id);
                     })[0];
+                    $scope.changeProject();
                 }
             } else {
                 alertMsgServe.alert(resp.msg);
@@ -70,19 +63,25 @@ angular.module('myApp')
 
     //change project need to generate the status array
     $scope.changeProject = function() {
-        console.log('changeProject: ', $scope.task.project)
-        if ($scope.task.project) {
-            $scope.task.status_table = [];
-            angular.forEach($scope.task.project.status_list, function(value, key) {
-                $scope.task.status_table.push({
-                    status_id: value.id,
-                    status_name: value.name,
-                    // sequence_order: value.sequence_order,
-                    user_id: ''
+            console.log('changeProject: ', $scope.task.project)
+            if ($scope.task.project) {
+                $scope.task.status_table = [];
+                angular.forEach($scope.task.project.status_list, function(value, key) {
+                    $scope.task.status_table.push({
+                        status_id: value.id,
+                        status_name: value.name,
+                        // sequence_order: value.sequence_order,
+                        user_id: ''
+                    });
                 });
-            });
+            }
         }
-    }
+        //pagnination
+    if (!$scope.search) $scope.search = {
+        totalItems: 0,
+        currentPage: 1,
+        pageSize: 3
+    };
 
     if ($stateParams.taskid) {
         //get task by id
@@ -105,11 +104,11 @@ angular.module('myApp')
     } else {
         //get all task by default search task query
         //默认显示所有的item
-        MyTaskServe.query(function(resp) {
+        MyTaskServe.query($scope.search,function(resp) {
             if (resp.code == '50000') {
-                $scope.searched_tasks = resp.data;
-                $scope.totalItems = $scope.searched_tasks.length;
-                $scope.currentPage = 1;
+                $scope.searched_tasks = resp.data.records;
+                $scope.search.totalItems = resp.data.total;
+                $scope.search.currentPage = 1;
             } else {
                 alertMsgServe.alert(resp.msg);
             }
@@ -133,7 +132,17 @@ angular.module('myApp')
         }
     };
 
+
+    $scope.pageChanged = function() {
+        $log.log('Page changed to: ' + $scope.search.currentPage);
+        // $log.log('Page changed to: ' + $scope.currentPage);
+        $scope.searchTask();
+    };
+
     $scope.searchTask = function() {
+        //reset
+        $scope.searched_tasks = [];
+
         if ($scope.search) {
             if ($scope.search.selectedProject) {
                 $scope.search.project_id = $scope.search.selectedProject.project.id;
@@ -143,11 +152,12 @@ angular.module('myApp')
         }
         MyTaskServe.query($scope.search, function(resp) {
             if (resp.code == '50000') {
-                $scope.searched_tasks = resp.data;
-                $scope.totalItems = $scope.searched_tasks.length;
-                $scope.currentPage = 1;
+                $scope.searched_tasks = resp.data.records;
+                $scope.search.totalItems = resp.data.total;
             } else {
                 $scope.searched_tasks = [];
+                $scope.search.totalItems = 0;
+                $scope.search.currentPage = 1;
                 alertMsgServe.alert(resp.msg);
             }
         });
@@ -169,14 +179,14 @@ angular.module('myApp')
     if ($state.is('app.task_detail')) {
         //获取logType 列表 
         // TODO 需要接口
-        $scope.logTypes = [{ code: 'B', name: 'Billable' }, { code: 'NB', name: 'Nonbillable' }];
+        $scope.logTypes = [{ code: 'BILL', name: 'Billable' }, { code: 'NOBILL', name: 'Nonbillable' }];
     }
 
     //for test save log
     $scope.workLog = {
-        work_date: $filter('date')(new Date(), 'yyyy/MM/dd'),
+        work_date: $filter('date')(new Date(), 'yyyy-MM-dd'),
         minutes: '120',
-        item_work_type_code: 'B',
+        item_work_type_code: 'BILL',
         detail: 'Did Nothing...'
     };
 

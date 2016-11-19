@@ -30,13 +30,13 @@
     </div>
     <div class="form-group col-md-12">
         <label for="email">
-            任务状态表
+            任务流程步骤表
         </label>
         <button style="margin-left: 30px;" ng-click="addTaskStatus()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
         <div class="form-group form-inline" ng-repeat="s in project.status_list | orderBy : sequence_order" style="margin-top:10px;">
             <div class="input-group">
                 <input type="text" ng-model="s.name" class="form-control" required ng-maxlength="50" />
-                <span class="input-group-addon">{{$index+1}}</span>
+                <span class="input-group-addon">步骤 {{$index+1}}</span>
             </div>
             <button style="margin-left: 30px;" ng-click="delTaskStatus($index)" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></button>
         </div>
