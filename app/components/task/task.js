@@ -63,7 +63,7 @@ angular.module('myApp')
 
     //change project need to generate the status array
     $scope.changeProject = function() {
-            console.log('changeProject: ', $scope.task.project)
+            //console.log('changeProject: ', $scope.task.project)
             if ($scope.task.project) {
                 $scope.task.status_table = [];
                 angular.forEach($scope.task.project.status_list, function(value, key) {
@@ -80,7 +80,7 @@ angular.module('myApp')
     if (!$scope.search) $scope.search = {
         totalItems: 0,
         currentPage: 1,
-        pageSize: 3
+        pageSize: 10
     };
 
     if ($stateParams.taskid) {
@@ -109,6 +109,7 @@ angular.module('myApp')
                 $scope.searched_tasks = resp.data.records;
                 $scope.search.totalItems = resp.data.total;
                 $scope.search.currentPage = 1;
+                //console.log('XXXX: ',resp.data.total,$scope.search.totalItems)
             } else {
                 alertMsgServe.alert(resp.msg);
             }
@@ -134,8 +135,9 @@ angular.module('myApp')
 
 
     $scope.pageChanged = function() {
-        $log.log('Page changed to: ' + $scope.search.currentPage);
+        // $log.log('Page changed to: ' + $scope.search.currentPage);
         // $log.log('Page changed to: ' + $scope.currentPage);
+        //console.log('total: ',$scope.search.totalItems)
         $scope.searchTask();
     };
 
@@ -154,6 +156,7 @@ angular.module('myApp')
             if (resp.code == '50000') {
                 $scope.searched_tasks = resp.data.records;
                 $scope.search.totalItems = resp.data.total;
+                //console.log('XXXX: ',resp.data.total,$scope.search.totalItems);
             } else {
                 $scope.searched_tasks = [];
                 $scope.search.totalItems = 0;

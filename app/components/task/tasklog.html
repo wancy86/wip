@@ -7,10 +7,8 @@
             <div class="box col-md-12" style="border:1px solid #ccc;padding:15px;margin-bottom: 20px;">
                 <p><b>任务名称：</b>{{task.name}}</p>
                 <p><b>所属项目：</b>{{task.project.project.name}}</p>
-                <p><b>任务状态：</b>{{task.status}}</p>
+                <p><b>任务状态：</b>{{task.status_id}}</p>
                 <p><b>任务简介：</b>{{task.description}}</p>
-                <p><b>开发人员：</b>{{task.developer.last_name + ' ' + task.developer.first_name }}</p>
-                <p><b>测试人员：</b>{{task.QA.last_name + ' ' + task.QA.first_name }}</p>
             </div>
         </uib-tab>
         <uib-tab index="1" heading="工作日志" select="tabClick('log')">

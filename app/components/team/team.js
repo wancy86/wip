@@ -164,15 +164,14 @@ angular.module('myApp')
                 return false;
             }
 
-            var params = {
-                session_id: $rootScope.session.session_id,
-                team_id: $scope.selected_teamid,
-                user_id: '',
-                team_role_type_code: 'N' /*T M N*/
-            }
-
             //TODO 后端支持后可以一次提交多个
             angular.forEach(selectedUsers, function(user, key) {
+                var params = {
+                    session_id: $rootScope.session.session_id,
+                    team_id: $scope.selected_teamid,
+                    user_id: '',
+                    team_role_type_code: 'N' /*T M N*/
+                }
                 params.user_id = user.id;
                 params.team_role_type_code = user.team_role_type_code;
                 TeamMemberServe.save(params, function(resp) {

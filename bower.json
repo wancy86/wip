@@ -17,6 +17,7 @@
     "angular-messages": "^1.5.8"
   },
   "devDependencies": {
-    "angular-resource": "^1.5.8"
+    "angular-resource": "^1.5.8",
+    "requirejs": "^2.3.2"
   }
 }
