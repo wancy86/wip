@@ -15,12 +15,12 @@ angular.module('myApp', [
     // $httpProvider.defaults.withCredentials = true;
 
     $stateProvider.state('app', {
-        url: '/',
+        url: '/wip/',
         templateUrl: 'app.html'
     })
 
     .state('register', {
-        url: '/register',
+        url: '/',
         templateUrl: 'components/register/register.html',
         controller: 'RegisterCtrl'
     })
@@ -55,10 +55,17 @@ angular.module('myApp', [
         controller: 'TaskCtrl'
     });
 
-    $urlRouterProvider.otherwise('register');
+    $urlRouterProvider.otherwise('/');
 }])
 
-.controller('AppCtrl', ['$rootScope', '$state', '$cookies', 'alertMsgServe', function($rootScope, $state, $cookies, alertMsgServe) {
+.controller('AppCtrl', ['$rootScope', '$state', '$cookies', 'alertMsgServe', 'AccountServe', function($rootScope, $state, $cookies, alertMsgServe, AccountServe) {
+    //check auto login
+    var session_id = $cookies.get('session')
+    if (session_id) {
+        //auto login
+        AccountServe.login({ session_id: session_id });
+    }
+
     // $rootScope.login = 0;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if (toState.name == 'register') return; // 
