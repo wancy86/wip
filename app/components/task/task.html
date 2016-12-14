@@ -25,7 +25,7 @@
     </div>
     <!-- 动态显示状态的负责人 -->
     <div class="form-group col-md-6" ng-repeat="sta in task.status_table | orderBy : sta.sequence_order">
-        <label>{{sta.status_name}} 负责人</label>
+        <label>{{sta.status_name}} 负责人</label>{{sta.user_id}}
         <select required class="form-control" ng-model="sta.user_id" ng-options="qa.id as qa.last_name+' '+qa.first_name for qa in taskUserList" name="{{sta.status_name}}">
         </select>
         <div ng-messages="newTaskForm[sta.status_name].$error" ng-if="newTaskForm.$submitted || newTaskForm[sta.status_name].$touched">

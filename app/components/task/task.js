@@ -126,6 +126,7 @@ angular.module('myApp')
             taskServer.$save({ session_id: $rootScope.session.session_id }).then(function(resp) {
                 if (resp.code == '50000') {
                     $state.go('app.task');
+                    delete $scope.task;
                 } else {
                     alertMsgServe.alert(resp.msg);
                 }
